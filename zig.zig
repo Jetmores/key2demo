@@ -10,3 +10,18 @@ pub fn main() !void{
     }
     idir.close();
 }
+
+?hello ?world
+const print = @import("std").debug.print;
+
+pub fn main() void {
+    print("Hello, world!\n", .{});
+}
+
+?hello ?world
+const std = @import("std");
+
+pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+    try stdout.print("Hello, {s}!\n", .{"world"});
+}

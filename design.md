@@ -35,3 +35,5 @@ private:
 	Singleton & operator=(const Singleton &)= delete;
 };
 ```
+### 建造者模式
+典型的聚合关系,抽象类建造者作属性,且建造者作方法参数,参数再泛化具体建造者

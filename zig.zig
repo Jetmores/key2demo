@@ -1,4 +1,4 @@
-/遍历 /目录
+?遍历 ?目录
 const print=@import("std").debug.print;
 const std=@import("std");
 pub fn main() !void{

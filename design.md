@@ -1,4 +1,4 @@
-## UML类图
+## [UML类图](https://design-patterns.readthedocs.io/zh_CN/latest/index.html)
 ### 实现
 继承抽象类,虚线三角(被指向者是基类)
 
@@ -17,7 +17,7 @@
 ### 组合
 使用,作属性,局部构造,不可脱离,实心菱形
 
-## 设计模式
+## [设计模式](https://design-patterns.readthedocs.io/zh_CN/latest/index.html)
 ### 单例模式
 单例模式本质是某命名空间下的全局变量;渐渐被依赖注入所替代
 ```cpp

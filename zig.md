@@ -13,7 +13,7 @@ pub fn main() !void {
 }
 ```
 
-### ?遍历 ?目录
+### ?遍历 ?目录 ?workdir
 ```zig
 const print=@import("std").debug.print;
 const std=@import("std");

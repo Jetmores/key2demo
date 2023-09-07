@@ -2,8 +2,8 @@
 ```bash
 info threads
 thread id
-#只有当前被调试线程会执行|默认全部执行
-set scheduler-locking on|off
+#只有当前被调试线程会执行|默认全部执行|当next or step时同on,continue-until-finish等大跳转则全部运行,此时遇到断点(包括另一线程处的断点)则切换为当前线程
+set scheduler-locking on|off|step
 #默认,fork之后父子独立://默认追踪父进程//追踪子进程
 detach-on-fork on;follow-fork-mode parent
 detach-on-fork on;follow-fork-mode child

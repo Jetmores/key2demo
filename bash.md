@@ -10,6 +10,9 @@ detach-on-fork on;follow-fork-mode child
 #fork之后block在该位置://默认追踪父进程,子进程block在fork位置//追踪子进程,父进程block在fork位置
 detach-on-fork off;follow-fork-mode parent
 detach-on-fork off;follow-fork-mode child
+
+#汇编
+disassemble
 ```
 
 ### 执行文件的第5行命令

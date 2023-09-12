@@ -1,4 +1,8 @@
 ### ?bind
+```cpp
+// （ _1 与 _2 来自 std::placeholders ，并表示将来会传递给 f1 的参数）
+auto f1 = std::bind(f, _2, 42, _1, std::cref(n), n);
+```
 
 ### ?lambda
 

@@ -4,7 +4,7 @@
 auto f1 = std::bind(f, _2, 42, _1, std::cref(n), n);
 ```
 
-### ?lambda
+### ?lambda ?λ
 ```cpp
 int& (*fpi)(int*) = [](int* a) -> int& { return *a; };
 ```

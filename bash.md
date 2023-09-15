@@ -58,8 +58,8 @@ tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802
 
 ### 提交代码时的用户信息
 ```bash
-git config [--global] user.name "[name]"
-git config [--global] user.email "[email address]"
+git config --global user.name "[name]"
+git config --global user.email "[email address]"
 git config --global -e //sometime not correct
 ```
 

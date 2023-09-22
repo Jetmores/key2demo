@@ -7,7 +7,7 @@ rs
 https://doc.rust-lang.org/std/index.html?search=%s
 ```
 
-### ?遍历目录 ?workdir
+### ?遍历 ?目录 ?workdir
 ```rs
 use std::fs;
 

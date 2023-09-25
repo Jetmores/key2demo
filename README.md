@@ -15,17 +15,17 @@ language.md
 2. 面向对象与设计模式
 
 ##### c/zig
-1. 网络文件io,多进程多线程的通信和同步
+1. 网络文件io,多进程多线程的通信和同步(main)
 2. libevent:使用和源码详解
 3. Linux:使用和源码详解
 
 ##### rust
-1. the book
+1. the book(base)
 2. async
-3. 高性能web框架:axum
+3. 高性能web框架:axum(main)
 
 ##### game
-1. Unreal Engine
+1. Unreal Engine(main)
 2. DaVinci
 3. ~~blender(Houdini就够了)~~
 4. Houdini

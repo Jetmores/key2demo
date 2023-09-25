@@ -27,5 +27,5 @@ language.md
 ##### game
 1. Unreal Engine
 2. DaVinci
-3. ~~blender~~
+3. ~~blender(Houdini就够了)~~
 4. Houdini

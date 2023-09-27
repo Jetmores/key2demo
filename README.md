@@ -10,11 +10,11 @@ language.md
 1. 通过?key的形式搜索
 
 #### 知识结构
-##### cpp(try)
+##### cpp
 1. STL
 2. 面向对象与设计模式
 
-##### c下(work)/zig(like)
+##### c(work)/zig(like)
 1. 网络文件io,多进程多线程的通信和同步(main)
 2. libevent:使用和源码详解
 3. Linux:使用和源码详解

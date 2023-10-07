@@ -8,10 +8,8 @@ https://gitee.com/letsmut/MITCourse.git
 
 4. c:网络文件io,多进程多线程,libevent(main)
 
-5. Unreal Engine(没时间就算了)
-入门,demo
+5. Unreal Engine(没时间就算了):入门,demo
 
-6. Houdini
-入门(没时间就算了)
+6. Houdini:入门(没时间就算了)
 
 7. rust异步demo(没时间就算了)

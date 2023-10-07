@@ -23,10 +23,10 @@ language.md
 1. the book(base)
 2. async
 3. 高性能web框架:axum(main)
-4. ~~Bevy:game engine(if have time)~~
+4. Bevy:game engine(if have time)
 
 ##### game
 1. Unreal Engine(main)
 2. DaVinci
-3. ~~blender(Houdini就够了)~~
+3. blender(Houdini就够了)
 4. Houdini

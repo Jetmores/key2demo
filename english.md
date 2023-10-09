@@ -11,4 +11,4 @@
 10. bidirectional:/ baɪdəˈrekʃənl/双向的
 
 ### sentence
-1. best bid and offer 最佳出价和报价
+1. best bid and offer 最佳出价(买单)和报价(ask/offer卖单)

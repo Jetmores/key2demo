@@ -26,7 +26,7 @@ pub fn binarySearch(
 }
 ```
 
-### 插入排序
+### 插入排序(n~n^2~~n^2 stable)
 ```zig
 pub fn insertion(
     comptime T: type,
@@ -67,12 +67,12 @@ pub fn insertionContext(a: usize, b: usize, context: anytype) void {
 
 ### 希尔排序
 
-### 堆排序3
+### 堆排序3(nlogn~nlogn~~nlogn unstable)
 
-### 快速排序1
+### 快速排序1(nlogn~n^2~~nlogn unstable)
 递归版改为非递归和迭代版:将信息push和pop到栈结构中或者存到范围数组std::pair<int,int> ranges[len];
 
-### 归并排序2
+### 归并排序2(nlogn~nlogn~~nlogn stable)
 
 ### 计数排序
 

@@ -70,7 +70,7 @@ pub fn insertionContext(a: usize, b: usize, context: anytype) void {
 ### 堆排序3
 
 ### 快速排序1
-递归版改为迭代版:将信息push和pop到栈结构中或者存到范围数组std::pair<int,int> ranges[len];
+递归版改为非递归和迭代版:将信息push和pop到栈结构中或者存到范围数组std::pair<int,int> ranges[len];
 
 ### 归并排序2
 

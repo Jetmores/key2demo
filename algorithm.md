@@ -28,6 +28,26 @@ pub fn binarySearch(
 
 ### 插入排序
 ```zig
+pub fn insertion(
+    comptime T: type,
+    items: []T,
+    context: anytype,
+    comptime lessThanFn: fn (@TypeOf(context), lhs: T, rhs: T) bool,
+) void {
+    const Context = struct {
+        items: []T,
+        sub_ctx: @TypeOf(context),
+
+        pub fn lessThan(ctx: @This(), a: usize, b: usize) bool {
+            return lessThanFn(ctx.sub_ctx, ctx.items[a], ctx.items[b]);
+        }
+
+        pub fn swap(ctx: @This(), a: usize, b: usize) void {
+            return mem.swap(T, &ctx.items[a], &ctx.items[b]);
+        }
+    };
+    insertionContext(0, items.len, Context{ .items = items, .sub_ctx = context });
+}
 pub fn insertionContext(a: usize, b: usize, context: anytype) void {
     assert(a <= b);
 

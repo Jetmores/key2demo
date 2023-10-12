@@ -9,6 +9,7 @@
 8. flavors:/ ˈfleɪvəz /风格,风味
 9. unary:/ ˈjuːnəri /一元的;如unary function一元函数
 10. bidirectional:/ baɪdəˈrekʃənl/双向的
+11. pivot:/ˈpɪv.ət/支点,枢纽
 
 ### sentence
 1. best bid and offer 最佳出价(买单)和报价(ask/offer卖单)

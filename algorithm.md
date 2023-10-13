@@ -74,6 +74,7 @@ pub fn insertionContext(a: usize, b: usize, context: anytype) void {
 内省排序(introsort):快排递归深度达到阈值,退化为O(n^2),此时调整为堆排序,从而将最坏情况优化为nlogn;当元素数低于某个阈值,切换为插入排序
 
 ### 归并排序2(nlogn~nlogn~~nlogn stable)
+块排序(block sort):混合插入和归并的排序
 
 ### 计数排序
 

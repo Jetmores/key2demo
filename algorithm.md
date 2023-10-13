@@ -68,6 +68,55 @@ pub fn insertionContext(a: usize, b: usize, context: anytype) void {
 ### 希尔排序
 
 ### 堆排序3(nlogn~nlogn~~nlogn unstable)
+```zig
+pub fn heapContext(a: usize, b: usize, context: anytype) void {
+    assert(a <= b);
+    // build the heap in linear time.
+    var i = a + (b - a) / 2;
+    while (i > a) {
+        i -= 1;
+        siftDown(a, i, b, context);
+    }
+
+    // pop maximal elements from the heap.
+    i = b;
+    while (i > a) {
+        i -= 1;
+        context.swap(a, i);
+        siftDown(a, a, i, context);
+    }
+}
+
+fn siftDown(a: usize, target: usize, b: usize, context: anytype) void {
+    var cur = target;
+    while (true) {
+        // When we don't overflow from the multiply below, the following expression equals (2*cur) - (2*a) + a + 1
+        // The `+ a + 1` is safe because:
+        //  for `a > 0` then `2a >= a + 1`.
+        //  for `a = 0`, the expression equals `2*cur+1`. `2*cur` is an even number, therefore adding 1 is safe.
+        var child = (math.mul(usize, cur - a, 2) catch break) + a + 1;
+
+        // stop if we overshot the boundary
+        if (!(child < b)) break;
+
+        // `next_child` is at most `b`, therefore no overflow is possible
+        const next_child = child + 1;
+
+        // store the greater child in `child`
+        if (next_child < b and context.lessThan(child, next_child)) {
+            child = next_child;
+        }
+
+        // stop if the Heap invariant holds at `cur`.
+        if (context.lessThan(child, cur)) break;
+
+        // swap `cur` with the greater child,
+        // move one step down, and continue sifting.
+        context.swap(child, cur);
+        cur = child;
+    }
+}
+```
 
 ### 快速排序1(nlogn~n^2~~nlogn unstable)
 递归版改为非递归和迭代版:将信息push和pop到栈结构中或者存到范围数组std::pair<int,int> ranges[len];<br>

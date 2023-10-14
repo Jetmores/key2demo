@@ -24,5 +24,9 @@ flushall
 ```
 
 ### redis usage
+1. DEL key [key ...]
+2. EXISTS key [key ...]
+3. EXPIRE key seconds [NX|XX|GT|LT]
+4. TTL key
 #### type
 string list map(hash) set sorted-set

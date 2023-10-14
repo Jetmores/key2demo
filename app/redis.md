@@ -24,3 +24,5 @@ flushall
 ```
 
 ### redis usage
+#### type
+string list map(hash) set sorted-set

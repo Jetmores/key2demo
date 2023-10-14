@@ -46,3 +46,16 @@ INCR key # ++1
 INCRBY key increment # incrby xx 2 # incrby xx -1
 
 INCRBYFLOAT key increment # incrbyfloat xx 0.5
+
+#### hash(map)
+HSET key field value [field value ...] #hmset同,但被deprecated;且hash的超时仅可hset后expire key 10
+
+HSETNX key field value
+
+HGET key field
+
+HMGET key field [field ...]
+
+HGETALL key
+
+HINCRBY key field increment

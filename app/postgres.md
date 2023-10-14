@@ -8,5 +8,5 @@
 
 ### base usage
 ```bash
-psql -U postgres
+psql -U postgres # \l list db
 ```

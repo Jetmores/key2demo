@@ -30,3 +30,5 @@ flushall
 4. TTL key
 #### type
 string list map(hash) set sorted-set
+#### string:int,float,string
+1.set/mset/get/mget

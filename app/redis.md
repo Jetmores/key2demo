@@ -5,9 +5,9 @@
 
 1. /etc/redis/redis.conf
 ```bash
-#bind 127.0.0.1 -::1
-#protected-mode yes
-daemonize no
+bind 0.0.0.0
+protected-mode yes
+daemonize yes
 requirepass 123456
 appendonly yes
 ```

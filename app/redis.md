@@ -53,3 +53,14 @@ HMGET key field [field ...]
 HGETALL key
 HINCRBY key field increment
 ```
+
+#### list
+1. stack:入口与出口一致lpush-lpop或rpush-rpop
+2. queue:入口出口不在一边lpush-rpop
+3. 阻塞队列:同2,但pop要用block版本如lpush-brpop
+```bash
+L/RPUSH key element [element ...]
+L/RPOP key [count]
+BL/RPOP key [key ...] timeout # block and pop until timeout
+LRANGE key start stop
+```

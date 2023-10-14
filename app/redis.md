@@ -34,7 +34,6 @@ TTL key
 #### type
 string list map(hash) set sorted-set
 #### string:int,float,string
-1.set/mset/get/mget
 ```bash
 SET key value [NX]/[EX seconds]
 MSET key value [key value ...]

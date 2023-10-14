@@ -64,3 +64,31 @@ L/RPOP key [count]
 BL/RPOP key [key ...] timeout # block and pop until timeout
 LRANGE key start stop
 ```
+
+#### set(类似hashmap,但无key-value的value)
+```bash
+SADD key member [member ...]
+SREM key member [member ...]
+SISMEMBER key member
+SMEMBERS key
+SCARD key
+SINTER key [key ...] #A^B
+SUNION key [key ...] #AvB
+SDIFF key [key ...] #A-B
+```
+
+#### sorted-set(不是红黑树,是skiplist跳表+hash表)
+```bash
+ZADD key [NX|XX] [GT|LT] [CH] [INCR] score member [score member ...]
+ZREM key member [member ...]
+ZSCORE key member
+ZINCRBY key increment member
+ZRANK key member
+ZCARD key
+ZCOUNT key min max
+ZRANGE key start stop [BYSCORE|BYLEX] [REV] [LIMIT offset count] [WITHSCORES]
+ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]
+ZINTER numkeys key [key ...] [WEIGHTS weight [weight ...]] [AGGREGATE SUM|MIN|MAX] [WITHSCORES]
+ZUNION numkeys key [key ...] [WEIGHTS weight [weight ...]] [AGGREGATE SUM|MIN|MAX] [WITHSCORES]
+ZDIFF numkeys key [key ...] [WITHSCORES]
+```

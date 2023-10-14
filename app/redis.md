@@ -32,3 +32,16 @@ flushall
 string list map(hash) set sorted-set
 #### string:int,float,string
 1.set/mset/get/mget
+SET key value [NX]/[EX seconds]
+
+MSET key value [key value ...]
+
+GET key
+
+MGET key [key ...]
+
+INCR key # ++1
+
+INCRBY key increment # incrby xx 2 # incrby xx -1
+
+INCRBYFLOAT key increment # incrbyfloat xx 0.5

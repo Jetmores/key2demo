@@ -16,3 +16,11 @@ psql [-h 127.0.0.1] [-p 5432] -U postgres [-d postgres]
 \d mtable #describe table
 \du #list user
 ```
+
+### 建库建表
+
+### 增删改查
+
+### 备份恢复
+
+### 用户授权

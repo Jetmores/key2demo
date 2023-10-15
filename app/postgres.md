@@ -46,7 +46,7 @@ select * from test;
 
 ### 备份恢复
 ```bash
-# 不知为何,恢复失败
+# 不知为何,尝试多次,均恢复失败
 pg_dump -U kt -f mdb.bak mdb
 psql -U kt -f mdb.bak mdb
 pg_dump -U kt -f mdb.sql mdb

@@ -9,5 +9,10 @@
 
 ### base usage
 ```bash
-psql -U postgres # \l list db
+psql [-h 127.0.0.1] [-p 5432] -U postgres [-d postgres]
+\l #list db
+\c #connect db
+\d #list tables
+\d mtable #describe table
+\du #list user
 ```

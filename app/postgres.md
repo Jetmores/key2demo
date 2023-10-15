@@ -1,5 +1,5 @@
 ### start command
-删除pgdata外挂盘,删除现有容器,完全重新执行如下指令方可正常
+完全重建容器,需要删除pgdata外挂盘,删除现有容器,完全重新执行如下指令方可正常
 ```bash
 !docker volume create pgdata
 !docker volume inspect pgdata

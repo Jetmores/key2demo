@@ -59,5 +59,17 @@ void sendCancelAccept(const corelib::security_identifier_t& sec_id, OrderPtr ord
 void sendCancelReject(const corelib::security_identifier_t& sec_id, OrderPtr order, const reject_params_t& reject_params);
 ```
 
+quickfix库运行逻辑
+```cpp
+FIX::SessionSettings settings( file );
+Application application;
+FIX::FileStoreFactory storeFactory( settings );
+FIX::ScreenLogFactory logFactory( settings );
+FIX::SocketInitiator initiator( application, storeFactory, settings, logFactory );
+
+initiator.start();
+application.run();
+initiator.stop();
+```
 
 

@@ -33,8 +33,14 @@ template <class TKey,class TPriceHashMap,class TOrderRepStrategy>
 class TSymbolBook: public SymbolHashMap<TKey, OrderStorage<TPriceHashMap, TOrderRepStrategy>>, public ISerializable
 typedef TSymbolBook < corelib::security_identifier_t,THashMapPriceTimePriority,TOrderRepositoryPriceTimePriority > SymbolBookPriceTimePriority;
 
+class THashMapPriceTimePriority :public matching_api::IOrderBook,public std::map <ATPDecimal, THashMapEntry>,public ISerializable, 
+public TEvent <price_change_info>,public exchange_instr_subscr_registry_t, public ACE_Event_Handler
+class TOrderRepositoryPriceTimePriority : public std::map <ATPDecimal, THashMapEntry>, public ISerializable
 
-
+//THashMapEntry.h
+class Side : public TList{};
+class THashMapEntry{
+Side  buy_side_ ;Side  sell_side_ ;}
 ```
 
 #### fix逻辑

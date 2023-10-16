@@ -45,6 +45,19 @@ Side  buy_side_ ;Side  sell_side_ ;}
 
 #### fix逻辑
 /home/shared/src/simex/exchange_simulator/ExchSimApplication44.cpp
+```cpp
+class ExchSimApplication44 : public IExchSimApplication, virtual public corelib::BaseFixApplication
+void onMessage(const FIX44::NewOrderSingle &, const FIX::SessionID &);
+void onMessage(const FIX44::OrderCancelRequest &, const FIX::SessionID &);
+
+void sendFilledReport(const corelib::security_identifier_t& sec_id, OrderPtr order);
+void sendPartialFillReport(const corelib::security_identifier_t& sec_id, OrderPtr order);
+void sendNewOrderReport(const corelib::security_identifier_t& sec_id, OrderPtr order);
+void sendRejectedReport(const corelib::security_identifier_t& sec_id, OrderPtr order,order_reject_reason_enum reason_code, const char* reason_text);
+
+void sendCancelAccept(const corelib::security_identifier_t& sec_id, OrderPtr order,const cancel_reason_t& cancel_reason = enNoReason, const std::string& cancel_id = "");
+void sendCancelReject(const corelib::security_identifier_t& sec_id, OrderPtr order, const reject_params_t& reject_params);
+```
 
 
 

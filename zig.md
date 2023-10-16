@@ -101,6 +101,12 @@ pub fn main() anyerror!void {
 }
 ```
 
+### zig ?collection
+1. ArrayList[Aligned][Unmanaged] ->vector
+2. [Auto/String]HashMap ->unordered_map
+3. SinglyLinkedList ->forward_list
+4. ~~TailQueue~~DoublyLinkedList ->list
+
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增
 2. Edge-设置-搜:地址栏和搜索-管理搜索引擎-添加

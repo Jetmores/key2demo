@@ -25,6 +25,10 @@ class OrdersManager : public TEvent <price_change_info>::Handler{
 QueueInterface                  * queue_;
 SymbolBookPriceTimePriority     * symbol_book_ ;
 
+int OrdersManager::commandProcessing(Command* command)
+ct_order
+ct_cancel_order
+
 //TSymbolBook.h
 template<typename TKey, typename TVal>
 class SymbolHashMap: public std::unordered_map<TKey, TVal, hash_comparer<TKey>, eq_sec_id<TKey>>{};

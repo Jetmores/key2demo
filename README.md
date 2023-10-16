@@ -25,6 +25,15 @@ language.md
 3. 高性能web框架:axum
 4. Bevy:game engine
 
+#### lib
+1. libevent
+2. quickfix
+
+#### app
+1. postgres
+2. redis
+3. nginx
+
 ##### game
 1. Unreal Engine
 2. DaVinci

@@ -1,3 +1,32 @@
+### ?嵌套类 ?nested
+```cpp
+int x,y; // 全局变量
+class enclose // 外围类
+{
+public:
+    struct inner // 嵌套类
+    {
+        void f(int i)
+        {
+            x = i; // 错误：不能不带实例地写入非静态的 enclose::x
+            int a = sizeof x; // C++11 前错误，C++11 中 OK：sizeof 的操作数不求值，
+                              // 可以这样使用非静态的 enclose::x 。
+            s = i;   // OK：可以赋值给静态 enclose::s
+            ::x = i; // OK：可以赋值给全局 x
+            y = i;   // OK：可以赋值给全局 y
+        }
+ 
+        void g(enclose* p, int i)
+        {
+            p->x = i; // OK：赋值给 enclose::x
+        }
+    };
+private:
+    int x;
+    static int s;
+};
+```
+
 ### ?bind
 ```cpp
 // （ _1 与 _2 来自 std::placeholders ，并表示将来会传递给 f1 的参数）

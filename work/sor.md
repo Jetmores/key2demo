@@ -1,4 +1,4 @@
-### NINJA Application
+### NINJA Application (ninja+fixappframework)
 ```cpp
 Application app;
 app.init();

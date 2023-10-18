@@ -14,3 +14,11 @@ class NinjaBuzzManager:   Noncopyable, public NinjaMsgListener //联系全局的
 NinjaMsgListener::OrderAck
 MsgHelper::createOrderAccepted
 ```
+
+### sor
+通过搜索NinjaBuzzManager即可查看联系
+```cpp
+//RequestListener.cpp发送
+
+//ResponseListener.cpp接收
+```

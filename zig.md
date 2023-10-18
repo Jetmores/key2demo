@@ -106,6 +106,7 @@ pub fn main() anyerror!void {
 2. [Auto/String]HashMap ->unordered_map
 3. SinglyLinkedList ->forward_list
 4. ~~TailQueue~~DoublyLinkedList ->list
+5. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
 
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增

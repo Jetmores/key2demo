@@ -10,7 +10,7 @@ app.stop();
 NinjaBuzzManager::build
 auto sessId = ninjaClient()->getSession(senderId, targetId, this);
 class NinjaMsgListener : public NINJA::MsgHandlerImpl
-class **NinjaBuzzManager**:   Noncopyable, public NinjaMsgListener
+class NinjaBuzzManager:   Noncopyable, public NinjaMsgListener //联系全局的类NinjaBuzzManager
 NinjaMsgListener::OrderAck
 MsgHelper::createOrderAccepted
 ```

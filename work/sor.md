@@ -7,6 +7,8 @@ app.sendMsg("router_branch012", "exch_sim012", &order);
 app.stop();
 //Application.cpp
 //NINJATradeClient.cpp 封装一层
+
+//fixappframework
 NinjaBuzzManager::build
 auto sessId = ninjaClient()->getSession(senderId, targetId, this);
 class NinjaMsgListener : public NINJA::MsgHandlerImpl

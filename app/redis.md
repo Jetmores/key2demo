@@ -48,6 +48,7 @@ INCRBYFLOAT key increment # incrbyfloat xx 0.5
 ```bash
 HSET key field value [field value ...] #hmset同,但被deprecated;且hash的超时仅可hset后expire key 10
 HSETNX key field value
+HDEL key field [field ...]
 HGET key field
 HMGET key field [field ...]
 HGETALL key

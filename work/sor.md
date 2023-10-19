@@ -28,6 +28,7 @@ RequestListener::processNewOrder
 onNewOrderOrig(msg);
 submitMarketOrder(norder);/submitLimitOrder(norder);
 FSX::Ninja::NinjaBuzzManager::instance().enterOrder(norder);
+OSessions::sendToNinja(msg)
 
 //ResponseListener.cpp接收
 Application::onMessage

@@ -34,6 +34,7 @@ OSessions::sendToNinja(msg)
 Application::onMessage
 NINJATradeClient::OnOrderAck
 NinjaMsgListener::OrderAck
+MsgHelper::createOrderAccepted(msg, m);
 NinjaBuzzManager::onOrderAccepted
 ResponseListener::onNewOrderAccepted
 ResponseListener::processOrderAccepted

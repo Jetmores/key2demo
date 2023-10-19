@@ -21,6 +21,19 @@ MsgHelper::createOrderAccepted
 通过搜索NinjaBuzzManager即可查看联系
 ```cpp
 //RequestListener.cpp发送
+RequestListener::onNewOrder
+RequestListener::processNewOrder
+QRequestManager::processMessage
+RequestListener::processNewOrder
+onNewOrderOrig(msg);
+submitMarketOrder(norder);/submitLimitOrder(norder);
+FSX::Ninja::NinjaBuzzManager::instance().enterOrder(norder);
 
 //ResponseListener.cpp接收
+Application::onMessage
+NINJATradeClient::OnOrderAck
+NinjaMsgListener::OrderAck
+NinjaBuzzManager::onOrderAccepted
+ResponseListener::onNewOrderAccepted
+ResponseListener::processOrderAccepted
 ```

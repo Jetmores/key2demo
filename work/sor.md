@@ -39,6 +39,9 @@ NinjaBuzzManager::onOrderAccepted
 ResponseListener::onNewOrderAccepted
 ResponseListener::processOrderAccepted
 ResponseListener::backwardFromME
+//MessageListener::setGateway//BackListener::setGateway
+//FsxApplication::setResponseListener//gapp.setAppSettings(appSettings);
+//FsxApplication::run
 this->getGateway()->backward(m);
 GatewayImpl::backward
 sendToTarget(msg,true);

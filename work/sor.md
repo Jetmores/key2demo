@@ -46,3 +46,6 @@ this->getGateway()->backward(m);
 GatewayImpl::backward
 sendToTarget(msg,true);
 ```
+
+### clientgateway(CGW)
+类似sor的代码结构

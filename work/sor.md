@@ -38,5 +38,8 @@ MsgHelper::createOrderAccepted(msg, m);
 NinjaBuzzManager::onOrderAccepted
 ResponseListener::onNewOrderAccepted
 ResponseListener::processOrderAccepted
-//未完待续...
+ResponseListener::backwardFromME
+this->getGateway()->backward(m);
+GatewayImpl::backward
+sendToTarget(msg,true);
 ```

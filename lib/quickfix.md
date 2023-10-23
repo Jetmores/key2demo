@@ -11,11 +11,16 @@
 ```
 
 ### 线程
-1. xxx
+1. 新建线程
 ```cpp
 initiator->start();//Initiator::start()//->
 HttpServer::startGlobal( m_settings );//新线程
 thread_spawn( &startThread, this, m_threadid )//新线程
 SocketInitiator::onStart()
 Initiator::connect()
+```
+
+2. 数据来回
+```cpp
+
 ```

@@ -22,8 +22,8 @@ Initiator::connect()
 
 2. 数据来回(fromApp,toAdmin)与线程切换
 ```cpp
-//toAdmin
+//toAdmin//after sendtoTarget
 
-//fromApp
+//fromApp//back msg
 
 ```

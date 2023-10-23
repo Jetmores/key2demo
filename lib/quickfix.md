@@ -20,7 +20,7 @@ SocketInitiator::onStart()
 Initiator::connect()
 ```
 
-2. 数据来回
+2. 数据来回与线程切换
 ```cpp
 
 ```

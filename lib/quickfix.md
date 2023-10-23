@@ -20,7 +20,10 @@ SocketInitiator::onStart()
 Initiator::connect()
 ```
 
-2. 数据来回与线程切换
+2. 数据来回(fromApp,toAdmin)与线程切换
 ```cpp
+//toAdmin
+
+//fromApp
 
 ```

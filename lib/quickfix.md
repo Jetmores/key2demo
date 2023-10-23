@@ -23,6 +23,11 @@ Initiator::connect()
 2. 数据来回(fromApp,toAdmin)与线程切换
 ```cpp
 //toAdmin//after sendtoTarget
+Session::sendToTarget
+sendRaw
+isAdminMsgType//0A12345//m_application.toAdmin( message, m_sessionID );//只有A,5,0等才是admin消息,否则toApp
+Session::send
+m_pResponder->send( string );
 
 //fromApp//back msg
 

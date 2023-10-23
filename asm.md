@@ -1,0 +1,7 @@
+### x86/x64汇编(intel/AT&T)寄存器
+1. AL/AH, CL/CH, DL/DH, BL/BH, SPL, BPL, SIL, DIL, R8B-R15B 
+2. AX, CX, DX, BX, SP, BP, SI, DI, R8W-R15W 
+3. EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI, R8D-R15D 
+4. RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI, R8-R15
+
+### 待定

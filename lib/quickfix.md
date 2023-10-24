@@ -21,7 +21,7 @@ select( FD_SETSIZE, &readSet, &writeSet, &exceptSet, getTimeval(poll, timeout) )
 processWriteSet( strategy, writeSet );
 processReadSet( strategy, readSet );
 
-thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线程
+thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线程,用于连接和断连重试
 SocketInitiator::onStart()
 Initiator::connect()
 ```

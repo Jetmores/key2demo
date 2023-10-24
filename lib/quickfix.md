@@ -29,6 +29,6 @@ isAdminMsgType//0A12345//m_application.toAdmin( message, m_sessionID );//只有A
 Session::send
 m_pResponder->send( string );
 
-//fromApp//back msg
+//fromApp//back msg//which thread?
 
 ```

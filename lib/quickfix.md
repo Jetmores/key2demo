@@ -14,8 +14,8 @@
 1. 新建线程
 ```cpp
 initiator->start();//Initiator::start()//->
-HttpServer::startGlobal( m_settings );//新线程
-thread_spawn( &startThread, this, m_threadid )//新线程
+HttpServer::startGlobal( m_settings );//HttpServer::start()//thread_spawn( &startThread, this, m_threadid )//新线程
+thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线程
 SocketInitiator::onStart()
 Initiator::connect()
 ```

@@ -15,6 +15,12 @@
 ```cpp
 initiator->start();//Initiator::start()//->
 HttpServer::startGlobal( m_settings );//HttpServer::start()//thread_spawn( &startThread, this, m_threadid )//新线程
+HttpServer::onStart()
+m_pServer->block( *this )//SocketServer::block//m_monitor.block( wrapper, poll, timeout );
+select( FD_SETSIZE, &readSet, &writeSet, &exceptSet, getTimeval(poll, timeout) );
+processWriteSet( strategy, writeSet );
+processReadSet( strategy, readSet );
+
 thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线程
 SocketInitiator::onStart()
 Initiator::connect()

@@ -1,4 +1,4 @@
-### 实例典型
+### 典型应用
 ```cpp
     Application application;
     FIX::FileStoreFactory storeFactory( settings );

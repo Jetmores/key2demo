@@ -24,6 +24,7 @@ SocketInitiator( Application&, MessageStoreFactory&,const SessionSettings&, LogF
 //其它
 DataDictionary.cpp//解析诸如FIX42.xml的数据字典
 Field.cpp//数据字典中解析预定义的field
+FieldMap.cpp//message的头-体-尾的基类
 Message.cpp//数据字典中解析处理message节点
 Http.cpp//实现http引擎的部分
 Socket.cpp//会话层的通信

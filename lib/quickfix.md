@@ -11,7 +11,12 @@
 ```
 
 ### 线程
-1. 新建线程
+1. class SocketInitiator : public Initiator, SocketConnector::Strategy
+```cpp
+SocketInitiator( Application&, MessageStoreFactory&,const SessionSettings&, LogFactory& ) EXCEPT ( ConfigError );
+```
+
+2. 新建线程
 ```cpp
 initiator->start();//Initiator::start()//->
 HttpServer::startGlobal( m_settings );//HttpServer::start()//thread_spawn( &startThread, this, m_threadid )//新线程
@@ -26,7 +31,7 @@ SocketInitiator::onStart()
 Initiator::connect()
 ```
 
-2. 数据来回(fromApp,toAdmin/toApp)与线程切换
+3. 数据来回(fromApp,toAdmin/toApp)与线程切换
 ```cpp
 //toAdmin//after sendtoTarget//main thread
 Session::sendToTarget
@@ -39,14 +44,9 @@ m_pResponder->send( string );
 
 ```
 
-3. SessionSettings:读取配置文件,以不同SessionID为key组成map红黑树
+4. SessionSettings:读取配置文件,以不同SessionID为key组成map红黑树
 ```cpp
 class SessionSettings
 typedef std::map < SessionID, Dictionary > Dictionaries;
 Dictionaries m_settings;
-```
-
-4. class SocketInitiator : public Initiator, SocketConnector::Strategy
-```cpp
-SocketInitiator( Application&, MessageStoreFactory&,const SessionSettings&, LogFactory& ) EXCEPT ( ConfigError );
 ```

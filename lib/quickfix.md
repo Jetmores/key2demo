@@ -45,3 +45,8 @@ class SessionSettings
 typedef std::map < SessionID, Dictionary > Dictionaries;
 Dictionaries m_settings;
 ```
+
+4. class SocketInitiator : public Initiator, SocketConnector::Strategy
+```cpp
+SocketInitiator( Application&, MessageStoreFactory&,const SessionSettings&, LogFactory& ) EXCEPT ( ConfigError );
+```

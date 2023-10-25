@@ -45,6 +45,7 @@ thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线�
 SocketInitiator::onStart()
 Initiator::connect()
 SocketInitiator::doConnect( const SessionID& s, const Dictionary& d )
+m_connector.connect( address, port, m_noDelay, m_sendBufSize, m_rcvBufSize, sourceAddress, sourcePort );
 ```
 
 3. 数据来回(fromApp,toAdmin/toApp)与线程切换

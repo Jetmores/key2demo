@@ -22,7 +22,8 @@ language.md
 ##### rust
 1. the book
 2. async
-3. 高性能web框架:axum
+3. axum:高性能web框架
+4. yew:避开js,WebAssembly的框架
 4. Bevy:game engine
 
 ##### lib

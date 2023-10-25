@@ -11,8 +11,14 @@
 ```
 
 ### 线程
-1. class SocketInitiator : public Initiator, SocketConnector::Strategy
+1. 组成
 ```cpp
+//SessionSettings:读取配置文件,以不同SessionID为key组成map红黑树
+class SessionSettings
+typedef std::map < SessionID, Dictionary > Dictionaries;
+Dictionaries m_settings;
+
+class SocketInitiator : public Initiator, SocketConnector::Strategy
 SocketInitiator( Application&, MessageStoreFactory&,const SessionSettings&, LogFactory& ) EXCEPT ( ConfigError );
 ```
 
@@ -44,9 +50,3 @@ m_pResponder->send( string );
 
 ```
 
-4. SessionSettings:读取配置文件,以不同SessionID为key组成map红黑树
-```cpp
-class SessionSettings
-typedef std::map < SessionID, Dictionary > Dictionaries;
-Dictionaries m_settings;
-```

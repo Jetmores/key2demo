@@ -10,7 +10,7 @@
     delete initiator;
 ```
 
-### 线程
+### 源码分析
 1. 组成
 ```cpp
 //SessionSettings:读取配置文件,以不同SessionID为key组成map红黑树

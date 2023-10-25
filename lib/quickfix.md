@@ -22,12 +22,12 @@ class SocketInitiator : public Initiator, SocketConnector::Strategy
 SocketInitiator( Application&, MessageStoreFactory&,const SessionSettings&, LogFactory& ) EXCEPT ( ConfigError );
 
 //其它
-DataDictionary.cpp:解析诸如FIX42.xml的数据字典
-Field.cpp:数据字典中解析预定义的field
-Message.cpp:数据字典中解析处理message节点
-Http.cpp: 实现http引擎的部分
-Socket.cpp:会话层的通信
-Session.cpp: 会话层的东西
+DataDictionary.cpp//解析诸如FIX42.xml的数据字典
+Field.cpp//数据字典中解析预定义的field
+Message.cpp//数据字典中解析处理message节点
+Http.cpp//实现http引擎的部分
+Socket.cpp//会话层的通信
+Session.cpp//会话层的东西
 ```
 
 2. 新建线程

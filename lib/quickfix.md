@@ -38,3 +38,10 @@ m_pResponder->send( string );
 //fromApp//back msg//which thread?
 
 ```
+
+3. SessionSettings:读取配置文件,以不同SessionID为key组成map红黑树
+```cpp
+class SessionSettings
+typedef std::map < SessionID, Dictionary > Dictionaries;
+Dictionaries m_settings;
+```

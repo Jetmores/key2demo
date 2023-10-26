@@ -46,6 +46,10 @@ SocketInitiator::onStart()
 Initiator::connect()
 SocketInitiator::doConnect( const SessionID& s, const Dictionary& d )
 m_connector.connect( address, port, m_noDelay, m_sendBufSize, m_rcvBufSize, sourceAddress, sourcePort );
+while ( !isStopped() ) {//读写异常等的事件循环
+  m_connector.block( *this, false, 1.0 );
+  onTimeout( m_connector );
+}
 ```
 
 3. 数据来回(fromApp,toAdmin/toApp)与线程切换

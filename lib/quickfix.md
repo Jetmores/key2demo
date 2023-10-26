@@ -55,7 +55,7 @@ while ( !isStopped() ) {//读写异常等的事件循环
 3. 线程任务分布
 ```cpp
 //主线程1
-35=D
+35=D或F
 FIX::Session::sendToTarget
 FIX::Session::sendRaw
 FIX::Session::send
@@ -89,7 +89,7 @@ FIX::Session::generateHeartbeat
 FIX::Session::generateLogout
 
 
-35=8
+35=8或9
 FIX::Initiator::startThread
 FIX::SocketInitiator::onStart
 FIX::SocketConnector::block

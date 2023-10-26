@@ -52,16 +52,58 @@ while ( !isStopped() ) {//读写异常等的事件循环
 }
 ```
 
-3. 数据来回(fromApp,toAdmin/toApp)与线程切换
+3. 线程任务分布
 ```cpp
-//toAdmin//after sendtoTarget//main thread
-Session::sendToTarget
-sendRaw
-isAdminMsgType//0A12345//m_application.toAdmin( message, m_sessionID );//只有A,5,0等才是admin消息,否则toApp
-Session::send
-m_pResponder->send( string );
+主线程1
+35=D
+FIX::Session::sendToTarget
+FIX::Session::sendRaw
+FIX::Session::send
+FIX::SocketConnection::send
+FIX::SocketConnection::processQueue
 
-//fromApp//back msg//which thread?
+
+httpServer线程2
+
+
+收发线程3
+35=A
+FIX::Initiator::startThread
+FIX::SocketInitiator::onStart
+FIX::SocketConnector::block
+FIX::SocketMonitor::block
+FIX::SocketMonitor::processWriteSet
+FIX::SocketInitiator::onConnect
+FIX::SocketConnection::onTimeout
+FIX::Session::next
+FIX::Session::generateLogon
+FIX::Session::sendRaw
+FIX::Session::send
+FIX::SocketConnection::send
+FIX::SocketConnection::processQueue
+
+35=0
+FIX::Session::generateHeartbeat
+
+35=5
+FIX::Session::generateLogout
+
+
+35=8
+FIX::Initiator::startThread
+FIX::SocketInitiator::onStart
+FIX::SocketConnector::block
+FIX::SocketMonitor::block
+FIX::SocketMonitor::processReadSet
+FIX::ConnectorWrapper::onEvent
+FIX::SocketConnection::read
+FIX::SocketConnection::readMessages
+FIX::Session::next
+FIX::Session::verify
+Application::fromApp
+FIX::MessageCracker::crack
+FIX42::MessageCracker::crack
+Application::onMessage
 
 ```
 

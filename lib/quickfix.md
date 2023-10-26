@@ -41,7 +41,7 @@ select( FD_SETSIZE, &readSet, &writeSet, &exceptSet, getTimeval(poll, timeout) )
 processWriteSet( strategy, writeSet );
 processReadSet( strategy, readSet );
 
-thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线程,用于连接和断连重试,可以打onEvent的log
+thread_spawn( &startThread, this, m_threadid )//Initiator::start()下的新线程,用于连接和处理连接上的读写事件,可以打onEvent的log
 SocketInitiator::onStart()
 Initiator::connect()
 SocketInitiator::doConnect( const SessionID& s, const Dictionary& d )

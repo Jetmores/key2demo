@@ -31,9 +31,10 @@ g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
 ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 ```
 
-### scp远程拷贝
+### 远程拷贝
 ```bash
 scp dlib.tar.xz cat@119.27.182.173:/home/cat/tp
+rsync --partial -z -e 'ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p"' mCtrl.tar.xz yh@10.64.4.45:~
 ```
 
 ### cat .ssh/id_rsa.pub

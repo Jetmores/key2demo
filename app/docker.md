@@ -18,3 +18,8 @@ daemon.json
   ]
 }
 ```
+
+### 查看docker容器挂载目录信息:
+```bash
+docker inspect -f "{{.Mounts}}" argo_mysql
+```

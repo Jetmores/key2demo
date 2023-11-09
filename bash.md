@@ -93,3 +93,11 @@ zig build -Dtarget=x86_64-linux-gnu
 curl 127.0.0.1:9909
 ```
 
+### ps查看进程
+```bash
+ps -ef
+# 查看某进程的线程
+ps -T -p pid
+top -H -p pid
+```
+

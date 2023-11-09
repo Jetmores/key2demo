@@ -58,13 +58,6 @@ client:nc -u 127.0.0.1 36802
 tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802
 ```
 
-### 提交代码时的用户信息
-```bash
-git config --global user.name "[name]"
-git config --global user.email "[email address]"
-git config --global -e //sometime not correct
-```
-
 ### 生成intel汇编语法
 ```bash
 cc -S -masm=intel add.c
@@ -95,6 +88,8 @@ top -H -p pid
 ```bash
 # name,email,then need id_rsa for clone in git@
 git config --global -e
+git config --global user.name "[name]"
+git config --global user.email "[email address]"
 # 暂存与恢复
 git stash
 git stash pop

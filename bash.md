@@ -65,17 +65,6 @@ git config --global user.email "[email address]"
 git config --global -e //sometime not correct
 ```
 
-### 丢弃工作区的修改或删除,不含新增或未追踪
-```bash
-git checkout .
-```
-
-### 删除所有未追踪的文件或目录,保险起见先查即将删除项:git clean -nxdf
-```bash
-git clean -df
-git clean -xdf
-```
-
 ### 生成intel汇编语法
 ```bash
 cc -S -masm=intel add.c
@@ -88,6 +77,7 @@ zig build-exe hi.zig -lc -target x86_64-linux-musl
 zig build -Dtarget=x86_64-windows
 zig build -Dtarget=x86_64-linux-gnu
 ```
+
 ### 模拟HTTP请求
 ```bash
 curl 127.0.0.1:9909
@@ -108,5 +98,10 @@ git config --global -e
 # 暂存与恢复
 git stash
 git stash pop
+# 丢弃工作区的修改或删除,不含新增或未追踪
+git checkout .
+# 删除所有未追踪的文件或目录,保险起见先查即将删除项:git clean -nxdf
+git clean -df
+git clean -xdf
 ```
 

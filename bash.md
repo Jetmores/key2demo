@@ -101,3 +101,9 @@ ps -T -p pid
 top -H -p pid
 ```
 
+### git
+```bash
+# name,email,then need id_rsa for clone in git@
+git config --global -e
+```
+

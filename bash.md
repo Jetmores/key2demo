@@ -105,5 +105,8 @@ top -H -p pid
 ```bash
 # name,email,then need id_rsa for clone in git@
 git config --global -e
+# 暂存与恢复
+git stash
+git stash pop
 ```
 

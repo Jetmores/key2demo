@@ -26,6 +26,19 @@ sed -n '5p' cmd |bash
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
 ```
 
+### 生成intel汇编语法
+```bash
+cc -S -masm=intel add.c
+```
+
+### zig指定链接的libc库
+```bash
+zig build-exe hi.zig --library c -target x86_64-linux-musl
+zig build-exe hi.zig -lc -target x86_64-linux-musl
+zig build -Dtarget=x86_64-windows
+zig build -Dtarget=x86_64-linux-gnu
+```
+
 ### 快捷拷贝程序依赖的动态库
 ```bash
 ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
@@ -35,11 +48,6 @@ ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 ```bash
 scp dlib.tar.xz cat@119.27.182.173:/home/cat/tp
 rsync --partial -z -e 'ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p"' mCtrl.tar.xz yh@10.64.4.45:~
-```
-
-### cat .ssh/id_rsa.pub
-```bash
-ssh-keygen -t rsa -C "lets2rs@126.com"
 ```
 
 ### 测试udp连通性:端口占用-存在即使成功也不起作用的情况
@@ -58,19 +66,6 @@ client:nc -u 127.0.0.1 36802
 tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802
 ```
 
-### 生成intel汇编语法
-```bash
-cc -S -masm=intel add.c
-```
-
-### zig指定链接的libc库
-```bash
-zig build-exe hi.zig --library c -target x86_64-linux-musl
-zig build-exe hi.zig -lc -target x86_64-linux-musl
-zig build -Dtarget=x86_64-windows
-zig build -Dtarget=x86_64-linux-gnu
-```
-
 ### 模拟HTTP请求
 ```bash
 curl 127.0.0.1:9909
@@ -82,6 +77,11 @@ ps -ef
 # 查看某进程的线程
 ps -T -p pid
 top -H -p pid
+```
+
+### cat .ssh/id_rsa.pub
+```bash
+ssh-keygen -t rsa -C "lets2rs@126.com"
 ```
 
 ### git

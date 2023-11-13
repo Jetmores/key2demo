@@ -46,6 +46,12 @@ select * from test;
 
 ### 备份恢复
 ```bash
+su postgres
+pg_dump mydb > mydb.sql
+# 恢复之前保证现有数据库名
+create database mydb2;
+psql mydb2 -f mydb.sql
+
 # 不知为何,尝试多次,均恢复失败
 pg_dump -U kt -f mdb.bak mdb
 psql -U kt -f mdb.bak mdb

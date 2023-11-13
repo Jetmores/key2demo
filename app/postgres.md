@@ -88,6 +88,7 @@ select * from mytest2;
 //ERROR:  permission denied for table mytest2
 grant all privileges on mytest2 to public;//授权xx到所有
 grant all privileges on mytest to kt;//授权xx到kt
+revoke all privileges on mytest from kt;//撤回
 
 ----------------------------------------------------
 # user 和 role 仅多了login,role不可login,需要另外alter

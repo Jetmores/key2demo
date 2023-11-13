@@ -79,7 +79,7 @@ create role myrole
 drop role myrole
 createuser myrole
 dropuser myrole
-# 拥有登录权限的角色即用户
+# 拥有登录权限的角色即用户,否则role "kt" is not permitted to log in
 CREATE ROLE name LOGIN;
 CREATE USER name;
 

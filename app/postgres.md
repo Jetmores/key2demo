@@ -95,7 +95,7 @@ revoke all privileges on mytest from kt;//撤回
 create user kt password 'catgo'; #password 没起作用,可能和配置pg_hba.conf中trust有关
 drop user kt;
 # 以下命令均未起作用,未完待续
-grant all privileges on database mdb to kt;
+grant all privileges on database mdb to kt;//表还是无权限访问
 revoke all privileges on database mdb from kt;
 grant all privileges on all tables in schema public to kt;
 revoke all privileges on all tables in schema public from kt;

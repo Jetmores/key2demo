@@ -48,7 +48,7 @@ select * from test;
 ```bash
 su postgres
 pg_dump mydb > mydb.sql
-# 恢复之前保证现有数据库名
+# 恢复之前保证先有数据库名,也可仅删除数据库中的表再同样命令恢复(仅表)
 create database mydb2;
 psql mydb2 -f mydb.sql
 

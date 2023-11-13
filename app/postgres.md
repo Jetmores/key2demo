@@ -50,7 +50,7 @@ select * from test;
 su postgres
 pg_dump mydb > mydb.sql
 # 恢复之前保证先有数据库名,也可仅删除数据库中的表再同样命令恢复(仅表)
-# create database [-T template0] mydb2;//createdb mydb2 [-O postgres]
+# create database mydb2;//createdb [-T template0] mydb2 [-O postgres]
 psql mydb2 -f mydb.sql
 
 pg_dump -Fc mydb > mydb.dump

@@ -75,6 +75,15 @@ pg_restore -U kt -d mdb ./mdb.tar
 
 ### 用户授权
 ```bash
+create role myrole
+drop role myrole
+createuser myrole
+dropuser myrole
+# 拥有登录权限的角色即用户
+CREATE ROLE name LOGIN;
+CREATE USER name;
+
+----------------------------------------------------
 # user 和 role 仅多了login,role不可login,需要另外alter
 create user kt password 'catgo'; #password 没起作用,可能和配置pg_hba.conf中trust有关
 drop user kt;

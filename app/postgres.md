@@ -58,6 +58,10 @@ pg_restore -d mydb3 mydb.dump
 pg_dump -Fd mydb -f mydb_dir
 pg_restore -d mydb4 mydb_dir
 
+# 针对单个表的备份和恢复
+pg_dump -t mytest2 mydb > mydb_2.sql
+psql mydb -f mydb_2.sql
+
 # 不知为何,尝试多次,均恢复失败
 pg_dump -U kt -f mdb.bak mdb
 psql -U kt -f mdb.bak mdb

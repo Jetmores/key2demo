@@ -40,5 +40,16 @@ xxx
 
 ### 用户授权
 ```bash
-xxx
+# 用旧密码换新密码:root/localhost
+mysqladmin -u root -p flush-privileges password ["catgo"]
+# 先查询用户和host,再修改,最后刷新
+mysql -u root -p -e "select user,host from mysql.user;"
+mysql -u root -p -e "alter user 'root'@'localhost' identified by 'catgo';"
+mysqladmin -u root -p flush-privileges #不刷新,实测也更改成功
+
+create user kt identified by 'catgo';
+drop user 'kt'@'localhost';
+show grants for kt;
+grant all on *.* to kt;
+revoke all on *.* from kt;
 ```

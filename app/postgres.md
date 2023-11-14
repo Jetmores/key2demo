@@ -95,11 +95,9 @@ grant all privileges on mytest2 to public;//授权xx到所有
 grant all privileges on mytest to kt;//授权xx到kt
 revoke all privileges on mytest from kt;//撤回
 
-----------------------------------------------------
-# user 和 role 仅多了login,role不可login,需要另外alter
-create user kt with password 'catgo'; #password 没起作用,可能和配置pg_hba.conf中trust有关
+create user kt with password 'catgo';
 drop user kt;
-# 以下命令均未起作用,未完待续
+# 以下命令均未起作用或意义不明白,未完待续
 grant all privileges on database mdb to kt;//表无权访问,无法新建表和访问,仅连接等
 revoke all privileges on database mdb from kt;
 grant all privileges on all tables in schema public to kt;

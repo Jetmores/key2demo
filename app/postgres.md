@@ -32,8 +32,10 @@ pg_ctl reload
 
 ### 建库建表
 ```bash
-create database mdb [owner kt];
+create database mdb [owner kt][TEMPLATE template0];
 drop database mdb;
+createdb [-T template0] mydb2 [-O postgres]
+dropdb dbname
 # 整型(smallint-2,int[eger]-4,bigint-8,[small|big]serial自增类型2-4-8字节) 
 #浮点(real-4,double precision-8,decimal/numeric等效的大精度数) 
 #字符(char(n),varchar(n),text) 日期时间(date,time,timestamp)

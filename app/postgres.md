@@ -22,8 +22,12 @@ set role kt;//切换角色
 ```bash
 # /var/lib/postgresql/data/postgresql.conf (容器默认已配置)
 listen_addresses = '*'
-# /var/lib/postgresql/data/pg_hba.conf (更改密码方式,暂不动)
-host all all 0.0.0.0/0 md5
+# /var/lib/postgresql/data/pg_hba.conf (local for Unix domain socket,即本机. 改完后即可密码进入,否则直接进入)
+local   all             all                                     md5
+# 改完配置,重启生效
+pg_ctl reload
+# 修改密码,需要进入该用户,或从postgres中set role kt切换角色(不用重启)
+\password
 ```
 
 ### 建库建表

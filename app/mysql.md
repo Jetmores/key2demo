@@ -3,13 +3,13 @@
 !docker run --name mysql_ -e MYSQL_ROOT_PASSWORD=catgo -d mysql:latest
 ```
 
-### base usage
+### 连接
 ```bash
 # 密码如上,MYSQL_ROOT_PASSWORD=catgo
 mysql [-h 127.0.0.1 -P 3306 -u root -D mysql] -p
 ```
 
-setting
+配置
 ```bash
 xxx
 ```

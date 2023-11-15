@@ -1,4 +1,4 @@
-### start command
+### 容器构建
 完全重建容器,需要删除pgdata外挂盘,删除现有容器,完全重新执行如下指令方可正常
 ```bash
 !docker volume create pgdata
@@ -7,7 +7,7 @@
 !docker exec -it postgres_ /bin/bash
 ```
 
-### base usage
+### 连接
 ```bash
 psql [-h 127.0.0.1] [-p 5432] -U postgres [-d postgres]
 set role kt;//切换角色
@@ -18,7 +18,7 @@ set role kt;//切换角色
 \du #list user
 ```
 
-### setting
+### 配置
 ```bash
 # /var/lib/postgresql/data/postgresql.conf (容器默认已配置)
 listen_addresses = '*'

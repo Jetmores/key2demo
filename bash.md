@@ -61,6 +61,11 @@ server:nc -lu 36802
 client:nc -u 127.0.0.1 36802
 ```
 
+### 查看程序占用的ip和端口号
+```bash
+netstat -[a|4]pn
+```
+
 ### tcpdump:抓取100源地址和36802的目的端口,tcp/udp用来修饰端口的
 ```bash
 tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802

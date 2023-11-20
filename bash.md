@@ -103,5 +103,7 @@ git checkout .
 # 删除所有未追踪的文件或目录,保险起见先查即将删除项:git clean -nxdf
 git clean -df
 git clean -xdf
+# 加入暂存(当前目录不含.xx|当前目录|版本库所有目录)
+git add [*|.|-A]
 ```
 

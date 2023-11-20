@@ -35,12 +35,19 @@ select * from test;
 
 ### 备份恢复
 ```bash
+# Usage:
+mysqldump [OPTIONS] database [tables]
+mysqldump [OPTIONS] --databases [OPTIONS] DB1 [DB2 DB3...]
+mysqldump [OPTIONS] --all-databases [OPTIONS]
+
 # 备份表
 mysqldump -u root -p mdb test2 > /root/mdb_test2.sql
 source mdb_test2.sql
 mysql -u root -p mdb < mdb_test2.sql
 # 备份库(单个,多个或所有)
-
+mysqldump -u root -p [--databases|-B|--all_databases|-A] mdb > /root/mdb.sql
+create database mdb;use mdb;source mdb.sql
+create database mdb;mysql -u root -p mdb < mdb.sql
 ```
 
 ### 用户授权

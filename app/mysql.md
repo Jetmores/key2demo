@@ -35,7 +35,12 @@ select * from test;
 
 ### 备份恢复
 ```bash
-xxx
+# 备份表
+mysqldump -u root -p mdb test2 > /root/mdb_test2.sql
+source mdb_test2.sql
+mysql -u root -p mdb < mdb_test2.sql
+# 备份库(单个,多个或所有)
+
 ```
 
 ### 用户授权

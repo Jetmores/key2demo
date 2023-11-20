@@ -66,6 +66,7 @@ FIX::SocketConnection::processQueue
 ///httpServer线程2
 QuickFIX Engine Web Interface  
 //在运行或断点时curl 127.0.0.1:9909 可探测到;或用浏览器访问;
+//#注释HttpAcceptPort=9909,即可去掉此线程
 
 ///收发线程3
 //35=A toAdmin

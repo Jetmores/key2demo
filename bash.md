@@ -113,3 +113,8 @@ tail -f x.log #退出ctrl+c
 less +F x.log #退出ctrl+c;q
 ```
 
+### kill
+```bash
+kill -9 pid
+pkill -f marketCtrl
+```

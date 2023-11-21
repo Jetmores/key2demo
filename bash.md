@@ -107,3 +107,9 @@ git clean -xdf
 git add [*|.|-A]
 ```
 
+### 查看log文件
+```bash
+tail -f x.log #退出ctrl+c
+less +F x.log #退出ctrl+c;q
+```
+

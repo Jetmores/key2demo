@@ -1,7 +1,9 @@
-### print
+### print expect
 ```zig
 std.debug.print("Hello, world!\n", .{});
 try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
+
+const expect = @import("std").testing.expect;
 ```
 
 ### Value assignment ?赋值

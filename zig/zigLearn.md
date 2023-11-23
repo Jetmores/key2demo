@@ -1,5 +1,7 @@
 ### print
 ```zig
+std.debug.print("Hello, world!\n", .{});
+try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
 ```
 
 ### Value assignment ?赋值

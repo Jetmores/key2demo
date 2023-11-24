@@ -64,4 +64,9 @@ drop user 'kt'@'localhost';
 show grants for kt;
 grant all on *.* to kt;
 revoke all on *.* from kt;
+
+# mysqldump权限(process)
+mysql -u root -p -e "show grants for kt;"
+mysql -u root -p -e "grant process on *.* to kt;"
+mysql -u root -p -e "revoke process on *.* from kt;"
 ```

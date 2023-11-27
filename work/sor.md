@@ -6,6 +6,7 @@ app.init();
 app.run();
 app.sendMsg("router_branch012", "exch_sim012", &order);
 app.stop();
+```
 
 //NINJATradeClient.cpp 封装一层:结构同上
 ```mermaid

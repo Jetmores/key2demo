@@ -22,6 +22,7 @@ classO .. classP
 ```
 
 //fixappframework
+```cpp
 NinjaBuzzManager::build
 auto sessId = ninjaClient()->getSession(senderId, targetId, this);
 class NinjaMsgListener : public NINJA::MsgHandlerImpl

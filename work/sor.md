@@ -8,6 +8,17 @@ app.sendMsg("router_branch012", "exch_sim012", &order);
 app.stop();
 
 //NINJATradeClient.cpp 封装一层:结构同上
+```mermaid
+classDiagram
+classA <|-- classB
+classC *-- classD
+classE o-- classF
+classG <-- classH
+classI -- classJ
+classK <.. classL
+classM <|.. classN
+classO .. classP
+```
 
 //fixappframework
 NinjaBuzzManager::build

@@ -10,9 +10,6 @@ app.stop();
 
 //NINJATradeClient.cpp 封装一层:结构同上
 ```mermaid
----
-title: Animal example
----
 classDiagram
     note "From Duck till Zebra"
     Animal <|-- Duck

@@ -96,6 +96,7 @@ git config --global -e
 git config --global user.name "[name]"
 git config --global user.email "[email address]"
 git config --global core.editor vim
+git config --global http.sslverify false
 # 暂存与恢复
 git stash
 git stash pop

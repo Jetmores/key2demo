@@ -39,4 +39,5 @@ docker tag ubuntu:latest ubuntu:22.04
 7. ENV
 8. EXPOSE
 9. VOLUME
-10. SHELL bin/bash
+10. USER
+11. SHELL bin/bash

@@ -95,6 +95,7 @@ ssh-keygen -t rsa -C "lets2rs@126.com"
 git config --global -e
 git config --global user.name "[name]"
 git config --global user.email "[email address]"
+git config --global core.editor vim
 # 暂存与恢复
 git stash
 git stash pop

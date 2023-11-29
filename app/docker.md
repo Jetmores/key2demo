@@ -23,3 +23,8 @@ daemon.json
 ```bash
 docker inspect -f "{{.Mounts}}" argo_mysql
 ```
+
+### other
+```bash
+docker tag ubuntu:latest ubuntu:22.04
+```

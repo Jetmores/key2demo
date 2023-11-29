@@ -28,3 +28,15 @@ docker inspect -f "{{.Mounts}}" argo_mysql
 ```bash
 docker tag ubuntu:latest ubuntu:22.04
 ```
+
+### Dockerfile
+1. FROM
+2. WORKDIR
+3. COPY/ADD
+4. RUN
+5. CMD/ENTRYPOINT
+6. ARG
+7. ENV
+8. EXPOSE
+9. VOLUME
+10. SHELL bin/bash

@@ -50,8 +50,8 @@ docker build -t mclient:1.10 .
 4. RUN yes|unminimize && && apt-get install -y --no-install-recommends man-db
 5. CMD/ENTRYPOINT #ENTRYPOINT ["/bin/bash","-c"]
 6. ARG CODE_VERSION=latest #FROM base:${CODE_VERSION} #仅在构建期间的变量
-7. ENV <key>=<value> ...
-8. EXPOSE
-9. VOLUME
-10. USER
-11. SHELL bin/bash
+7. ENV key=value ...
+8. EXPOSE 80/tcp 443/tcp #需要配合run中参数--net=host,更好的方法是docker run -p 80:80/tcp -p 80:80/udp ...
+9. VOLUME ["/data","/bin"]
+10. USER user[:<group>]
+11. SHELL ["/bin/sh", "-c"]

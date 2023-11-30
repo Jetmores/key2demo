@@ -58,7 +58,7 @@ docker build -t mclient:1.10 .
 
 ### docker compose
 docker compose -f docker-compose-kafka-redis.yml up -d  
-yaml:用缩进对齐来展示层级
+yaml:用缩进对齐来展示层级,#表示注释,
 ```yaml
 version: "3"
 

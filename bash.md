@@ -35,8 +35,8 @@ cc -S -masm=intel add.c
 ```bash
 zig build-exe hi.zig --library c -target x86_64-linux-musl
 zig build-exe hi.zig -lc -target x86_64-linux-musl
-zig build -Dtarget=x86_64-windows
-zig build -Dtarget=x86_64-linux-gnu
+?zig build -Dtarget=x86_64-windows
+?zig build -Dtarget=x86_64-linux-gnu
 ```
 
 ### 快捷拷贝程序依赖的动态库

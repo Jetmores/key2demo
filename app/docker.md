@@ -55,3 +55,6 @@ docker build -t mclient:1.10 .
 9. VOLUME ["/data","/bin"] #貌似更好docker run -v
 10. USER user[:group]
 11. SHELL ["/bin/sh", "-c"]
+
+### docker compose
+

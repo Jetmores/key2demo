@@ -59,7 +59,7 @@ docker build -t mclient:1.10 .
 11. SHELL ["/bin/sh", "-c"]
 
 ### docker compose
-docker compose -f docker-compose-kafka-redis.yml up -d  
+docker compose -f docker-compose.yaml up -d  
 yaml:用缩进对齐来展示层级,#表示注释,
 ```yaml
 version: "3"
@@ -67,20 +67,19 @@ version: "3"
 services:
     redis:
         image:  redis:6.2.7
-        container_name: redis
-        restart: always
+        container_name: redis_c
+        restart: unless-stopped
         volumes:
-            - "C:/workdir/other/redis/data:/data"
+            - "/mnt/c/workdir/temp/ubuntu2204/redis/data:/data"
         ports:
             - '7000:7000'
-            - '17000:17000'
             - '6379:6379'
         environment:
             REDIS_PORT: '7000'
         command: redis-server --appendonly yes
         networks:
-            kafka-net:
-                ipv4_address: "172.20.0.20"
+            test-net:
+                ipv4_address: "192.168.3.10"
         logging:
             driver: "json-file"
             options:
@@ -88,18 +87,18 @@ services:
                 max-file: "10"
                 
     mysql:
-        image:  mysql
-        container_name: mysql
-        restart: always
+        image:  mysql:8.2.0
+        container_name: mysql_c
+        restart: unless-stopped
         volumes:
-            - "C:/workdir/other/mysql:/data"
+            - "/mnt/c/workdir/temp/ubuntu2204/mysql:/data"
         ports:
-            - '3306:3306'
+            - '5306:5306'
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
         networks:
-            kafka-net:
-                ipv4_address: "172.20.0.21"
+            test-net:
+                ipv4_address: "192.168.3.11"
         logging:
             driver: "json-file"
             options:
@@ -107,13 +106,13 @@ services:
                 max-file: "10"
          
 networks:
-    kafka-net:
-        name: kafka-net
+    test-net:
+        name: test-net
         driver: bridge
         ipam:
             driver: default
             config:
-                - subnet: "172.20.0.0/24"
+                - subnet: "192.168.3.0/24"
 
 ```
 

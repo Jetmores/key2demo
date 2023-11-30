@@ -22,6 +22,8 @@ daemon.json
 ### 查看docker容器挂载目录信息:
 ```bash
 docker inspect -f "{{.Mounts}}" argo_mysql
+# 查看容器latest对应的版本
+docker image inspect mysql:latest | grep -i version
 ```
 
 ### docker command

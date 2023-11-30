@@ -52,6 +52,6 @@ docker build -t mclient:1.10 .
 6. ARG CODE_VERSION=latest #FROM base:${CODE_VERSION} #仅在构建期间的变量
 7. ENV key=value ...
 8. EXPOSE 80/tcp 443/tcp #需要配合run中参数--net=host,更好的方法是docker run -p 80:80/tcp -p 80:80/udp ...
-9. VOLUME ["/data","/bin"]
+9. VOLUME ["/data","/bin"] #貌似更好docker run -v
 10. USER user[:group]
 11. SHELL ["/bin/sh", "-c"]

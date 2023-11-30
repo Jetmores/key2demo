@@ -42,7 +42,7 @@ docker start ubt
 docker stop ubt
 ```
 
-### Dockerfile
+### Dockerfile:docker build -t mclient:1.10 .
 1. FROM
 2. WORKDIR
 3. COPY/ADD

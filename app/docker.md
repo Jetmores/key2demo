@@ -24,9 +24,20 @@ daemon.json
 docker inspect -f "{{.Mounts}}" argo_mysql
 ```
 
-### other
+### docker command
 ```bash
+docker pull ubuntu:22.04
+docker commit ubt ubt:yh001
+docker save -o ubt_yh001.tar ubt:yh001
+docker load -i argo_yh001.tar
 docker tag ubuntu:latest ubuntu:22.04
+docker rm container
+docker rmi image
+
+docker run -it --name ubt -p 25:22 -v C:\workdir\ubt:/root ubuntu:22.04 /bin/bash
+docker exec -it --detach-keys="ctrl-q,q" ubt /bin/bash
+docker start ubt
+docker stop ubt
 ```
 
 ### Dockerfile

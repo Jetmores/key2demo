@@ -43,6 +43,11 @@ zig build -Dtarget=x86_64-linux-gnu
 ```bash
 ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 ```
+### cat .ssh/id_rsa.pub
+```bash
+ssh-keygen -t rsa -C "lets2rs@126.com"
+ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
+```
 
 ### 远程拷贝
 ```bash
@@ -82,11 +87,6 @@ ps -ef
 # 查看某进程的线程
 ps -T -p pid
 top -H -p pid
-```
-
-### cat .ssh/id_rsa.pub
-```bash
-ssh-keygen -t rsa -C "lets2rs@126.com"
 ```
 
 ### git

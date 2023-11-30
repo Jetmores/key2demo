@@ -57,4 +57,5 @@ docker build -t mclient:1.10 .
 11. SHELL ["/bin/sh", "-c"]
 
 ### docker compose
+docker compose -f docker-compose-kafka-redis.yml up -d
 

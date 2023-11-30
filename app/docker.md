@@ -58,4 +58,113 @@ docker build -t mclient:1.10 .
 
 ### docker compose
 docker compose -f docker-compose-kafka-redis.yml up -d
+```yaml
+version: "3"
+
+services:
+    zookeeper-1:
+        image: docker.io/bitnami/zookeeper:3.8
+        container_name: zookeeper
+        restart: always
+        ports:
+            - 2181:2181
+            - 8081:8080
+        volumes:
+            - "C:/workdir/other/zookeeper/zookeeper-1/data:/data"
+            - "C:/workdir/other/zookeeper/zookeeper-1/datalog:/datalog"
+            - "C:/workdir/other/zookeeper/zookeeper-1/logs:/logs"
+            - "C:/workdir/other/zookeeper/zookeeper-1/conf:/conf"
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1=zookeeper-1:2888:3888
+        command: /bin/bash -c "cp /opt/bitnami/zookeeper/bin/../conf/zoo_sample.cfg /opt/bitnami/zookeeper/bin/../conf/zoo.cfg && zkServer.sh start-foreground"
+        networks:
+            kafka-net:
+                ipv4_address: "172.20.0.10"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+
+    kafka-1:
+        image: docker.io/bitnami/kafka:3.0.1
+        container_name: kafka-1
+        restart: always
+        ports:
+            - 9092:9092
+            - 8084:8083
+        volumes:
+            - "C:/workdir/other/kafka/kafka-1/logs:/kafka"
+            - "C:/workdir/other/kafka/plugins:/opt/kafka/plugins"
+        environment:
+            KAFKA_ADVERTISED_HOST_NAME: "192.168.1.133"
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.133:9092
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181"
+            KAFKA_ADVERTISED_PORT: 9092
+            KAFKA_BROKER_ID: 1
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            ALLOW_PLAINTEXT_LISTENER: "yes"
+        depends_on:
+            - zookeeper-1
+        networks:
+            kafka-net:
+                ipv4_address: "172.20.0.4"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+                
+    redis:
+        image:  redis:6.2.7
+        container_name: redis
+        restart: always
+        volumes:
+            - "C:/workdir/other/redis/data:/data"
+        ports:
+            - '7000:7000'
+            - '17000:17000'
+            - '6379:6379'
+        environment:
+            REDIS_PORT: '7000'
+        command: redis-server --appendonly yes
+        networks:
+            kafka-net:
+                ipv4_address: "172.20.0.20"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+                
+    mysql:
+        image:  mysql
+        container_name: mysql
+        restart: always
+        volumes:
+            - "C:/workdir/other/mysql:/data"
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        networks:
+            kafka-net:
+                ipv4_address: "172.20.0.21"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+                max-file: "10"
+         
+networks:
+    kafka-net:
+        name: kafka-net
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.20.0.0/24"
+
+```
 

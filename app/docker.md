@@ -42,15 +42,15 @@ docker start ubt
 docker stop ubt
 ```
 
-### Dockerfile
+### Dockerfile:[https://docs.docker.com/engine/reference/builder/]
 docker build -t mclient:1.10 .
-1. FROM
-2. WORKDIR
-3. COPY/ADD
-4. RUN
-5. CMD/ENTRYPOINT
-6. ARG
-7. ENV
+1. FROM ubuntu:22.04
+2. WORKDIR $HOME
+3. COPY/ADD #ADD zig-linux-x86_64-0.11.0.tar.xz /root/ #COPY neovim-config/ /root/
+4. RUN yes|unminimize && && apt-get install -y --no-install-recommends man-db
+5. CMD/ENTRYPOINT #ENTRYPOINT ["/bin/bash","-c"]
+6. ARG CODE_VERSION=latest #FROM base:${CODE_VERSION} #仅在构建期间的变量
+7. ENV <key>=<value> ...
 8. EXPOSE
 9. VOLUME
 10. USER

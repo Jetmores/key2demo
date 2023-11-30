@@ -57,7 +57,8 @@ docker build -t mclient:1.10 .
 11. SHELL ["/bin/sh", "-c"]
 
 ### docker compose
-docker compose -f docker-compose-kafka-redis.yml up -d
+docker compose -f docker-compose-kafka-redis.yml up -d  
+yaml:用缩进对齐来展示层级
 ```yaml
 version: "3"
 

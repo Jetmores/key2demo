@@ -79,6 +79,8 @@ tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802
 ### 模拟HTTP请求
 ```bash
 curl 127.0.0.1:9909
+# 下载文件类似wget,加k不进行ssl校验
+curl -LOk https://ziglang.org/download/0.11.0/zig-0.11.0.tar.xz
 ```
 
 ### ps查看进程

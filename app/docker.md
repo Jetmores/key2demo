@@ -18,7 +18,8 @@ daemon.json
   ]
 }
 ```
-~/.docker/config.json
+~/.docker/config.json  
+否则每次都要如此docker exec -it --detach-keys="ctrl-q,q" ubt /bin/bash
 ```json
 {
   "detachKeys": "ctrl-q,q",
@@ -46,7 +47,7 @@ docker ps
 docker images
 
 docker run -it --name ubt -p 25:22 -v C:\workdir\ubt:/root ubuntu:22.04 /bin/bash
-docker exec -it --detach-keys="ctrl-q,q" ubt /bin/bash
+docker exec -it ubt /bin/bash
 docker start ubt
 docker stop ubt
 ```

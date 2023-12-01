@@ -1,5 +1,5 @@
 ### 查找
-二分查找
+####二分查找
 ```zig
 pub fn binarySearch(
     comptime T: type,
@@ -26,7 +26,7 @@ pub fn binarySearch(
 }
 ```
 
-### 插入排序(n~n^2~~n^2 stable)
+#### 插入排序(n~n^2~~n^2 stable)
 ```zig
 pub fn insertion(
     comptime T: type,
@@ -61,13 +61,13 @@ pub fn insertionContext(a: usize, b: usize, context: anytype) void {
 }
 ```
 
-### 选择排序
+#### 选择排序
 
-### 冒泡排序
+#### 冒泡排序
 
-### 希尔排序
+#### 希尔排序
 
-### 堆排序3(nlogn~nlogn~~nlogn unstable)
+#### 堆排序3(nlogn~nlogn~~nlogn unstable)
 ```zig
 pub fn heapContext(a: usize, b: usize, context: anytype) void {
     assert(a <= b);
@@ -118,19 +118,19 @@ fn siftDown(a: usize, target: usize, b: usize, context: anytype) void {
 }
 ```
 
-### 快速排序1(nlogn~n^2~~nlogn unstable)
+#### 快速排序1(nlogn~n^2~~nlogn unstable)
 递归版改为非递归和迭代版:将信息push和pop到栈结构中或者存到范围数组std::pair<int,int> ranges[len];<br>
 内省排序(introsort):快排递归深度达到阈值,退化为O(n^2),此时调整为堆排序,从而将最坏情况优化为nlogn;当元素数低于某个阈值,切换为插入排序<br>
 pdqsort:introsort的改进版
 
-### 归并排序2(nlogn~nlogn~~nlogn stable)
+#### 归并排序2(nlogn~nlogn~~nlogn stable)
 块排序(block sort):混合插入和归并的排序
 
-### 计数排序
+#### 计数排序
 
-### 基数排序
+#### 基数排序
 
-### 桶排序
+#### 桶排序
 
 ### 散列表
 

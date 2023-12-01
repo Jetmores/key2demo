@@ -27,6 +27,7 @@ pub fn binarySearch(
 ```
 
 ### 排序
+![sort](/images/sort.png)
 #### 插入排序(n~n^2~~n^2 stable)
 ```zig
 pub fn insertion(

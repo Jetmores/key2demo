@@ -1,5 +1,5 @@
 ### setting
-daemon.json
+/etc/docker/daemon.json
 ```json
 {
   "builder": {

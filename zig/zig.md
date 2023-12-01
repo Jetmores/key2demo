@@ -108,6 +108,7 @@ pub fn main() anyerror!void {
 4. ~~TailQueue~~DoublyLinkedList ->list
 5. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
 6. *[Auto/String]ArrayHashMap[Unmanaged]* 建议用HashMap更快
+7. [https://gitee.com/letsmut/key2demo/blob/master/algorithm.md]
 
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增

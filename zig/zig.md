@@ -1,6 +1,3 @@
-
-<div style="width:25%"><img src="/images/ziggy.svg" style="max-height:200px"></div>
-
 ### ?hello ?world
 ```zig
 const print = @import("std").debug.print;

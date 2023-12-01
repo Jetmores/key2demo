@@ -17,7 +17,13 @@ daemon.json
     "https://mirror.baidubce.com"
   ]
 }
-#config.json
+```
+~/.docker/config.json
+```json
+{
+  "detachKeys": "ctrl-q,q",
+  "credsStore": "desktop.exe"
+}
 ```
 
 ### 查看docker容器挂载目录信息:

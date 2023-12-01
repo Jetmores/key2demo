@@ -109,9 +109,9 @@ pub fn main() anyerror!void {
 5. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
 6. *[Auto/String]ArrayHashMap[Unmanaged]* 建议用HashMap更快
 7. <https://github.com/ziglang/std-lib-orphanage/tree/master>  
-* std.rb.Tree
-* std.BloomFilter
-* std.SegmentedList
+    * std.rb.Tree
+    * std.BloomFilter
+    * std.SegmentedList
 
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增

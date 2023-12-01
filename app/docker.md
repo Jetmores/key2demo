@@ -17,6 +17,7 @@ daemon.json
     "https://mirror.baidubce.com"
   ]
 }
+#config.json
 ```
 
 ### 查看docker容器挂载目录信息:

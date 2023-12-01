@@ -74,7 +74,7 @@ version: "3"
 
 services:
     redis:
-        image:  redis:6.2.7
+        image:  redis:alpine
         container_name: redis_c
         restart: unless-stopped
         volumes:
@@ -87,7 +87,7 @@ services:
         command: redis-server --appendonly yes
         networks:
             test-net:
-                ipv4_address: "192.168.3.10"
+                ipv4_address: "192.168.5.10"
         logging:
             driver: "json-file"
             options:
@@ -101,12 +101,12 @@ services:
         volumes:
             - "/mnt/c/workdir/temp/ubuntu2204/mysql:/data"
         ports:
-            - '5306:5306'
+            - '3306:3306'
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
         networks:
             test-net:
-                ipv4_address: "192.168.3.11"
+                ipv4_address: "192.168.5.11"
         logging:
             driver: "json-file"
             options:
@@ -120,7 +120,7 @@ networks:
         ipam:
             driver: default
             config:
-                - subnet: "192.168.3.0/24"
+                - subnet: "192.168.5.0/24"
 
 ```
 

@@ -1,4 +1,4 @@
-![](https://gitee.com/letsmut/key2demo/tree/master/images/ziggy.svg)
+![](/images/ziggy.svg)
 ### ?hello ?world
 ```zig
 const print = @import("std").debug.print;

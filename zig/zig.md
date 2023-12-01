@@ -101,7 +101,7 @@ pub fn main() anyerror!void {
 }
 ```
 
-### zig ?collection
+### zig ?collection <https://github.com/ziglang/zig/issues/7782>
 1. ArrayList[Aligned][Unmanaged] ->vector
 2. [Auto/String]HashMap[Unmanaged] ->unordered_map
 3. SinglyLinkedList ->forward_list

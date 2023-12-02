@@ -111,7 +111,7 @@ pub fn main() anyerror!void {
 7. <https://github.com/ziglang/std-lib-orphanage/tree/master>  
     * std.rb.Tree
     * std.BloomFilter
-    * std.SegmentedList
+    * std.SegmentedList 类似ArrayList但避免了预分配耗尽后的拷贝搬迁
 
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增

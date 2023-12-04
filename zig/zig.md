@@ -103,15 +103,16 @@ pub fn main() anyerror!void {
 
 ### zig ?collection <https://github.com/ziglang/zig/issues/7782>
 1. ArrayList[Aligned][Unmanaged] ->vector
-2. [Auto/String]HashMap[Unmanaged] ->unordered_map
+5. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
+2. SegmentedList 类似ArrayList但避免了预分配耗尽后的拷贝搬迁,类似一半的deque
 3. SinglyLinkedList ->forward_list
 4. ~~TailQueue~~DoublyLinkedList ->list
-5. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
+2. [Auto/String]HashMap[Unmanaged] ->unordered_map
 6. *[Auto/String]ArrayHashMap[Unmanaged]* 建议用HashMap更快
-7. <https://github.com/ziglang/std-lib-orphanage/tree/master>  
+7. <https://github.com/ziglang/std-lib-orphanage/tree/master>
     * std.rb.Tree
     * std.BloomFilter
-    * std.SegmentedList 类似ArrayList但避免了预分配耗尽后的拷贝搬迁
+    * ~~std.SegmentedList(同上)~~
 
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增

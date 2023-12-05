@@ -115,7 +115,6 @@ void insertionSort(int nums[], int size) {
         nums[j + 1] = base;
     }
 }
-
 ```
 ```zig
 pub fn insertion(
@@ -158,6 +157,44 @@ pub fn insertionContext(a: usize, b: usize, context: anytype) void {
 #### 希尔排序
 
 #### 堆排序3(nlogn~nlogn~~nlogn unstable)
+```cpp
+/* 堆的长度为 n ，从节点 i 开始，从顶至底堆化 */
+void siftDown(vector<int> &nums, int n, int i) {
+    while (true) {
+        // 判断节点 i, l, r 中值最大的节点，记为 ma
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        int ma = i;
+        if (l < n && nums[l] > nums[ma])
+            ma = l;
+        if (r < n && nums[r] > nums[ma])
+            ma = r;
+        // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
+        if (ma == i) {
+            break;
+        }
+        // 交换两节点
+        swap(nums[i], nums[ma]);
+        // 循环向下堆化
+        i = ma;
+    }
+}
+
+/* 堆排序 */
+void heapSort(vector<int> &nums) {
+    // 建堆操作：堆化除叶节点以外的其他所有节点
+    for (int i = nums.size() / 2 - 1; i >= 0; --i) {
+        siftDown(nums, nums.size(), i);
+    }
+    // 从堆中提取最大元素，循环 n-1 轮
+    for (int i = nums.size() - 1; i > 0; --i) {
+        // 交换根节点与最右叶节点（交换首元素与尾元素）
+        swap(nums[0], nums[i]);
+        // 以根节点为起点，从顶至底进行堆化
+        siftDown(nums, i, 0);
+    }
+}
+```
 ```zig
 pub fn heapContext(a: usize, b: usize, context: anytype) void {
     assert(a <= b);
@@ -213,15 +250,116 @@ fn siftDown(a: usize, target: usize, b: usize, context: anytype) void {
 内省排序(introsort):快排递归深度达到阈值,退化为O(n^2),此时调整为堆排序,从而将最坏情况优化为nlogn;当元素数低于某个阈值,切换为插入排序<br>
 pdqsort:introsort的改进版
 
+```cpp
+/* 选取三个元素的中位数 */
+int medianThree(vector<int> &nums, int left, int mid, int right) {
+    // 此处使用异或运算来简化代码
+    // 异或规则为 0 ^ 0 = 1 ^ 1 = 0, 0 ^ 1 = 1 ^ 0 = 1
+    if ((nums[left] < nums[mid]) ^ (nums[left] < nums[right]))
+        return left;
+    else if ((nums[mid] < nums[left]) ^ (nums[mid] < nums[right]))
+        return mid;
+    else
+        return right;
+}
+
+/* 哨兵划分（三数取中值） */
+int partition(vector<int> &nums, int left, int right) {
+    // 选取三个候选元素的中位数
+    int med = medianThree(nums, left, (left + right) / 2, right);
+    // 将中位数交换至数组最左端
+    swap(nums, left, med);
+    // 以 nums[left] 为基准数
+    int i = left, j = right;
+    while (i < j) {
+        while (i < j && nums[j] >= nums[left])
+            j--; // 从右向左找首个小于基准数的元素
+        while (i < j && nums[i] <= nums[left])
+            i++;          // 从左向右找首个大于基准数的元素
+        swap(nums, i, j); // 交换这两个元素
+    }
+    swap(nums, i, left); // 将基准数交换至两子数组的分界线
+    return i;            // 返回基准数的索引
+}
+```
+
 #### 归并排序2(nlogn~nlogn~~nlogn stable)
 块排序(block sort):混合插入和归并的排序
+```cpp
+/* 合并左子数组和右子数组 */
+void merge(vector<int> &nums, int left, int mid, int right) {
+    // 左子数组区间 [left, mid], 右子数组区间 [mid+1, right]
+    // 创建一个临时数组 tmp ，用于存放合并后的结果
+    vector<int> tmp(right - left + 1);
+    // 初始化左子数组和右子数组的起始索引
+    int i = left, j = mid + 1, k = 0;
+    // 当左右子数组都还有元素时，比较并将较小的元素复制到临时数组中
+    while (i <= mid && j <= right) {
+        if (nums[i] <= nums[j])
+            tmp[k++] = nums[i++];
+        else
+            tmp[k++] = nums[j++];
+    }
+    // 将左子数组和右子数组的剩余元素复制到临时数组中
+    while (i <= mid) {
+        tmp[k++] = nums[i++];
+    }
+    while (j <= right) {
+        tmp[k++] = nums[j++];
+    }
+    // 将临时数组 tmp 中的元素复制回原数组 nums 的对应区间
+    for (k = 0; k < tmp.size(); k++) {
+        nums[left + k] = tmp[k];
+    }
+}
+
+/* 归并排序 */
+void mergeSort(vector<int> &nums, int left, int right) {
+    // 终止条件
+    if (left >= right)
+        return; // 当子数组长度为 1 时终止递归
+    // 划分阶段
+    int mid = (left + right) / 2;    // 计算中点
+    mergeSort(nums, left, mid);      // 递归左子数组
+    mergeSort(nums, mid + 1, right); // 递归右子数组
+    // 合并阶段
+    merge(nums, left, mid, right);
+}
+```
 
 #### 计数排序
+计数排序是桶排序在整型数据下的一个特例
 
 #### 基数排序
 
 #### 桶排序
-
+```cpp
+/* 桶排序 */
+void bucketSort(vector<float> &nums) {
+    // 初始化 k = n/2 个桶，预期向每个桶分配 2 个元素
+    int k = nums.size() / 2;
+    vector<vector<float>> buckets(k);
+    // 1. 将数组元素分配到各个桶中
+    for (float num : nums) {
+        // 输入数据范围为 [0, 1)，使用 num * k 映射到索引范围 [0, k-1]
+        int i = num * k;
+        // 将 num 添加进桶 bucket_idx
+        buckets[i].push_back(num);
+    }
+    // 2. 对各个桶执行排序
+    for (vector<float> &bucket : buckets) {
+        // 使用内置排序函数，也可以替换成其他排序算法
+        sort(bucket.begin(), bucket.end());
+    }
+    // 3. 遍历桶合并结果
+    int i = 0;
+    for (vector<float> &bucket : buckets) {
+        for (float num : bucket) {
+            nums[i++] = num;
+        }
+    }
+}
+```
 
 ---
 ### 树

@@ -42,7 +42,7 @@ const assert = std.debug.assert;
 //const Server = @This();
 //const proto = @import("protocol.zig");
 
-//test "HTTP server handles a chunked transfer coding request" {
+//test "HTTP server handles a chunked transfer coding request"
 pub fn main() anyerror!void {
     const builtin = @import("builtin");
 

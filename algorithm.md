@@ -257,7 +257,18 @@ pdqsort:introsort的改进版
 
 ---
 ### 图
+分类:
+* 有向图|无向图:关注和被关注是有方向的,好友是双向的
+* 有权图|无权图:最短路径
+* 连通图|非连通图:多起点
 
+图的表示:
+* 邻接矩阵:vector<vector<int>> adjMat;
+* 邻接链表:unordered_map<Vertex *, vector<Vertex *>> adjList;
+
+图的遍历:
+* 广度优先
+* 深度优先
 
 ---
 ### 分治
@@ -284,10 +295,44 @@ pdqsort:introsort的改进版
 * 最优子结构:
 * 无后效性:
 
+初探:
+```cpp
+//给定一个共有n阶的楼梯，你每步可以上1阶或者2阶,请问有多少种方案可以爬到楼顶?
+/* 爬楼梯：动态规划 */
+int climbingStairsDP(int n) {
+    if (n == 1 || n == 2)
+        return n;
+    // 初始化 dp 表，用于存储子问题的解
+    vector<int> dp(n + 1);
+    // 初始状态：预设最小子问题的解
+    dp[1] = 1;
+    dp[2] = 2;
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}
 
-### 贪心算法
-贪心地做出局部最优的决策,以期获得全局最优解(近似算法捷径);不同于动态规划会根据之前阶段的所有决策来考虑当前决策(用过去子问题解构建当前子问题的解)
+/* 爬楼梯：空间优化后的动态规划 */
+int climbingStairsDPComp(int n) {
+    if (n == 1 || n == 2)
+        return n;
+    int a = 1, b = 2;
+    for (int i = 3; i <= n; i++) {
+        int tmp = b;
+        b = a + b;
+        a = tmp;
+    }
+    return b;
+}
+```
 
+### 贪心算法:值得一试的捷径,有点魏延子午谷奇谋的意思
+贪心地做出局部最优的决策,以期获得全局最优解(近似算法捷径);不同于动态规划会根据之前阶段的所有决策来考虑当前决策(用过去子问题解构建当前子问题的解)  
+正确条件:每一步的最优解一定包含上一步的最优解
+
+1. 零钱兑换：贪心 (精心设计的钱币对贪心算法有适配,否则动态规划才能达到最优)
 ```c
 /* 零钱兑换：贪心 */
 int coinChangeGreedy(int *coins, int size, int amt) {
@@ -308,3 +353,9 @@ int coinChangeGreedy(int *coins, int size, int amt) {
     return amt == 0 ? count : -1;
 }
 ```
+
+2. 分数背包问题
+
+3. 最大容量问题
+
+4. 最大切分乘法问题

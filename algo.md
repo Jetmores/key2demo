@@ -370,7 +370,58 @@ void bucketSort(vector<float> &nums) {
 * 平衡二叉树:任意节点的左子树和右子树的高度之差的绝对值不超过1
 
 广度优先搜索:层序遍历  
+```cpp
+/* 层序遍历 */
+vector<int> levelOrder(TreeNode *root) {
+    // 初始化队列，加入根节点
+    queue<TreeNode *> queue;
+    queue.push(root);
+    // 初始化一个列表，用于保存遍历序列
+    vector<int> vec;
+    while (!queue.empty()) {
+        TreeNode *node = queue.front();
+        queue.pop();              // 队列出队
+        vec.push_back(node->val); // 保存节点值
+        if (node->left != nullptr)
+            queue.push(node->left); // 左子节点入队
+        if (node->right != nullptr)
+            queue.push(node->right); // 右子节点入队
+    }
+    return vec;
+}
+```
 深度优先搜索:前序,中序,后序遍历;均为O(n)时间复杂度
+```cpp
+/* 前序遍历 */
+void preOrder(TreeNode *root) {
+    if (root == nullptr)
+        return;
+    // 访问优先级：根节点 -> 左子树 -> 右子树
+    vec.push_back(root->val);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+/* 中序遍历 */
+void inOrder(TreeNode *root) {
+    if (root == nullptr)
+        return;
+    // 访问优先级：左子树 -> 根节点 -> 右子树
+    inOrder(root->left);
+    vec.push_back(root->val);
+    inOrder(root->right);
+}
+
+/* 后序遍历 */
+void postOrder(TreeNode *root) {
+    if (root == nullptr)
+        return;
+    // 访问优先级：左子树 -> 右子树 -> 根节点
+    postOrder(root->left);
+    postOrder(root->right);
+    vec.push_back(root->val);
+}
+```
 
 表示:
 * 完美二叉树/完全二叉树:i-left(2i+1)-right(2i+2),可用数组表示,典型代表堆排序中的构建大顶堆
@@ -469,7 +520,7 @@ vector<Vertex *> graphDFS(GraphAdjList &graph, Vertex *startVet) {
 ```
 
 ------
-分治之后是算法第二阶段,需要更高深的理解力
+分治之后是算法第二阶段,需要更高深的理解力和想象力
 ------
 ### 分治
 分而治之揭示了一个重要的事实:从简单做起,一切都不再复杂.  

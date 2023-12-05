@@ -517,7 +517,7 @@ void solveHanota(vector<int> &A, vector<int> &B, vector<int> &C) {
 
 2. 子集和问题:暂略
 
-3. N皇后问题
+3. N皇后问题:较复杂
 
 
 ### 动态规划
@@ -592,8 +592,6 @@ int knapsackDPComp(vector<int> &wgt, vector<int> &val, int cap) {
 //给定n中硬币,第i中硬币的面值为coins[i-1],目标金额为amt,每种硬币可以重复选取,问凑出目标金额的硬币组合数量.
 ```
 
-4. 编辑距离问题
-
 
 ### 贪心算法:值得一试的捷径,有点魏延子午谷奇谋的意思
 贪心地做出局部最优的决策,以期获得全局最优解(近似算法捷径);不同于动态规划会根据之前阶段的所有决策来考虑当前决策(用过去子问题解构建当前子问题的解)  
@@ -622,9 +620,3 @@ int coinChangeGreedy(int *coins, int size, int amt) {
 ```
 
 2. 分数背包问题
-
-3. 最大容量问题  
-无法一眼看出
-
-4. 最大切分乘法问题  
-无法一眼看出

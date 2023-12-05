@@ -99,6 +99,24 @@ pub fn binarySearch(
 | 桶排序   | O(n+k) | O(n+k) | O(n^2) | O(n+k) | out-place | 稳定 |
 
 #### 插入排序(n~n^2~~n^2 stable)
+```c
+/* 插入排序 */
+void insertionSort(int nums[], int size) {
+    // 外循环：已排序元素数量为 1, 2, ..., n
+    for (int i = 1; i < size; i++) {
+        int base = nums[i], j = i - 1;
+        // 内循环：将 base 插入到已排序部分的正确位置
+        while (j >= 0 && nums[j] > base) {
+            // 将 nums[j] 向右移动一位
+            nums[j + 1] = nums[j];
+            j--;
+        }
+        // 将 base 赋值到正确位置
+        nums[j + 1] = base;
+    }
+}
+
+```
 ```zig
 pub fn insertion(
     comptime T: type,

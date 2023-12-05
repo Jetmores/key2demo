@@ -107,7 +107,7 @@ pub fn main() anyerror!void {
 3. SegmentedList 类似ArrayList但避免了预分配耗尽后的拷贝搬迁,类似一半的deque
 4. SinglyLinkedList ->forward_list
 5. DoublyLinkedList ->list
-6. [Auto/String]HashMap[Unmanaged] ->unordered_map
+6. [Auto/String]HashMap[Unmanaged] ->unordered_map/BufMap-BufSet拷贝key后拥有它,特化且带数据所有权StringHashMap
 7. *[Auto/String]ArrayHashMap[Unmanaged]* 建议用HashMap更快
 8. <https://github.com/ziglang/std-lib-orphanage/tree/master>
     * std.rb.Tree

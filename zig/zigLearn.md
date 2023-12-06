@@ -1,4 +1,4 @@
-### print expect
+### print expect log
 ```zig
 std.debug.print("Hello, world!\n", .{});
 try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
@@ -11,7 +11,19 @@ e(s)
 ?:调试信息
 #:打印值的原始16进制
 
+//expect
 const expect = @import("std").testing.expect;
+
+/// The default log level is based on build mode.
+pub const default_level: Level = switch (builtin.mode) {
+    .Debug => .debug,
+    .ReleaseSafe => .info,
+    .ReleaseFast, .ReleaseSmall => .err,
+};
+std.log.debug("A borderline useless debug log message", .{});
+std.log.info("Flux capacitor is starting to overheat", .{});
+std.log.warn("Warn", .{});
+std.log.err("Error", .{});
 ```
 
 ### Value assignment ?赋值

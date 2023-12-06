@@ -281,6 +281,35 @@ int partition(vector<int> &nums, int left, int right) {
     swap(nums, i, left); // 将基准数交换至两子数组的分界线
     return i;            // 返回基准数的索引
 }
+
+/* 快速排序 */
+void quickSort(vector<int> &nums, int left, int right) {
+    // 子数组长度为 1 时终止递归
+    if (left >= right)
+        return;
+    // 哨兵划分
+    int pivot = partition(nums, left, right);
+    // 递归左子数组、右子数组
+    quickSort(nums, left, pivot - 1);
+    quickSort(nums, pivot + 1, right);
+}
+
+/* 快速排序（尾递归优化） */
+void quickSort(vector<int> &nums, int left, int right) {
+    // 子数组长度为 1 时终止
+    while (left < right) {
+        // 哨兵划分操作
+        int pivot = partition(nums, left, right);
+        // 对两个子数组中较短的那个执行快速排序
+        if (pivot - left < right - pivot) {
+            quickSort(nums, left, pivot - 1); // 递归排序左子数组
+            left = pivot + 1;                 // 剩余未排序区间为 [pivot + 1, right]
+        } else {
+            quickSort(nums, pivot + 1, right); // 递归排序右子数组
+            right = pivot - 1;                 // 剩余未排序区间为 [left, pivot - 1]
+        }
+    }
+}
 ```
 
 #### 归并排序2(nlogn~nlogn~~nlogn stable)

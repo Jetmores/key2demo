@@ -3,6 +3,11 @@
 std.debug.print("Hello, world!\n", .{});
 try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
 
+占位符:{}默认自适应类型
+c
+d(还有b,o,x,X)
+e
+
 const expect = @import("std").testing.expect;
 ```
 

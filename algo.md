@@ -377,8 +377,8 @@ void bucketSort(vector<float> &nums) {
     }
     // 2. 对各个桶执行排序
     for (vector<float> &bucket : buckets) {
-        // 使用内置排序函数，也可以替换成其他排序算法
-        sort(bucket.begin(), bucket.end());
+        // 使用内置稳定排序函数，也可以替换成其他稳定排序算法
+        stable_sort(bucket.begin(), bucket.end());
     }
     // 3. 遍历桶合并结果
     int i = 0;

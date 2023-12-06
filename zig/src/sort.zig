@@ -1,7 +1,7 @@
 ///sort do myself
 const std = @import("std");
 const assert = std.debug.assert;
-const eql = std.mem.eql;
+const mem = std.mem;
 
 //test
 const expect = std.testing.expect;
@@ -25,7 +25,8 @@ test "sort case" {
     try expect(usize == @TypeOf(i));
     var a = [_]i32{ 9, 3, 1, 5, 2, 7, 3, 8 };
     try expect(usize == @TypeOf(a.len));
-    try expect(1 == 1);
+    insertSort(i32, a[0..], 0, 8);
+    try expect(mem.eql(i32, &a, &[_]i32{ 1, 2, 3, 3, 5, 7, 8, 9 }));
 }
 
 pub fn insertSort(comptime T: type, items: []T, b: usize, e: usize) void {

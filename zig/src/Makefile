@@ -1,12 +1,12 @@
-logDebug:
-	zig build-exe log.zig
-
 sortTest:
 	zig test sort.zig
 
 sort:
 	zig build-exe sort.zig
 
+logDebug:
+	zig build-exe log.zig
+
 .PHONY:clean
 clean:
-	rm *.o sort log
+	rm -f *.o sort log

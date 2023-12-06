@@ -108,7 +108,7 @@ pub fn main() anyerror!void {
 4. SinglyLinkedList ->forward_list
 5. DoublyLinkedList ->list
 6. [Auto/String]HashMap[Unmanaged] ->unordered_map/BufMap-BufSet拷贝key后拥有它,特化且带数据所有权StringHashMap
-7. *[Auto/String]ArrayHashMap[Unmanaged]* 建议用HashMap更快
+7. *[Auto/String]ArrayHashMap[Unmanaged]* 特化遍历(空间换时间),否则用HashMap
 8. <https://github.com/ziglang/std-lib-orphanage/tree/master>
     * std.rb.Tree
     * std.BloomFilter

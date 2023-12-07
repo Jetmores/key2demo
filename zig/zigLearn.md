@@ -97,3 +97,45 @@ test "for" {
     }
 }
 ```
+
+### fn
+```zig
+fn fibonacci(n: u16) u16 {
+    if (n == 0 or n == 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+test "function recursion" {
+    const x = fibonacci(10);
+    try expect(x == 55);
+}
+```
+
+### defer
+```zig
+test "multi defer" {
+    var x: f32 = 5;
+    {
+        defer x += 2;
+        defer x /= 2;
+        try expect(x == 5);
+    }
+    try expect(x == 4.5);
+}
+```
+
+### error:like enum
+```zig
+const FileOpenError = error{
+    AccessDenied,
+    OutOfMemory,
+    FileNotFound,
+};
+const AllocationError = error{OutOfMemory};
+
+test "coerce error from a subset to a superset" {
+    const err: FileOpenError = AllocationError.OutOfMemory;
+    try expect(err == FileOpenError.OutOfMemory);
+}
+```
+

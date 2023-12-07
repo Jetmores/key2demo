@@ -42,29 +42,23 @@ xxx
 
 ### 查找
 #### 二分查找:自适应搜索
-```zig
-pub fn binarySearch(
-    comptime T: type,
-    key: anytype,
-    items: []const T,
-    context: anytype,
-    comptime compareFn: fn (context: @TypeOf(context), key: @TypeOf(key), mid_item: T) math.Order,
-) ?usize {
-    var left: usize = 0;
-    var right: usize = items.len;
-
-    while (left < right) {
-        // Avoid overflowing in the midpoint calculation
-        const mid = left + (right - left) / 2;
-        // Compare the key with the midpoint element
-        switch (compareFn(context, key, items[mid])) {
-            .eq => return mid,
-            .gt => left = mid + 1,
-            .lt => right = mid,
-        }
+```cpp
+/* 二分查找（左闭右开区间） */
+int binarySearchLCRO(vector<int> &nums, int target) {
+    // 初始化左闭右开区间 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
+    int i = 0, j = nums.size();
+    // 循环，当搜索区间为空时跳出（当 i = j 时为空）
+    while (i < j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target)    // 此情况说明 target 在区间 [m+1, j) 中
+            i = m + 1;
+        else if (nums[m] > target) // 此情况说明 target 在区间 [i, m) 中
+            j = m;
+        else // 找到目标元素，返回其索引
+            return m;
     }
-
-    return null;
+    // 未找到目标元素，返回 -1
+    return -1;
 }
 ```
 #### 树查找
@@ -116,39 +110,6 @@ void insertionSort(int nums[], int size) {
     }
 }
 ```
-```zig
-pub fn insertion(
-    comptime T: type,
-    items: []T,
-    context: anytype,
-    comptime lessThanFn: fn (@TypeOf(context), lhs: T, rhs: T) bool,
-) void {
-    const Context = struct {
-        items: []T,
-        sub_ctx: @TypeOf(context),
-
-        pub fn lessThan(ctx: @This(), a: usize, b: usize) bool {
-            return lessThanFn(ctx.sub_ctx, ctx.items[a], ctx.items[b]);
-        }
-
-        pub fn swap(ctx: @This(), a: usize, b: usize) void {
-            return mem.swap(T, &ctx.items[a], &ctx.items[b]);
-        }
-    };
-    insertionContext(0, items.len, Context{ .items = items, .sub_ctx = context });
-}
-pub fn insertionContext(a: usize, b: usize, context: anytype) void {
-    assert(a <= b);
-
-    var i = a + 1;
-    while (i < b) : (i += 1) {
-        var j = i;
-        while (j > a and context.lessThan(j, j - 1)) : (j -= 1) {
-            context.swap(j, j - 1);
-        }
-    }
-}
-```
 
 #### 选择排序
 
@@ -192,55 +153,6 @@ void heapSort(vector<int> &nums) {
         swap(nums[0], nums[i]);
         // 以根节点为起点，从顶至底进行堆化
         siftDown(nums, i, 0);
-    }
-}
-```
-```zig
-pub fn heapContext(a: usize, b: usize, context: anytype) void {
-    assert(a <= b);
-    // build the heap in linear time.
-    var i = a + (b - a) / 2;
-    while (i > a) {
-        i -= 1;
-        siftDown(a, i, b, context);
-    }
-
-    // pop maximal elements from the heap.
-    i = b;
-    while (i > a) {
-        i -= 1;
-        context.swap(a, i);
-        siftDown(a, a, i, context);
-    }
-}
-
-fn siftDown(a: usize, target: usize, b: usize, context: anytype) void {
-    var cur = target;
-    while (true) {
-        // When we don't overflow from the multiply below, the following expression equals (2*cur) - (2*a) + a + 1
-        // The `+ a + 1` is safe because:
-        //  for `a > 0` then `2a >= a + 1`.
-        //  for `a = 0`, the expression equals `2*cur+1`. `2*cur` is an even number, therefore adding 1 is safe.
-        var child = (math.mul(usize, cur - a, 2) catch break) + a + 1;
-
-        // stop if we overshot the boundary
-        if (!(child < b)) break;
-
-        // `next_child` is at most `b`, therefore no overflow is possible
-        const next_child = child + 1;
-
-        // store the greater child in `child`
-        if (next_child < b and context.lessThan(child, next_child)) {
-            child = next_child;
-        }
-
-        // stop if the Heap invariant holds at `cur`.
-        if (context.lessThan(child, cur)) break;
-
-        // swap `cur` with the greater child,
-        // move one step down, and continue sifting.
-        context.swap(child, cur);
-        cur = child;
     }
 }
 ```
@@ -604,7 +516,7 @@ void solveHanota(vector<int> &A, vector<int> &B, vector<int> &C) {
 3. N皇后问题:较复杂
 
 
-### 动态规划
+### 动态规划:满足某种数列公式(状态转换方程)
 动态规划也对问题进行递归分解,但与分治算法的主要区别是,动态规划中的子问题是相互依赖的,在分解过程中会出现许多重叠子问题;  
 动态规划常用来求解最优化问题,特性:
 * 重叠子问题

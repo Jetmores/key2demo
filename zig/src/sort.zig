@@ -6,14 +6,23 @@ const mem = std.mem;
 //test
 const expect = std.testing.expect;
 
-pub fn main() !void {
-    var a = [_]i32{ 9, 3, 1, 5, 2, 7, 3, 8 };
-    //insertSort(i32, &a, 0, 8);
-    insertSort(i32, a[0..], 0, 8);
-    for (&a) |*x| {
-        std.debug.print("{d}\t", .{x.*});
-        std.debug.print("{*}", .{x});
-        std.debug.print("\n", .{});
+test "for" {
+    //character literals are equivalent to integer literals
+    const string = [_]u8{ 'a', 'b', 'c' };
+
+    for (string) |character| {
+        _ = character;
+    }
+
+    for (string) |_| {}
+
+    for (string, 0..) |character, index| {
+        _ = character;
+        _ = index;
+    }
+
+    for (string, 0..) |_, index| {
+        _ = index;
     }
 }
 
@@ -40,5 +49,16 @@ pub fn insertSort(comptime T: type, items: []T, b: usize, e: usize) void {
             items[j] = items[j - 1];
         }
         items[j] = base;
+    }
+}
+
+pub fn main() !void {
+    var a = [_]i32{ 9, 3, 1, 5, 2, 7, 3, 8 };
+    //insertSort(i32, &a, 0, 8);
+    insertSort(i32, a[0..], 0, 8);
+    for (&a) |*x| {
+        std.debug.print("{d}\t", .{x.*});
+        std.debug.print("{*}", .{x});
+        std.debug.print("\n", .{});
     }
 }

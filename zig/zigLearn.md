@@ -63,3 +63,37 @@ test "if statement expression" {
 ```
 
 ### while
+```zig
+test "while with continue" {
+    var sum: u8 = 0;
+    var i: u8 = 0;
+    while (i <= 3) : (i += 1) {
+        if (i == 2) continue;//or break
+        sum += i;
+    }
+    try expect(sum == 4);
+}
+```
+
+### for
+```zig
+test "for" {
+    //character literals are equivalent to integer literals
+    const string = [_]u8{ 'a', 'b', 'c' };
+
+    for (string) |character| {
+        _ = character;
+    }
+
+    for (string) |_| {}
+
+    for (string, 0..) |character, index| {
+        _ = character;
+        _ = index;
+    }
+
+    for (string, 0..) |_, index| {
+        _ = index;
+    }
+}
+```

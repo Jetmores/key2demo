@@ -62,6 +62,36 @@ test "if statement expression" {
 }
 ```
 
+### switch
+```zig
+test "switch expression" {
+    var x: i8 = 10;
+    x = switch (x) {
+        -1...1 => -x,
+        10, 100 => @divExact(x, 10),
+        else => x,
+    };
+    try expect(x == 1);
+}
+```
+
+### unreachable
+noreturn type, can coerce to any other type.
+```zig
+fn asciiToUpper(x: u8) u8 {
+    return switch (x) {
+        'a'...'z' => x + 'A' - 'a',
+        'A'...'Z' => x,
+        else => unreachable,
+    };
+}
+
+test "unreachable switch" {
+    try expect(asciiToUpper('a') == 'A');
+    try expect(asciiToUpper('A') == 'A');
+}
+```
+
 ### while
 ```zig
 test "while with continue" {
@@ -125,6 +155,7 @@ test "multi defer" {
 ```
 
 ### error:like enum
+try x is a shortcut for x catch |err| return err
 ```zig
 const FileOpenError = error{
     AccessDenied,
@@ -138,5 +169,134 @@ test "coerce error from a subset to a superset" {
     const err: FileOpenError = AllocationError.OutOfMemory;
     try expect(err == FileOpenError.OutOfMemory);
 }
+
+fn failingFunction() error{Oops}!void {
+    return error.Oops;
+}
+
+test "returning an error" {
+    failingFunction() catch |err| {
+        try expect(err == error.Oops);
+        return;
+    };
+}
+
+var problems: u32 = 98;
+
+fn failFnCounter() error{Oops}!void {
+    errdefer problems += 1;
+    try failingFunction();
+}
+
+test "errdefer" {
+    failFnCounter() catch |err| {
+        try expect(err == error.Oops);
+        try expect(problems == 99);
+        return;
+    };
+}
+
+fn createFile() !void {
+    return error.AccessDenied;
+}
+
+test "inferred error set" {
+    //type coercion successfully takes place
+    const x: error{AccessDenied}!void = createFile();
+
+    //Zig does not let us ignore error unions via _ = x;
+    //we must unwrap it with "try", "catch", or "if" by any means
+    _ = x catch {};
+}
+
+//Error sets can be merged
+const A = error{ NotDir, PathNotFound };
+const B = error{ OutOfMemory, PathNotFound };
+const C = A || B;
+//anyerror is the global error set, which due to being the superset of all error sets, can have an error from any set coerced to it.
 ```
 
+### setRuntimeSafety
+```zig
+test "out of bounds" {
+    @setRuntimeSafety(false);
+    const a = [3]u8{ 1, 2, 3 };
+    var index: u8 = 5;
+    const b = a[index];
+    _ = b;
+}
+```
+
+### @Vector
+```zig
+test "Basic vector usage" {
+    // Vectors have a compile-time known length and base type.
+    const a = @Vector(4, i32){ 1, 2, 3, 4 };
+    const b = @Vector(4, i32){ 5, 6, 7, 8 };
+
+    // Math operations take place element-wise.
+    const c = a + b;
+
+    // Individual vector elements can be accessed using array indexing syntax.
+    try expectEqual(12, c[3]);
+    try expect(12 == c[3]);
+    try expect(std.meta.eql(c, @Vector(4, i32){ 6, 8, 10, 12 }));
+}
+
+test "Conversion between vectors, arrays, and slices" {
+    // Vectors and fixed-length arrays can be automatically assigned back and forth
+    var arr1: [4]f32 = [_]f32{ 1.1, 3.2, 4.5, 5.6 };
+    var vec: @Vector(4, f32) = arr1;
+    var arr2: [4]f32 = vec;
+    try expectEqual(arr1, arr2);
+
+    // You can also assign from a slice with comptime-known length to a vector using .*
+    try expect(@TypeOf(arr1[1..3]) == (*[2]f32));
+    try expect(@TypeOf(arr1[1..3].*) == ([2]f32));
+    const vec2: @Vector(2, f32) = arr1[1..3].*;
+
+    var slice: []const f32 = &arr1;
+    var offset: u32 = 1;
+    const vec3: @Vector(2, f32) = slice[offset..][0..2].*;
+    try expectEqual(slice[offset], vec2[0]);
+    try expectEqual(slice[offset + 1], vec2[1]);
+    try expectEqual(vec2, vec3);
+}
+```
+
+### pointer
+* *T :ptr.*
+* [*]T :索引,切片,偏移.ptr[i],ptr[start..end],ptr + x,ptr - x
+* []T :索引,切片,长度.array_ptr[i],array_ptr[start..end],array_ptr.len
+* *[N]T :索引,切片,长度.array_ptr[i],array_ptr[start..end],array_ptr.len  相当于数组的指针,.*解引用得数组,且可直接赋值给切片
+try expect(@TypeOf(arr1[1..3]) == (*[2]f32));  
+try expect(@TypeOf(arr1[1..3].*) == ([2]f32));  
+try expect(@TypeOf(&arr1) == (*[4]f32));  
+var slice: []const f32 = &arr1;  
+var ptr: [*]const i32 = &array;  
+```zig
+fn increment(num: *u8) void {
+    num.* += 1;
+}
+
+test "pointers" {
+    var x: u8 = 1;
+    increment(&x);
+    try expect(x == 2);
+    try expect(@sizeOf(usize) == @sizeOf(*u8));
+    try expect(@sizeOf(isize) == @sizeOf(*u8));
+}
+
+test "@intFromPtr and @ptrFromInt" {
+    const ptr: *i32 = @ptrFromInt(0xdeadbee0);
+    const addr = @intFromPtr(ptr);
+    try expect(@TypeOf(addr) == usize);
+    try expect(addr == 0xdeadbee0);
+}
+
+test "allowzero" {
+    var zero: usize = 0;
+    var ptr: *allowzero i32 = @ptrFromInt(zero);
+    try expect(@intFromPtr(ptr) == 0);
+}
+```

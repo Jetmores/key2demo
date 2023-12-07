@@ -291,3 +291,61 @@ test "allowzero" {
     var ptr: *allowzero i32 = @ptrFromInt(zero);
     try expect(@intFromPtr(ptr) == 0);
 }
+
+const Value2 = enum(u32) {
+    hundred = 100,
+    thousand = 1000,
+    million = 1000000,
+    next,
+};
+
+test "set enum ordinal value" {
+    try expect(@intFromEnum(Value2.hundred) == 100);
+    try expect(@intFromEnum(Value2.thousand) == 1000);
+    try expect(@intFromEnum(Value2.million) == 1000000);
+    try expect(@intFromEnum(Value2.next) == 1000001);
+}
+
+const Suit = enum {
+    var count: u32 = 0;
+    clubs,
+    spades,
+    diamonds,
+    hearts,
+    pub fn isClubs(self: Suit) bool {
+        return self == Suit.clubs;
+    }
+};
+
+test "enum method" {
+    Suit.count += 1;
+    try expect(Suit.count == 1);
+    try expect(Suit.spades.isClubs() == Suit.isClubs(.spades));
+}
+
+const Vec4 = struct { x: f32, y: f32, z: f32 = 0, w: f32 = undefined };
+
+test "struct defaults" {
+    const my_vector = Vec4{
+        .x = 25,
+        .y = -50,
+    };
+    _ = my_vector;
+}
+
+const Stuff = struct {
+    x: i32,
+    y: i32,
+    fn swap(self: *Stuff) void {
+        const tmp = self.x;
+        self.x = self.y;
+        self.y = tmp;
+    }
+};
+
+test "automatic dereference" {
+    var thing = Stuff{ .x = 10, .y = 20 };
+    thing.swap();
+    try expect(thing.x == 20);
+    try expect(thing.y == 10);
+}

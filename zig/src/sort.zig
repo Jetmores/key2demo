@@ -95,3 +95,11 @@ test "coerce error from a subset to a superset" {
     const err: FileOpenError = AllocationError.OutOfMemory;
     try expect(err == FileOpenError.OutOfMemory);
 }
+
+test "widening" {
+    const a: u16 = 1024;
+    const b: u16 = 512;
+
+    const c: u32 = @as(u32, a) * b;
+    try std.testing.expect(c == 1024 * 512);
+}

@@ -133,6 +133,7 @@ const FileOpenError = error{
 };
 const AllocationError = error{OutOfMemory};
 
+//一种自动提升
 test "coerce error from a subset to a superset" {
     const err: FileOpenError = AllocationError.OutOfMemory;
     try expect(err == FileOpenError.OutOfMemory);

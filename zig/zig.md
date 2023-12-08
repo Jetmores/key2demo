@@ -111,7 +111,7 @@ pub fn main() anyerror!void {
 7. *[Auto/String]ArrayHashMap[Unmanaged]* 特化遍历(空间换时间),否则用HashMap
 8. <https://github.com/ziglang/std-lib-orphanage/tree/master>
     * std.rb.Tree
-    * std.BloomFilter
+    * std.BloomFilter:用来检测一个元素是否在一个集合中,它的优点是空间效率高，查询速度快，缺点是有一定的误判率和删除困难;桶为1 bit(优化空间),多个hash函数将多个bit置为1,以此表示某个key存在(元素越多,冲突概率越大),不存在则一定不存在
 
 ### ?manpage ?search
 1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增

@@ -401,6 +401,23 @@ test "automatic dereference" {
     try expect(thing.x == 20);
     try expect(thing.y == 10);
 }
+
+test "tuple" {
+    const values = .{
+        @as(u32, 1234),
+        @as(f64, 12.34),
+        true,
+        "hi",
+    } ++ .{false} ** 2;
+    try expect(values[0] == 1234);
+    try expect(values[4] == false);
+    inline for (values, 0..) |v, i| {
+        if (i != 2) continue;
+        try expect(v);
+    }
+    try expect(values.len == 6);
+    try expect(values.@"3"[0] == 'h');
+}
 ```
 
 ### union
@@ -419,6 +436,23 @@ test "switch on tagged union" {
     try expect(value.b == 3);
 }
 const Tagged2 = union(enum) { a: u8, b: f32, c: bool, none };
+```
+
+### opaque  
+The typical usecase of opaque is to maintain type safety when interoperating with C code that does not expose complete type information.
+```zig
+const Window = opaque {
+    fn show(self: *Window) void {
+        show_window(self);
+    }
+};
+
+extern fn show_window(*Window) callconv(.C) void;
+
+test "opaque with declarations" {
+    var main_window: *Window = undefined;
+    main_window.show();
+}
 ```
 
 ### Integer Rules ?提升(自动)  

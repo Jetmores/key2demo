@@ -312,6 +312,7 @@ try expect(@TypeOf(arr1[1..3].*) == ([2]f32));
 try expect(@TypeOf(&arr1) == (*[4]f32));  
 var slice: []const f32 = &arr1;  
 var ptr: [*]const i32 = &array;  
+var ptr2: [*]const i32 = slice.ptr;  
 ```zig
 fn increment(num: *u8) void {
     num.* += 1;
@@ -336,6 +337,37 @@ test "allowzero" {
     var zero: usize = 0;
     var ptr: *allowzero i32 = @ptrFromInt(zero);
     try expect(@intFromPtr(ptr) == 0);
+}
+
+//[N:t]T, [:t]T, and [*:t]T, where t is a value of the child type T
+test "sentinel termination" {
+    const terminated = [3:0]u8{ 3, 2, 1 };
+    try expect(terminated.len == 3);
+    try expect(@as(*const [4]u8, @ptrCast(&terminated))[3] == 0);
+}
+
+test "string literal" {
+    try expect(@TypeOf("hello") == *const [5:0]u8);
+}
+
+test "C string" {
+    const c_string: [*:0]const u8 = "hello";
+    const x: [*]const u8 = c_string;
+    _ = x;
+    var array: [5]u8 = undefined;
+
+    var i: usize = 0;
+    while (c_string[i] != 0) : (i += 1) {
+        array[i] = c_string[i];
+    }
+}
+
+test "sentinel terminated slicing" {
+    var x = [_:0]u8{255} ** 3;
+    const y = x[0..3 :0];
+    try expect(x[0] == 255);
+    try expect(x[3] == 0);
+    _ = y;
 }
 ```
 
@@ -500,5 +532,152 @@ test "int-float conversion" {
     const b = @as(f32, @floatFromInt(a)); //safe
     const c = @as(i32, @intFromFloat(b)); //detectable illegal behaviour
     try expect(c == a);
+}
+```
+
+### comptime
+```zig
+test "comptime blocks" {
+    var x = comptime fibonacci(10);
+    _ = x;
+
+    var y = comptime blk: {
+        break :blk fibonacci(10);
+    };
+    _ = y;
+}
+
+//comptime_int values coerce to any integer type that can hold them. They also coerce to floats. Character literals are of this type
+test "comptime_int" {
+    const a = 12;
+    const b = a + 10;
+
+    const c: u4 = a;
+    _ = c;
+    const d: f32 = b;
+    _ = d;
+}
+//comptime_float is also available, which internally is an f128. These cannot be coerced to integers, even if they hold an integer value.
+
+//array:++,** also comptime
+
+//We can use the @Type function to create a type from a @typeInfo
+fn GetBiggerInt(comptime T: type) type {
+    return @Type(.{
+        .Int = .{
+            .bits = @typeInfo(T).Int.bits + 1,
+            .signedness = @typeInfo(T).Int.signedness,
+        },
+    });
+}
+
+test "@Type" {
+    try expect(GetBiggerInt(u8) == u9);
+    try expect(GetBiggerInt(i31) == i32);
+}
+```
+
+### optional ?T:null or value of T
+```zig
+test "orelse" {
+    var a: ?f32 = null;
+    var b = a orelse 0;
+    try expect(b == 0);
+    try expect(@TypeOf(b) == f32);
+}
+
+test "orelse unreachable" {
+    const a: ?f32 = 5;
+    const b = a orelse unreachable;
+    const c = a.?;
+    try expect(b == c);
+    try expect(@TypeOf(c) == f32);
+}
+
+//we can “capture” its non-null value;有捕获才能做条件,否则x!=null
+test "if optional payload capture" {
+    const a: ?i32 = 5;
+    if (a) |_| { //if (a != null) {
+        const value = a.?;
+        _ = value;
+    }
+
+    var b: ?i32 = 5;
+    if (b) |*value| {
+        value.* += 1;
+    }
+    try expect(b.? == 6);
+}
+```
+
+### payload capture
+```zig
+//optional-if
+
+//error union if
+test "error union if" {
+    var ent_num: error{UnknownEntity}!u32 = 5;
+    if (ent_num) |entity| {
+        try expect(@TypeOf(entity) == u32);
+        try expect(entity == 5);
+    } else |err| {
+        _ = err catch {};
+        unreachable;
+    }
+}
+
+//while
+var numbers_left2: u32 = undefined;
+
+fn eventuallyErrorSequence() !u32 {
+    return if (numbers_left2 == 0) error.ReachedZero else blk: {
+        numbers_left2 -= 1;
+        break :blk numbers_left2;
+    };
+}
+
+test "while error union capture" {
+    var sum: u32 = 0;
+    numbers_left2 = 3;
+    while (eventuallyErrorSequence()) |value| {
+        sum += value;
+    } else |err| {
+        try expect(err == error.ReachedZero);
+    }
+}
+test "for capture" {
+    const x = [_]i8{ 1, 5, 120, -5 };
+    for (x) |v| try expect(@TypeOf(v) == i8);
+}
+test "for with pointer capture" {
+    var data = [_]u8{ 1, 2, 3 };
+    for (&data) |*byte| byte.* += 1;
+    try expect(std.mem.eql(u8, &data, &[_]u8{ 2, 3, 4 }));
+}
+
+//switch
+const Info = union(enum) {
+    a: u32,
+    b: []const u8,
+    c,
+    d: u32,
+};
+
+test "switch capture" {
+    var b = Info{ .a = 10 };
+    const x = switch (b) {
+        .b => |str| blk: {
+            try expect(@TypeOf(str) == []const u8);
+            break :blk 1;
+        },
+        .c => 2,
+        //if these are of the same type, they
+        //may be inside the same capture group
+        .a, .d => |num| blk: {
+            try expect(@TypeOf(num) == u32);
+            break :blk num * 2;
+        },
+    };
+    try expect(x == 20);
 }
 ```

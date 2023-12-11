@@ -13,7 +13,7 @@ detach-on-fork off;follow-fork-mode parent
 detach-on-fork off;follow-fork-mode child
 
 #汇编
-disassemble
+disas[semble]
 ```
 
 ### 执行文件的第5行命令

@@ -376,7 +376,7 @@ test "integer widening" {
 }
 
 test "@intCast" {
-    const x: u64 = 200;
+    const x: u64 = 255;
     const y = @as(u8, @intCast(x));
     try expect(@TypeOf(y) == u8);
 }

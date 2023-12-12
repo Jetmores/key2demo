@@ -314,8 +314,8 @@ test "Conversion between vectors, arrays, and slices" {
 * [*]T :索引,切片,偏移.ptr[i],ptr[start..end],ptr + x,ptr - x
 * []T :索引,切片,长度.array_ptr[i],array_ptr[start..end],array_ptr.len
 * \*[N]T :索引,切片,长度.array_ptr[i],array_ptr[start..end],array_ptr.len  相当于数组的指针,.\*解引用得数组,且可直接赋值给切片
-try expect(@TypeOf(arr1[1..3]) == (*[2]f32));  
-try expect(@TypeOf(arr1[1..3].*) == ([2]f32));  
+try expect(@TypeOf(arr1[1..3]) == (\*[2]f32));  
+try expect(@TypeOf(arr1[1..3].\*) == ([2]f32));  
 try expect(@TypeOf(&arr1) == (*[4]f32));  
 var slice: []const f32 = &arr1;  
 var ptr: [\*]const i32 = &array;  

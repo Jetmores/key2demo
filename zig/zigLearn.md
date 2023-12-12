@@ -618,7 +618,21 @@ test "if optional payload capture" {
 ```
 
 ### payload capture
+for value  
+option  
+error union  
+switch union  
 ```zig
+test "for capture" {
+    const x = [_]i8{ 1, 5, 120, -5 };
+    for (x) |v| try expect(@TypeOf(v) == i8);
+}
+test "for with pointer capture" {
+    var data = [_]u8{ 1, 2, 3 };
+    for (&data) |*byte| byte.* += 1;
+    try expect(std.mem.eql(u8, &data, &[_]u8{ 2, 3, 4 }));
+}
+
 //optional-if
 
 //error union if
@@ -651,15 +665,6 @@ test "while error union capture" {
     } else |err| {
         try expect(err == error.ReachedZero);
     }
-}
-test "for capture" {
-    const x = [_]i8{ 1, 5, 120, -5 };
-    for (x) |v| try expect(@TypeOf(v) == i8);
-}
-test "for with pointer capture" {
-    var data = [_]u8{ 1, 2, 3 };
-    for (&data) |*byte| byte.* += 1;
-    try expect(std.mem.eql(u8, &data, &[_]u8{ 2, 3, 4 }));
 }
 
 //switch

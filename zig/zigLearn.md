@@ -1,3 +1,4 @@
+## 基础
 ### print log
 ```zig
 std.debug.print("Hello, world!\n", .{});
@@ -692,4 +693,20 @@ test "switch capture" {
     };
     try expect(x == 20);
 }
+```
+
+## 标准模式
+### allocator
+```zig
+
+```
+
+## 构建系统
+```bash
+
+```
+
+## working with c
+```c
+
 ```

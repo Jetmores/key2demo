@@ -6,8 +6,9 @@ try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
 
 占位符:{}默认自适应类型
 c
-d(还有b,o,x,X)
-e(s)
+d(还有b,o,x,X):10进制整型和浮点
+e:科学计数法
+s
 *:指针
 ?:调试信息
 #:打印值的原始16进制
@@ -751,6 +752,34 @@ test "GPA" {
 }
 
 //For high performance (but very few safety features!), std.heap.c_allocator
+```
+
+### ArrayList
+std.ArrayList(T) is similar to C++’s std::vector<T>
+```zig
+const eql = std.mem.eql;
+const ArrayList = std.ArrayList;
+//const test_allocator = std.testing.allocator;
+
+test "arraylist" {
+    //var list = ArrayList(u8).init(test_allocator);
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer {
+        const deinit_status = gpa.deinit();
+        if (deinit_status == .leak) expect(false) catch @panic("TEST FAIL");
+    }
+    const allocator = gpa.allocator();
+    var list = ArrayList(u8).init(allocator);
+    defer list.deinit();
+    try list.append('H');
+    try list.append('e');
+    try list.append('l');
+    try list.append('l');
+    try list.append('o');
+    try list.appendSlice(" World!");
+
+    try expect(eql(u8, list.items, "Hello World!"));
+}
 ```
 
 ## 构建系统

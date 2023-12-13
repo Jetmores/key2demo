@@ -21,6 +21,11 @@ disas[semble]
 sed -n '5p' cmd |bash
 ```
 
+### 批量查找替换文件内容
+```bash
+sed -i 's/LD_LIBRARY_PATH=./LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH/g' *.sh
+```
+
 ### gcc/g++动态库(默认)同时和静态库加载声明
 ```bash
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly

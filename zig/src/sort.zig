@@ -2,6 +2,7 @@
 const std = @import("std");
 const assert = std.debug.assert;
 const mem = std.mem;
+const bufPrint = std.fmt.bufPrint;
 
 //test
 const expect = std.testing.expect;
@@ -677,13 +678,55 @@ test "arena allocator" {
 
 test "GPA" {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
     defer {
         const deinit_status = gpa.deinit();
         //fail test; can't try in defer as defer is executed after we return
         if (deinit_status == .leak) expect(false) catch @panic("TEST FAIL");
     }
+    const allocator = gpa.allocator();
 
     const bytes = try allocator.alloc(u8, 100);
     defer allocator.free(bytes);
+}
+
+const eql = std.mem.eql;
+const ArrayList = std.ArrayList;
+//const test_allocator = std.testing.allocator;
+
+test "arraylist" {
+    //var list = ArrayList(u8).init(test_allocator);
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer {
+        const deinit_status = gpa.deinit();
+        if (deinit_status == .leak) expect(false) catch @panic("TEST FAIL");
+    }
+    const allocator = gpa.allocator();
+    var list = ArrayList(u8).init(allocator);
+    defer list.deinit();
+    try list.append('H');
+    try list.append('e');
+    try list.append('l');
+    try list.append('l');
+    try list.append('o');
+    try list.appendSlice(" World!");
+
+    try expect(eql(u8, list.items, "Hello World!"));
+}
+
+test "print d" {
+    var y: i32 = 255;
+
+    y += 1;
+
+    std.debug.print("\n{d}", .{y});
+    try expect(y == 256);
+}
+
+test "decimal float" {
+    var b: [4]u8 = undefined;
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{d}", .{1605}),
+        "1605",
+    ));
 }

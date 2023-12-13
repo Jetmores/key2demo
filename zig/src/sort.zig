@@ -719,7 +719,9 @@ test "print d" {
 
     y += 1;
 
-    std.debug.print("y:{d}\n", .{y});
+    std.debug.print("y:{#}\t", .{&y});
+    std.debug.print("y:{*}\t", .{&y});
+    std.debug.print("y:{?}\n", .{y});
     try expect(y == 256);
 }
 
@@ -752,4 +754,49 @@ test "hello world" {
         "Hello, {s}!\n",
         .{"World"},
     );
+}
+
+test "position" {
+    var b: [3]u8 = undefined;
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{0s}{0s}{1s}", .{ "a", "b" }),
+        "aab",
+    ));
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{0s}{1s}{1s}", .{ "a", "b" }),
+        "abb",
+    ));
+}
+
+test "precision" {
+    var b: [16]u8 = undefined;
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{d:.7}", .{3.1415926535897}),
+        "3.1415927",
+    ));
+}
+
+test "fill, alignment, width" {
+    var b: [6]u8 = undefined;
+
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{s: <5}", .{"hi!"}),
+        "hi!  ",
+    ));
+
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{s:_^6}", .{"hi!"}),
+        "_hi!__",
+    ));
+
+    try expect(eql(
+        u8,
+        try bufPrint(&b, "{s:!>4}", .{"hi?"}),
+        "!hi?",
+    ));
 }

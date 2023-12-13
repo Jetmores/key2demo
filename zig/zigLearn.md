@@ -1,5 +1,5 @@
 ## 基础
-### print log
+### print
 ```zig
 std.debug.print("Hello, world!\n", .{});
 try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
@@ -11,9 +11,23 @@ e:科学计数法
 s
 *:指针
 ?:调试信息
-#:打印值的原始16进制
+//#:打印值的原始16进制--暂不知和*有啥区别
+```
+{[position][specifier]:[fill][alignment][width].[precision]}
+| Name | Meaning |
+| :---: | :---: |
+| Position | The index of the argument that should be inserted |
+| Specifier | A type-dependent formatting option |
+| Fill | A single character used for padding |
+| Alignment | One of three characters ‘<’, ‘^’ or ‘>’; these are for left, middle and right alignment |
+| Width | The total width of the field (characters) |
+| Precision | How many decimals a formatted number should have |
 
+try expect(eql(u8,try bufPrint(&b, "{d:.2}", .{3.14159}),"3.14",));  
+try expect(eql(u8,try bufPrint(&b, "{s:_^6}", .{"hi!"}),"_hi!__",));
 
+### log
+```zig
 /// The default log level is based on build mode.
 pub const default_level: Level = switch (builtin.mode) {
     .Debug => .debug,

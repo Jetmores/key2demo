@@ -7,6 +7,7 @@ const bufPrint = std.fmt.bufPrint;
 //test
 const expect = std.testing.expect;
 const expectEqual = std.testing.expectEqual;
+const test_allocator = std.testing.allocator;
 
 pub fn main() !void {
     var a = [_]i32{ 9, 3, 1, 5, 2, 7, 3, 8 };
@@ -718,7 +719,7 @@ test "print d" {
 
     y += 1;
 
-    std.debug.print("\n{d}", .{y});
+    std.debug.print("y:{d}\n", .{y});
     try expect(y == 256);
 }
 
@@ -729,4 +730,26 @@ test "decimal float" {
         try bufPrint(&b, "{d}", .{1605}),
         "1605",
     ));
+}
+
+test "print" {
+    var list = std.ArrayList(u8).init(test_allocator);
+    defer list.deinit();
+    try list.writer().print(
+        "{} + {} = {}",
+        .{ 9, 10, 19 },
+    );
+    try expect(eql(u8, list.items, "9 + 10 = 19"));
+    for (list.items) |v| {
+        std.debug.print("{}\t", .{v});
+    }
+    std.debug.print("\n", .{});
+}
+
+test "hello world" {
+    const out_file = std.io.getStdOut();
+    try out_file.writer().print(
+        "Hello, {s}!\n",
+        .{"World"},
+    );
 }

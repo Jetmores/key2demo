@@ -771,6 +771,10 @@ test "GPA" {
 ### ArrayList
 std.ArrayList(T) is similar to C++’s std::vector<T>
 ```zig
+//try list.append('o');
+//try list.appendSlice(" World!");
+//open = stack.pop()
+
 const eql = std.mem.eql;
 const ArrayList = std.ArrayList;
 //const test_allocator = std.testing.allocator;
@@ -875,13 +879,198 @@ test "fetchPut" {
 ```
 
 ### std.mem.sort
+std.sort.sort has a best case of O(n), and an average and worst case of O(n*log(n)).
 ```zig
+test "sorting" {
+    var data = [_]u8{ 10, 240, 0, 0, 10, 5 };
+    std.mem.sort(u8, &data, {}, comptime std.sort.asc(u8));
+    try expect(eql(u8, &data, &[_]u8{ 0, 0, 5, 10, 10, 240 }));
+    std.mem.sort(u8, &data, {}, comptime std.sort.desc(u8));
+    try expect(eql(u8, &data, &[_]u8{ 240, 10, 10, 5, 0, 0 }));
+}
+```
 
+### iterator
+```zig
+test "split iterator" {
+    const text = "robust, optimal, reusable, maintainable, ";
+    var iter = std.mem.split(u8, text, ", ");
+    try expect(eql(u8, iter.next().?, "robust"));
+    try expect(eql(u8, iter.next().?, "optimal"));
+    try expect(eql(u8, iter.next().?, "reusable"));
+    try expect(eql(u8, iter.next().?, "maintainable"));
+    try expect(eql(u8, iter.next().?, ""));
+    try expect(iter.next() == null);
+}
+
+test "iterator looping" {
+    var iter = (try std.fs.cwd().openIterableDir(
+        ".",
+        .{},
+    )).iterate();
+
+    var file_count: usize = 0;
+    while (try iter.next()) |entry| {
+        if (entry.kind == .file) file_count += 1;
+    }
+
+    try expect(file_count > 0);
+}
+
+//try to implement a custom iterator
 ```
 
 ### Filesystem
 ```zig
+test "createFile, write, seekTo, read" {
+    const file = try std.fs.cwd().createFile(
+        "junk_file.txt",
+        .{ .read = true },
+    );
+    defer file.close();
 
+    const bytes_written = try file.writeAll("Hello File!");
+    _ = bytes_written;
+
+    var buffer: [100]u8 = undefined;
+    try file.seekTo(0);
+    const bytes_read = try file.readAll(&buffer);
+
+    try expect(eql(u8, buffer[0..bytes_read], "Hello File!"));
+}
+
+test "file stat" {
+    const file = try std.fs.cwd().createFile(
+        "junk_file2.txt",
+        .{ .read = true },
+    );
+    defer file.close();
+    const stat = try file.stat();
+    try expect(stat.size == 0);
+    try expect(stat.kind == .file);
+    try expect(stat.ctime <= std.time.nanoTimestamp());
+    try expect(stat.mtime <= std.time.nanoTimestamp());
+    try expect(stat.atime <= std.time.nanoTimestamp());
+}
+
+test "make dir" {
+    try std.fs.cwd().makeDir("test-tmp");
+    var iter_dir = try std.fs.cwd().openIterableDir(
+        "test-tmp",
+        .{},
+    );
+    defer {
+        iter_dir.close();
+        std.fs.cwd().deleteTree("test-tmp") catch unreachable;
+    }
+
+    _ = try iter_dir.dir.createFile("x", .{});
+    _ = try iter_dir.dir.createFile("y", .{});
+    _ = try iter_dir.dir.createFile("z", .{});
+
+    var file_count: usize = 0;
+    var iter = iter_dir.iterate();
+    while (try iter.next()) |entry| {
+        if (entry.kind == .file) file_count += 1;
+    }
+
+    try expect(file_count == 3);
+}
+```
+
+### json
+```zig
+test "json parse" {
+    const parsed = try std.json.parseFromSlice(
+        Place,
+        test_allocator,
+        \\{ "lat": 40.684540, "long": -74.401422 }
+    ,
+        .{},
+    );
+    defer parsed.deinit();
+
+    const place = parsed.value;
+
+    try expect(place.lat == 40.684540);
+    try expect(place.long == -74.401422);
+}
+
+test "json stringify" {
+    const x = Place{
+        .lat = 51.997664,
+        .long = -0.740687,
+    };
+
+    var buf: [100]u8 = undefined;
+    var fba = std.heap.FixedBufferAllocator.init(&buf);
+    var string = std.ArrayList(u8).init(fba.allocator());
+    try std.json.stringify(x, .{}, string.writer());
+
+    try expect(eql(u8, string.items,
+        \\{"lat":5.199766540527344e+01,"long":-7.406870126724243e-01}
+    ));
+}
+
+```
+
+### Reader amd Writer
+```zig
+
+```
+
+### rand
+```zig
+test "random numbers" {
+    var prng = std.rand.DefaultPrng.init(blk: {
+        var seed: u64 = undefined;
+        try std.os.getrandom(std.mem.asBytes(&seed));
+        break :blk seed;
+    });
+    const rand = prng.random();
+
+    const a = rand.float(f32);
+    const b = rand.boolean();
+    const c = rand.int(u8);
+    const d = rand.intRangeAtMost(u8, 0, 255);
+
+    //suppress unused constant compile error
+    _ = .{ a, b, c, d };
+}
+
+test "crypto random numbers" {
+    const rand = std.crypto.random;
+
+    const a = rand.float(f32);
+    const b = rand.boolean();
+    const c = rand.int(u8);
+    const d = rand.intRangeAtMost(u8, 0, 255);
+
+    //suppress unused constant compile error
+    _ = .{ a, b, c, d };
+}
+```
+
+### std.Thread
+```zig
+//While Zig provides more advanced ways of writing concurrent and parallel code, std.Thread is available for making use of OS threads.
+//Threads, however, aren’t particularly useful without strategies for thread safety.
+fn ticker(step: u8) void {
+    while (true) {
+        std.time.sleep(1 * std.time.ns_per_s);
+        tick += @as(isize, step);
+    }
+}
+
+var tick: isize = 0;
+
+test "threading" {
+    var thread = try std.Thread.spawn(.{}, ticker, .{@as(u8, 1)});
+    _ = thread;
+    try expect(tick == 0);
+    std.time.sleep(3 * std.time.ns_per_s / 2);
+    try expect(tick == 1);
+}
 ```
 
 ## 构建系统

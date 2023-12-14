@@ -52,6 +52,9 @@ test "sort case" {
     try expect(usize == @TypeOf(a.len));
     insertSort(i32, a[0..], 0, 8);
     try expect(mem.eql(i32, &a, &[_]i32{ 1, 2, 3, 3, 5, 7, 8, 9 }));
+    var x = [_]i32{};
+    try expect(usize == @TypeOf(x.len));
+    try expect(0 == x.len);
 }
 
 test "for" {
@@ -871,4 +874,127 @@ test "fetchPut" {
 
     try expect(old.?.value == 10);
     try expect(map.get(255).? == 100);
+}
+
+test "sorting" {
+    var data = [_]u8{ 10, 240, 0, 0, 10, 5 };
+    std.mem.sort(u8, &data, {}, comptime std.sort.asc(u8));
+    try expect(std.mem.eql(u8, &data, &[_]u8{ 0, 0, 5, 10, 10, 240 }));
+    std.mem.sort(u8, &data, {}, comptime std.sort.desc(u8));
+    try expect(eql(u8, &data, &[_]u8{ 240, 10, 10, 5, 0, 0 }));
+}
+
+test "split iterator" {
+    const text = "robust, optimal, reusable, maintainable, ";
+    var iter = std.mem.split(u8, text, ", ");
+    try expect(eql(u8, iter.next().?, "robust"));
+    try expect(eql(u8, iter.next().?, "optimal"));
+    try expect(eql(u8, iter.next().?, "reusable"));
+    try expect(eql(u8, iter.next().?, "maintainable"));
+    try expect(eql(u8, iter.next().?, ""));
+    try expect(iter.next() == null);
+}
+
+test "iterator looping" {
+    var iter = (try std.fs.cwd().openIterableDir(
+        ".",
+        .{},
+    )).iterate();
+
+    var file_count: usize = 0;
+    while (try iter.next()) |entry| {
+        if (entry.kind == .file) file_count += 1;
+    }
+
+    try expect(file_count > 0);
+}
+
+const ContainsIterator = struct {
+    strings: []const []const u8,
+    needle: []const u8,
+    index: usize = 0,
+    fn next(self: *ContainsIterator) ?[]const u8 {
+        const index = self.index;
+        for (self.strings[index..]) |string| {
+            self.index += 1;
+            if (std.mem.indexOf(u8, string, self.needle)) |_| {
+                return string;
+            }
+        }
+        return null;
+    }
+};
+
+test "custom iterator" {
+    var iter = ContainsIterator{
+        .strings = &[_][]const u8{ "one", "two", "three" },
+        .needle = "e",
+    };
+
+    try expect(eql(u8, iter.next().?, "one"));
+    try expect(eql(u8, iter.next().?, "three"));
+    try expect(iter.next() == null);
+}
+
+test "random numbers" {
+    var prng = std.rand.DefaultPrng.init(blk: {
+        var seed: u64 = undefined;
+        try std.os.getrandom(std.mem.asBytes(&seed));
+        break :blk seed;
+    });
+    const rand = prng.random();
+
+    const a = rand.float(f32);
+    const b = rand.boolean();
+    const c = rand.int(u8);
+    const d = rand.intRangeAtMost(u8, 0, 255);
+
+    //suppress unused constant compile error
+    _ = .{ a, b, c, d };
+}
+
+test "crypto random numbers" {
+    const rand = std.crypto.random;
+
+    const a = rand.float(f32);
+    const b = rand.boolean();
+    const c = rand.int(u8);
+    const d = rand.intRangeAtMost(u8, 0, 255);
+
+    //suppress unused constant compile error
+    _ = .{ a, b, c, d };
+}
+
+const Place = struct { lat: f32, long: f32 };
+
+test "json parse" {
+    const parsed = try std.json.parseFromSlice(
+        Place,
+        test_allocator,
+        \\{ "lat": 40.684540, "long": -74.401422 }
+    ,
+        .{},
+    );
+    defer parsed.deinit();
+
+    const place = parsed.value;
+
+    try expect(place.lat == 40.684540);
+    try expect(place.long == -74.401422);
+}
+
+test "json stringify" {
+    const x = Place{
+        .lat = 51.997664,
+        .long = -0.740687,
+    };
+
+    var buf: [100]u8 = undefined;
+    var fba = std.heap.FixedBufferAllocator.init(&buf);
+    var string = std.ArrayList(u8).init(fba.allocator());
+    try std.json.stringify(x, .{}, string.writer());
+
+    try expect(eql(u8, string.items,
+        \\{"lat":5.199766540527344e+01,"long":-7.406870126724243e-01}
+    ));
 }

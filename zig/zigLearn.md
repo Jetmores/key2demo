@@ -830,6 +830,9 @@ test "stack" {
 
 ### HashMap
 ```zig
+//m.put(k,v)
+//const old = try map.fetchPut(255, 100);
+//try expect(map.get(255).? == 100);
 test "hashing" {
     const Point = struct { x: i32, y: i32 };
 

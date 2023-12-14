@@ -998,3 +998,41 @@ test "json stringify" {
         \\{"lat":5.199766540527344e+01,"long":-7.406870126724243e-01}
     ));
 }
+
+const MyByteList = struct {
+    data: [100]u8 = undefined,
+    items: []u8 = &[_]u8{},
+
+    const Writer = std.io.Writer(
+        *MyByteList,
+        error{EndOfBuffer},
+        appendWrite,
+    );
+
+    fn appendWrite(
+        self: *MyByteList,
+        data: []const u8,
+    ) error{EndOfBuffer}!usize {
+        if (self.items.len + data.len > self.data.len) {
+            return error.EndOfBuffer;
+        }
+        std.mem.copy(
+            u8,
+            self.data[self.items.len..],
+            data,
+        );
+        self.items = self.data[0 .. self.items.len + data.len];
+        return data.len;
+    }
+
+    fn writer(self: *MyByteList) Writer {
+        return .{ .context = self };
+    }
+};
+
+test "custom writer" {
+    var bytes = MyByteList{};
+    _ = try bytes.writer().write("Hello");
+    _ = try bytes.writer().write(" Writer!");
+    try expect(eql(u8, bytes.items, "Hello Writer!"));
+}

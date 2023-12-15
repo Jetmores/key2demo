@@ -1184,6 +1184,20 @@ zig build -Dtarget=x86_64-linux-gnu -Doptimize=ReleaseFast
 ```
 
 ## working with c
+| Type | C Equivalent | Minimum Size(bits) |
+| :---: | :---: | :---: |
+| bool | bool | 1/8 |
+| c_char | char | 8 |
+| c_short | short | 16 |
+| c_ushort | unsigned short | 16 |
+| c_int | int | 16 |
+| c_uint | unsigned int | 16 |
+| c_long | long | 32 |
+| c_ulong | unsigned long | 32 |
+| c_longlong | long long | 64 |
+| c_ulonglong | unsigned long long | 64 |
+| c_longdouble | long double | N/A |
+| anyopaque | void | N/A |
 ```c
 
 ```

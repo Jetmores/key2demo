@@ -1172,8 +1172,15 @@ test "threading" {
 ```
 
 ## 构建系统
+### build command
 ```bash
+# zig [build-exe|build-lib|run|test] [options] [files]
+zig build-exe -lc -target x86_64-linux-musl -O ReleaseFast -fstrip hi.zig
+# 生成文档-femit-docs,build.zig也可docs.emit_docs = .emit;
+# zig build-lib -femit-docs x.zig -target native-windows
 
+# zig build install -h 仅在build.zig存在时有效
+zig build -Dtarget=x86_64-linux-gnu -Doptimize=ReleaseFast
 ```
 
 ## working with c

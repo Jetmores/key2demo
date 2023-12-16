@@ -1036,3 +1036,124 @@ test "custom writer" {
     _ = try bytes.writer().write(" Writer!");
     try expect(eql(u8, bytes.items, "Hello Writer!"));
 }
+
+const Data = extern struct { a: i32, b: u8, c: f32, d: bool, e: bool };
+
+test "hmm" {
+    const x = Data{
+        .a = 10005,
+        .b = 42,
+        .c = -10.5,
+        .d = false,
+        .e = true,
+    };
+    const z = @as([*]const u8, @ptrCast(&x));
+
+    try expect(@as(*const i32, @ptrCast(@alignCast(z))).* == 10005);
+    try expect(@as(*const u8, @ptrCast(@alignCast(z + 4))).* == 42);
+    try expect(@as(*const f32, @ptrCast(@alignCast(z + 8))).* == -10.5);
+    try expect(@as(*const bool, @ptrCast(@alignCast(z + 12))).* == false);
+    try expect(@as(*const bool, @ptrCast(@alignCast(z + 13))).* == true);
+}
+
+const builtin = @import("builtin");
+
+test "variable alignment" {
+    var x: i32 = 1234;
+    const align_of_i32 = @alignOf(@TypeOf(x));
+    try expect(@TypeOf(&x) == *i32);
+    try expect(*i32 == *align(align_of_i32) i32);
+    if (builtin.target.cpu.arch == .x86_64) {
+        try expect(@typeInfo(*i32).Pointer.alignment == 4);
+        try expect(@alignOf(*i32) == 8);
+    }
+}
+
+var foo: u8 align(4) = 100;
+//var foo: align(4) u8 = 100;//error
+
+test "global variable alignment" {
+    try expect(@typeInfo(@TypeOf(&foo)).Pointer.alignment == 4);
+    try expect(@TypeOf(&foo) == *align(4) u8);
+    const as_pointer_to_array: *align(4) [1]u8 = &foo;
+    const as_slice: []align(4) u8 = as_pointer_to_array;
+    const as_unaligned_slice: []u8 = as_slice;
+    try expect(as_unaligned_slice[0] == 100);
+}
+
+fn derp() align(@sizeOf(usize) * 2) i32 {
+    return 1234;
+}
+fn noop1() align(1) void {}
+fn noop4() align(4) void {}
+
+test "function alignment" {
+    try expect(derp() == 1234);
+    try expect(@TypeOf(noop1) == fn () align(1) void);
+    try expect(@TypeOf(noop4) == fn () align(4) void);
+    noop1();
+    noop4();
+}
+
+fn total(a: *align(64) const [64]u8) u32 {
+    var sum: u32 = 0;
+    for (a) |elem| sum += elem;
+    return sum;
+}
+
+test "passing aligned data" {
+    const x align(128) = [1]u8{10} ** 64;
+    try expect(total(&x) == 640);
+}
+
+const b1: u64 align(1) = 100;
+const b2 align(1) = @as(u64, 100);
+
+test "aligned pointers" {
+    const a: u32 align(8) = 257;
+    try expect(@TypeOf(&a) == *align(8) const u32);
+}
+
+const MovementState = packed struct {
+    running: bool,
+    crouching: bool,
+    jumping: bool,
+    in_air: bool,
+};
+
+test "packed struct size" {
+    try expect(@sizeOf(MovementState) == 1);
+    try expect(@bitSizeOf(MovementState) == 4);
+    const state = MovementState{
+        .running = true,
+        .crouching = true,
+        .jumping = true,
+        .in_air = true,
+    };
+    _ = state;
+}
+
+test "bit aligned pointers" {
+    var x = MovementState{
+        .running = false,
+        .crouching = false,
+        .jumping = false,
+        .in_air = false,
+    };
+
+    const running = &x.running;
+    running.* = true;
+
+    const crouching = &x.crouching;
+    crouching.* = true;
+
+    try expect(@TypeOf(running) == *align(1:0:1) bool);
+    try expect(@TypeOf(crouching) == *align(1:1:1) bool);
+
+    try expect(@import("std").meta.eql(x, .{
+        .running = true,
+        .crouching = true,
+        .jumping = false,
+        .in_air = false,
+    }));
+}

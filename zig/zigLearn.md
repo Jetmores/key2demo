@@ -1173,6 +1173,7 @@ test "threading" {
 
 ## 构建系统
 ### build command
+Linking libc can be done via the command line via -lc, or via build.zig using exe.linkLibC();.
 ```bash
 # zig [build-exe|build-lib|run|test] [options] [files]
 zig build-exe -lc -target x86_64-linux-musl -O ReleaseFast -fstrip hi.zig
@@ -1184,7 +1185,7 @@ zig build -Dtarget=x86_64-linux-gnu -Doptimize=ReleaseFast
 ```
 
 ## working with c
-bool,char,long double
+### bool,char,long double
 | Type | C Equivalent | Minimum Size(bits) |
 | :---: | :---: | :---: |
 | bool | bool | 1/8 |
@@ -1199,6 +1200,149 @@ bool,char,long double
 | c_ulonglong | unsigned long long | 64 |
 | c_longdouble | long double | N/A |
 | anyopaque | void | N/A |
-```c
 
+### extern struct
+```zig
+const expect = @import("std").testing.expect;
+
+const Data = extern struct { a: i32, b: u8, c: f32, d: bool, e: bool };
+
+test "hmm" {
+    const x = Data{
+        .a = 10005,
+        .b = 42,
+        .c = -10.5,
+        .d = false,
+        .e = true,
+    };
+    const z = @as([*]const u8, @ptrCast(&x));
+
+    try expect(@as(*const i32, @ptrCast(@alignCast(z))).* == 10005);
+    try expect(@as(*const u8, @ptrCast(@alignCast(z + 4))).* == 42);
+    try expect(@as(*const f32, @ptrCast(@alignCast(z + 8))).* == -10.5);
+    try expect(@as(*const bool, @ptrCast(@alignCast(z + 12))).* == false);
+    try expect(@as(*const bool, @ptrCast(@alignCast(z + 13))).* == true);
+}
+```
+
+### align
+```zig
+const b1: u64 align(1) = 100;
+const b2 align(1) = @as(u64, 100);
+
+test "aligned pointers" {
+    const a: u32 align(8) = 5;
+    try expect(@TypeOf(&a) == *align(8) const u32);
+}
+
+fn total(a: *align(64) const [64]u8) u32 {
+    var sum: u32 = 0;
+    for (a) |elem| sum += elem;
+    return sum;
+}
+
+test "passing aligned data" {
+    const x align(128) = [1]u8{10} ** 64;
+    try expect(total(&x) == 640);
+}
+
+test "bit aligned pointers" {
+    var x = MovementState{
+        .running = false,
+        .crouching = false,
+        .jumping = false,
+        .in_air = false,
+    };
+
+    const running = &x.running;
+    running.* = true;
+
+    const crouching = &x.crouching;
+    crouching.* = true;
+
+    try expect(@TypeOf(running) == *align(1:0:1) bool);
+    try expect(@TypeOf(crouching) == *align(1:1:1) bool);
+
+    try expect(@import("std").meta.eql(x, .{
+        .running = true,
+        .crouching = true,
+        .jumping = false,
+        .in_air = false,
+    }));
+}
+```
+
+### packed struct
+By default, all struct fields in Zig are naturally aligned to that of @alignOf(FieldType) (the ABI size).
+```zig
+const MovementState = packed struct {
+    running: bool,
+    crouching: bool,
+    jumping: bool,
+    in_air: bool,
+};
+
+test "packed struct size" {
+    try expect(@sizeOf(MovementState) == 1);
+    try expect(@bitSizeOf(MovementState) == 4);
+    const state = MovementState{
+        .running = true,
+        .crouching = true,
+        .jumping = true,
+        .in_air = true,
+    };
+    _ = state;
+}
+
+test "bit aligned pointers" {
+    var x = MovementState{
+        .running = false,
+        .crouching = false,
+        .jumping = false,
+        .in_air = false,
+    };
+
+    const running = &x.running;
+    running.* = true;
+
+    const crouching = &x.crouching;
+    crouching.* = true;
+
+    try expect(@TypeOf(running) == *align(1:0:1) bool);
+    try expect(@TypeOf(crouching) == *align(1:1:1) bool);
+
+    try expect(@import("std").meta.eql(x, .{
+        .running = true,
+        .crouching = true,
+        .jumping = false,
+        .in_air = false,
+    }));
+}
+```
+
+### cimport
+@cImport(expression) type  
+cImport is only available when linking libc.  
+Similar to @import, this returns a struct type with declarations. It is typically recommended to only use one instance of @cImport in an application to avoid symbol collisions; 
+```zig
+const c = @cImport({
+    @cDefine("NDEBUG", builtin.mode == .ReleaseFast);
+    if (something) {
+        @cDefine("_GNU_SOURCE", {});
+    }
+    @cInclude("stdlib.h");
+    if (something) {
+        @cUndef("_GNU_SOURCE");
+    }
+    @cInclude("soundio.h");
+});
+
+const c = @cImport({
+    // See https://github.com/ziglang/zig/issues/515
+    @cDefine("_NO_CRT_STDIO_INLINE", "1");
+    @cInclude("stdio.h");
+});
+pub fn main() void {
+    _ = c.printf("hello\n");
+}
 ```

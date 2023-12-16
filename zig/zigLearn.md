@@ -1184,6 +1184,7 @@ zig build -Dtarget=x86_64-linux-gnu -Doptimize=ReleaseFast
 ```
 
 ## working with c
+bool,char,long double
 | Type | C Equivalent | Minimum Size(bits) |
 | :---: | :---: | :---: |
 | bool | bool | 1/8 |

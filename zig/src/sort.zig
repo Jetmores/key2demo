@@ -725,6 +725,7 @@ test "print d" {
     std.debug.print("y:{#}\t", .{&y});
     std.debug.print("y:{*}\t", .{&y});
     std.debug.print("y:{?}\n", .{y});
+    std.debug.print("\n", .{});
     try expect(y == 256);
 }
 

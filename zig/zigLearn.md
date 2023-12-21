@@ -12,7 +12,6 @@ s
 *:指针
 //#:打印值的原始16进制--暂不知和*有啥区别
 //?:调试信息
-try expect(eql(u8,try bufPrint(&b, "{0s}{1s}{1s}", .{ "a", "b" }),"abb",));
 ```
 {[position][specifier]:[fill][alignment][width].[precision]}
 | Name | Meaning |
@@ -24,8 +23,11 @@ try expect(eql(u8,try bufPrint(&b, "{0s}{1s}{1s}", .{ "a", "b" }),"abb",));
 | Width | The total width of the field (characters) |
 | Precision | How many decimals a formatted number should have |
 
-try expect(eql(u8,try bufPrint(&b, "{d:.2}", .{3.14159}),"3.14",));  
+```zig
+try expect(eql(u8,try bufPrint(&b, "{0s}{1s}{1s}", .{ "a", "b" }),"abb",));
+try expect(eql(u8,try bufPrint(&b, "{d:.2}", .{3.14159}),"3.14",));
 try expect(eql(u8,try bufPrint(&b, "{s:_^6}", .{"hi!"}),"_hi!__",));
+```
 
 ### log
 ```zig

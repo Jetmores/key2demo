@@ -3,7 +3,6 @@
 ```zig
 std.debug.print("Hello, world!\n", .{});
 try std.io.getStdOut().writer().print("Hello, {s}!\n", .{"world"});
-try expect(eql(u8,try bufPrint(&b, "{0s}{1s}{1s}", .{ "a", "b" }),"abb",));
 
 占位符:{}默认自适应类型
 c
@@ -13,6 +12,7 @@ s
 *:指针
 //#:打印值的原始16进制--暂不知和*有啥区别
 //?:调试信息
+try expect(eql(u8,try bufPrint(&b, "{0s}{1s}{1s}", .{ "a", "b" }),"abb",));
 ```
 {[position][specifier]:[fill][alignment][width].[precision]}
 | Name | Meaning |

@@ -122,6 +122,8 @@ test "unreachable and -O" {//Debug,ReleaseSafe:reached unreachable code;Fast,Sma
     std.debug.print("Hello, {s}!\n", .{"World"});
 }
 
+//src
+const assert = std.debug.assert;
 pub fn assert(ok: bool) void {
     if (!ok) unreachable; // assertion failure
 }

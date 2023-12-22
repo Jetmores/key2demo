@@ -9,8 +9,8 @@ const expect = std.testing.expect;
 const expectEqual = std.testing.expectEqual;
 const test_allocator = std.testing.allocator;
 
-//pub fn main() !void {//Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
-test "assert and -O" { //Debug,ReleaseSafe:reached unreachable code;Fast,Small:passed
+pub fn main() !void { //Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+    //test "assert and -O" { //Debug,ReleaseSafe:reached unreachable code;Fast,Small:passed
     var x: i8 = 11;
     assert(x < 10);
 }

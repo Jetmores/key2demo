@@ -109,6 +109,18 @@ test "unreachable switch" {
     try expect(asciiToUpper('a') == 'A');
     try expect(asciiToUpper('A') == 'A');
 }
+
+//pub fn main() !void {//Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+test "unreachable and -O" {//Debug,ReleaseSafe:reached unreachable code;Fast,Small:passed
+    var x: i8 = 11;
+    x = switch (x) {
+        -1...1 => -x,
+        10, 100 => @divExact(x, 10),
+        else => unreachable, //Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+    };
+    //try expect(x == 1);
+    std.debug.print("Hello, {s}!\n", .{"World"});
+}
 ```
 
 ### label

@@ -9,7 +9,19 @@ const expect = std.testing.expect;
 const expectEqual = std.testing.expectEqual;
 const test_allocator = std.testing.allocator;
 
-pub fn main() !void {
+//pub fn main() !void {//Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+test "unreachable and -O" { //Debug,ReleaseSafe:reached unreachable code;Fast,Small:passed
+    var x: i8 = 11;
+    x = switch (x) {
+        -1...1 => -x,
+        10, 100 => @divExact(x, 10),
+        else => unreachable, //Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+    };
+    //try expect(x == 1);
+    std.debug.print("Hello, {s}!\n", .{"World"});
+}
+
+pub fn main1() !void {
     var a = [_]i32{ 9, 3, 1, 5, 2, 7, 3, 8 };
     //insertSort(i32, &a, 0, 8);
     insertSort(i32, a[0..], 0, 8);

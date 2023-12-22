@@ -10,12 +10,19 @@ const expectEqual = std.testing.expectEqual;
 const test_allocator = std.testing.allocator;
 
 //pub fn main() !void {//Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+test "assert and -O" { //Debug,ReleaseSafe:reached unreachable code;Fast,Small:passed
+    var x: i8 = 11;
+    assert(x < 10);
+}
+
+//pub fn main() !void {//Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
 test "unreachable and -O" { //Debug,ReleaseSafe:reached unreachable code;Fast,Small:passed
     var x: i8 = 11;
     x = switch (x) {
         -1...1 => -x,
         10, 100 => @divExact(x, 10),
-        else => unreachable, //Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
+        else => x,
+        //else => unreachable, //Debug,ReleaseSafe:reached unreachable code;Fast,Small:Segmentation fault
     };
     //try expect(x == 1);
     std.debug.print("Hello, {s}!\n", .{"World"});

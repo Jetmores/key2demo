@@ -121,6 +121,10 @@ test "unreachable and -O" {//Debug,ReleaseSafe:reached unreachable code;Fast,Sma
     //try expect(x == 1);
     std.debug.print("Hello, {s}!\n", .{"World"});
 }
+
+pub fn assert(ok: bool) void {
+    if (!ok) unreachable; // assertion failure
+}
 ```
 
 ### label

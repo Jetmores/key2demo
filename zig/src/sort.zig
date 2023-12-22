@@ -800,6 +800,12 @@ test "precision" {
         try bufPrint(&b, "{d:.7}", .{3.1415926535897}),
         "3.1415927",
     ));
+    var c: [16]u8 = undefined;
+    try expect(eql(
+        u8,
+        try bufPrint(&c, "{d}", .{3.1415926535897}),
+        "3.1415926535897",
+    ));
 }
 
 test "fill, alignment, width" {

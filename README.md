@@ -49,6 +49,7 @@ language.md
 ##### try
 1. 个人gitpage--无锁环形队列
 2. 在线mv--多路reactor
-3. 中文输入法--参照redis的输入预览
-4. 中文编程语言--依赖中文输入法,中文版ziglang
-5. 个人版vim,参照neovim和rust实现的Sodium(Vim-inspired text editor)
+3. 个人版vim,参照neovim和rust实现的Sodium(Vim-inspired text editor)
+4. 中文输入法--参照redis的输入预览
+5. 中文编程语言--依赖中文输入法,中文版ziglang
+

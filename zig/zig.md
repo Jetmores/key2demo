@@ -124,6 +124,7 @@ pub fn main() anyerror!void {
 
 ### std.http
 1. head
+key,value组合的字段数组,key-index散列表
 ```zig
 pub const HeaderList = std.ArrayListUnmanaged(Field);
 pub const HeaderIndexList = std.ArrayListUnmanaged(usize);

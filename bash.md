@@ -17,10 +17,10 @@ disas[semble]
 ```
 
 ### valgrind内存泄漏分析
-
+//TODO
 
 ### perf性能热点分析
-
+//TODO
 
 ### 执行文件的第5行命令
 ```bash
@@ -40,13 +40,6 @@ g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
 ### 生成intel汇编语法
 ```bash
 cc -S -masm=intel add.c
-```
-
-### zig指定链接的libc库
-```bash
-zig build-exe hi.zig -lc -target x86_64-linux-musl
-?zig build -Dtarget=x86_64-windows
-?zig build -Dtarget=x86_64-linux-gnu
 ```
 
 ### 快捷拷贝程序依赖的动态库

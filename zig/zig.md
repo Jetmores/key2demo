@@ -1,3 +1,12 @@
+### ?manpage ?search
+1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增
+2. Edge-设置-搜:地址栏和搜索-管理搜索引擎-添加
+```
+zig
+zig
+https://ziglang.org/documentation/master/std/#A;std?%s
+```
+
 ### ?hello ?world
 ```zig
 const print = @import("std").debug.print;
@@ -113,11 +122,19 @@ pub fn main() anyerror!void {
     * std.rb.Tree
     * std.BloomFilter:用来检测一个元素是否在一个集合中,它的优点是空间效率高，查询速度快，缺点是有一定的误判率和删除困难;桶为1 bit(优化空间),多个hash函数将多个bit置为1,以此表示某个key存在(元素越多,冲突概率越大),不存在则一定不存在.(有点类似记忆与神经元)
 
-### ?manpage ?search
-1. Chrome-设置-搜索引擎-管理搜索引擎和网站搜素-网站搜索-新增
-2. Edge-设置-搜:地址栏和搜索-管理搜索引擎-添加
-```
-zig
-zig
-https://ziglang.org/documentation/master/std/#A;std?%s
+### std.http
+1. head
+```zig
+pub const HeaderList = std.ArrayListUnmanaged(Field);
+pub const HeaderIndexList = std.ArrayListUnmanaged(usize);
+pub const HeaderIndex = std.HashMapUnmanaged([]const u8, HeaderIndexList, CaseInsensitiveStringContext, std.hash_map.default_max_load_percentage);
+pub const Field = struct {
+    name: []const u8,
+    value: []const u8,
+}
+pub const Headers = struct {
+    allocator: Allocator,
+    list: HeaderList = .{},
+    index: HeaderIndex = .{},
+}
 ```

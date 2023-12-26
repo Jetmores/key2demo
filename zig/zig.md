@@ -7,6 +7,18 @@ zig
 https://ziglang.org/documentation/master/std/#A;std?%s
 ```
 
+### zig ?collection <https://github.com/ziglang/zig/issues/7782>
+1. ArrayList[Aligned][Unmanaged] ->vector
+2. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
+3. SegmentedList 类似ArrayList但避免了预分配耗尽后的拷贝搬迁,类似一半的deque
+4. SinglyLinkedList ->forward_list
+5. DoublyLinkedList ->list
+6. [Auto/String]HashMap[Unmanaged] ->unordered_map/BufMap-BufSet拷贝key后拥有它,特化且带数据所有权StringHashMap
+7. *[Auto/String]ArrayHashMap[Unmanaged]* 特化遍历(空间换时间),否则用HashMap
+8. <https://github.com/ziglang/std-lib-orphanage/tree/master>
+    * std.rb.Tree
+    * std.BloomFilter:用来检测一个元素是否在一个集合中,它的优点是空间效率高，查询速度快，缺点是有一定的误判率和删除困难;桶为1 bit(优化空间),多个hash函数将多个bit置为1,以此表示某个key存在(元素越多,冲突概率越大),不存在则一定不存在.(有点类似记忆与神经元)
+
 ### ?hello ?world
 ```zig
 const print = @import("std").debug.print;
@@ -109,18 +121,6 @@ pub fn main() anyerror!void {
     server_thread.join();
 }
 ```
-
-### zig ?collection <https://github.com/ziglang/zig/issues/7782>
-1. ArrayList[Aligned][Unmanaged] ->vector
-2. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)
-3. SegmentedList 类似ArrayList但避免了预分配耗尽后的拷贝搬迁,类似一半的deque
-4. SinglyLinkedList ->forward_list
-5. DoublyLinkedList ->list
-6. [Auto/String]HashMap[Unmanaged] ->unordered_map/BufMap-BufSet拷贝key后拥有它,特化且带数据所有权StringHashMap
-7. *[Auto/String]ArrayHashMap[Unmanaged]* 特化遍历(空间换时间),否则用HashMap
-8. <https://github.com/ziglang/std-lib-orphanage/tree/master>
-    * std.rb.Tree
-    * std.BloomFilter:用来检测一个元素是否在一个集合中,它的优点是空间效率高，查询速度快，缺点是有一定的误判率和删除困难;桶为1 bit(优化空间),多个hash函数将多个bit置为1,以此表示某个key存在(元素越多,冲突概率越大),不存在则一定不存在.(有点类似记忆与神经元)
 
 ### std.http
 1. head

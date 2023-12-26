@@ -16,6 +16,12 @@ detach-on-fork off;follow-fork-mode child
 disas[semble]
 ```
 
+### valgrind内存泄漏分析
+
+
+### perf性能热点分析
+
+
 ### 执行文件的第5行命令
 ```bash
 sed -n '5p' cmd |bash

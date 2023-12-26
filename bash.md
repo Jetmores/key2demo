@@ -17,10 +17,14 @@ disas[semble]
 ```
 
 ### valgrind内存泄漏分析
-//TODO
+```bash
+valgrind ./app
+```
 
 ### perf性能热点分析
-//TODO
+```bash
+perf stat -p pid
+```
 
 ### 执行文件的第5行命令
 ```bash

@@ -174,6 +174,12 @@ test "HeadersParser.read length" {
 }
 ```
 3.server
+1. accept:
+2. wait:Wait for the client to send a complete request head.
+3. do: Send the response headers.
+4. readAll:Reads data from the response body. Must be called after wait.
+5. writeAll:Write bytes to the server.
+
 ```zig
 test "HTTP server handles a chunked transfer coding request" {
     const builtin = @import("builtin");

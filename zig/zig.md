@@ -173,7 +173,8 @@ test "HeadersParser.read length" {
     try std.testing.expectEqualStrings("GET / HTTP/1.1\r\nHost: localhost\r\nContent-Length: 5\r\n\r\n", r.header_bytes.items);
 }
 ```
-3.server
+3.server  
+accept->wait->readAll->do->writeAll
 1. accept:
 2. wait:Wait for the client to send a complete request head.
 3. do: Send the response headers.

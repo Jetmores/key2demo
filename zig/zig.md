@@ -139,3 +139,37 @@ pub const Headers = struct {
     index: HeaderIndex = .{},
 }
 ```
+2. protocol  
+解析head and body
+```zig
+test "HeadersParser.read length" {
+    // mock BufferedConnection for read
+
+    var r = HeadersParser.initDynamic(256);
+    defer r.header_bytes.deinit(std.testing.allocator);
+    const data = "GET / HTTP/1.1\r\nHost: localhost\r\nContent-Length: 5\r\n\r\nHello";
+    var fbs = std.io.fixedBufferStream(data);
+
+    var conn = MockBufferedConnection{
+        .conn = fbs,
+    };
+
+    while (true) { // read headers
+        try conn.fill();
+
+        const nchecked = try r.checkCompleteHead(std.testing.allocator, conn.peek());
+        conn.drop(@as(u16, @intCast(nchecked)));
+
+        if (r.state.isContent()) break;
+    }
+
+    var buf: [8]u8 = undefined;
+
+    r.next_chunk_length = 5;
+    const len = try r.read(&conn, &buf, false);
+    try std.testing.expectEqual(@as(usize, 5), len);
+    try std.testing.expectEqualStrings("Hello", buf[0..len]);
+
+    try std.testing.expectEqualStrings("GET / HTTP/1.1\r\nHost: localhost\r\nContent-Length: 5\r\n\r\n", r.header_bytes.items);
+}
+```

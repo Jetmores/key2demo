@@ -1,6 +1,10 @@
 sortTest:
 	zig test sort.zig
 
+
+echo:
+	zig build-exe echo.zig
+
 sort:
 	zig build-exe sort.zig
 
@@ -9,4 +13,4 @@ logDebug:
 
 .PHONY:clean
 clean:
-	rm -f *.o sort log
+	rm -f *.o sort log echo

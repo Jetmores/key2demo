@@ -19,3 +19,9 @@ fn main() -> std::io::Result<()> {
     Ok(())
 }
 ```
+
+### 改善 web server 吞吐量的方法
+1. thread poll 线程池
+2. fork/join模型
+3. 单线程异步 I/O 模型(单线程epoll)
+4. 多线程异步 I/O 模型(多线程epoll)

@@ -23,3 +23,7 @@ int main(int argc, char *argv[]){
     exit(0);
 }
 ```
+
+### 多线程 ?epoll
+1. 每个线程都处理自己的fd,从而完全避免多线程安全问题;
+2. 使用EPOLLONESHOT标志,即在一次wait返回后禁止fd再产生事件,并在处理完成后使用epoll_ctl的MOD操作重新开启.

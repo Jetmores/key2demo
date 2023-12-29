@@ -15,19 +15,24 @@ pub fn main() !void {
         var conn = try server.accept();
         defer conn.stream.close();
         errdefer conn.stream.close();
-        echo(conn) catch |err| {
-            switch (err) {
-                else => continue,
-            }
+        echo(conn) catch {
             continue;
         };
     }
 }
 
 fn echo(conn: net.StreamServer.Connection) !void {
+    if (std.io.is_async) {
+        std.debug.print("io is async\n", .{});
+    }
     while (true) {
         var buffer: [8096]u8 = undefined;
+        std.debug.print("in read\n", .{});
         var n = try conn.stream.reader().read(buffer[0..]);
+        std.debug.print("out read:{d}\n", .{n});
+        if (n == 0) {
+            break;
+        }
         _ = try conn.stream.writer().write(buffer[0..n]);
     }
 }

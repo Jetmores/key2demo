@@ -1,6 +1,6 @@
 const std = @import("std");
 const net = std.net;
-const mode = std.io.evented;
+//const mode = std.io.evented;// not useful in zig 0.11.0
 
 //疑惑:一次nc和ctrl+c之后,echo就不可用(设置非阻塞亦如此)
 pub fn main() !void {

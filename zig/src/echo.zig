@@ -2,7 +2,7 @@ const std = @import("std");
 const net = std.net;
 //const mode = std.io.evented;// not useful in zig 0.11.0
 
-//疑惑:一次nc和ctrl+c之后,echo就不可用(设置非阻塞亦如此)
+//疑惑:无法设置非阻塞?到底fd现在阻塞与否?
 pub fn main() !void {
     const localhost = try net.Address.parseIp("127.0.0.1", 9000);
     var server = net.StreamServer.init(.{

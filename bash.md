@@ -1,5 +1,6 @@
 ### gdb tips
-gdb [OPTIONS] [prog|prog procID|progfile core]
+gdb [OPTIONS] [program [procID or progfile core]]
+gdb -p pid
 ```bash
 info threads
 thread id

@@ -1,6 +1,6 @@
 const std = @import("std");
 const net = std.net;
-//const mode = std.io.evented;// not useful in zig 0.11.0
+pub const io_mode = std.io.evented; // not useful in zig 0.11.0
 
 //疑惑:无法设置非阻塞?到底fd现在阻塞与否?
 pub fn main() !void {

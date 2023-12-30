@@ -15,6 +15,8 @@ pub fn main() !void {
         var conn = try server.accept();
         defer conn.stream.close();
         errdefer conn.stream.close();
+
+        //fcntl conn.stream.handle to set nonblock
         echo(conn) catch {
             continue;
         };

@@ -1,3 +1,11 @@
+//read when no data
+//block or immediately return -1 and set errno=EAGAIN
+//write when no stream sapce
+//block or immediately return -1 and set errno=EAGAIN
+//write when client closed
+//return -1 and set EPIPE(need catch SIGPIPE and do nothing)
+
+
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>

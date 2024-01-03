@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
 
 //lib
 #include <pthread.h>
@@ -38,4 +39,19 @@ int Listen(const char* ip,short port) {
         handle_error("listen");
     }
     return fd;
+}
+
+
+void set_fl(int fd, int flags){
+    int val;
+
+    if ((val = fcntl(fd, F_GETFL, 0)) < 0){
+        handle_error("fcntl F_GETFL error");
+    }
+
+    val |= flags;
+
+    if (fcntl(fd, F_SETFL, val) < 0){
+        handle_error("fcntl F_SETFL error");
+    }
 }

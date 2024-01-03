@@ -46,7 +46,7 @@ docker rmi image
 docker ps
 docker images
 
-docker run -it --name ubt -p 25:22 -v C:\workdir\ubt:/root ubuntu:22.04 /bin/bash
+docker run -it [--ulimit core=-1] --name ubt -p 25:22 -v C:\workdir\ubt:/root ubuntu:22.04 /bin/bash
 docker exec -it ubt bash
 docker start ubt
 docker stop ubt

@@ -1,5 +1,6 @@
 const std = @import("std");
 const net = std.net;
+const os = std.os;
 pub const io_mode = std.io.evented; // not useful in zig 0.11.0
 
 //疑惑:无法设置非阻塞?到底fd现在阻塞与否?
@@ -16,7 +17,11 @@ pub fn main() !void {
         defer conn.stream.close();
         errdefer conn.stream.close();
 
-        //fcntl conn.stream.handle to set nonblock
+        //fcntl conn.stream.handle to set nonblock // not useful
+        var fl_flags = try os.fcntl(conn.stream.handle, os.F.GETFL, 0);
+        fl_flags &= ~@as(usize, os.O.NONBLOCK);
+        _ = try os.fcntl(conn.stream.handle, os.F.SETFL, fl_flags);
+
         echo(conn) catch {
             continue;
         };

@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <signal.h>
 
 #include "lib.cc"
 
@@ -12,6 +13,7 @@ int main(void){
     int n=-1;
     char buf[8]={0,};
 
+    signal(SIGPIPE,doNothing);
     int lfd=Listen("0.0.0.0",9990);
 
     while (1)
@@ -32,7 +34,7 @@ int main(void){
             usleep(1000000);
             n=write(cfd,buf,n);
             printf("write :%d\n",n);
-            if(n==-1){
+            if(n==-1){//do after ignore SIGPIPE
                 handle_error("write");
             }else if(n==0){
                 printf("write zero\n");

@@ -13,6 +13,11 @@
 #define handle_error(msg) do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
 
+void doNothing(int signo){
+    return;
+}
+
+
 int Listen(const char* ip,short port) {
     int fd=-1;
     int opt=1;

@@ -1,5 +1,5 @@
 echo:
-	cc echo.cc -o echo
+	cc -g echo.cc -o echo
 #cc echo.cc -lpthread -o echo
 
 .PHONY:clean

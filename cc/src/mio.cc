@@ -69,6 +69,10 @@ int main(void){
     return 0;
 }
 
+void doUseFdEt(int cfd){
+    return;
+}
+
 void doUseFd(int cfd){
     char buf[8]={0,};
     int n=-1;

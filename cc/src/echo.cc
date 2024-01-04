@@ -32,14 +32,15 @@ int main(void){
     sigaction(SIGPIPE,&action,NULL);
     int lfd=Listen("0.0.0.0",9990);
 
-    while (1)
+    for(;;)//while (1)
     {
         cfd = accept(lfd, (struct sockaddr *)&caddr, &clen);
         if (cfd == -1){
             handle_error("accept");
         }
         //set_fl(cfd,O_NONBLOCK);
-        while (1){
+        for(;;)//while (1)
+        {
             ReadAgain:
             n = read(cfd, buf, sizeof(buf));
             if(n==-1){

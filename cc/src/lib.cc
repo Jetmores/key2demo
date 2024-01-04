@@ -15,6 +15,7 @@
 
 
 void doNothing(int signo){
+    printf("catch number:%d\n",signo);
     return;
 }
 

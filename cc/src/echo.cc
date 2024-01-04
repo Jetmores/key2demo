@@ -1,7 +1,7 @@
 //read when no data
-//block or immediately return -1 and set errno=EAGAIN
+//block return -1 and set errno=EINTR or immediately return -1 and set errno=EAGAIN
 //write when no stream sapce
-//block or immediately return -1 and set errno=EAGAIN
+//block return -1 and set errno=EINTR or immediately return -1 and set errno=EAGAIN
 //write when client closed
 //return -1 and set EPIPE(need catch SIGPIPE and do nothing)
 
@@ -21,7 +21,14 @@ int main(void){
     int n=-1;
     char buf[8]={0,};
 
-    signal(SIGPIPE,doNothing);
+    //signal(SIGPIPE,doNothing);//默认重启被打断的慢速read调用,就是恢复read的阻塞等待
+    struct sigaction action;
+    action.sa_handler=doNothing;
+    action.sa_flags =SA_INTERRUPT;//切记要=,不要|=
+    //kill -10 pid or kill -SIGUSR1 pid
+    sigaction(SIGUSR1,&action,NULL);//默认重启被打断的慢速read调用,但可手动设置=SA_INTERRUPT从而不重启
+    //kill -13 pid
+    sigaction(SIGPIPE,&action,NULL);
     int lfd=Listen("0.0.0.0",9990);
 
     while (1)
@@ -36,7 +43,10 @@ int main(void){
             n = read(cfd, buf, sizeof(buf));
             if(n==-1){
                 if(errno==EAGAIN||errno==EWOULDBLOCK){//no data to read, read reback immediately
-                    //printf("read again\n");
+                    printf("read again\n");
+                    goto ReadAgain;
+                }else if(errno==EINTR){//block mode only
+                    printf("read EINTR\n");
                     goto ReadAgain;
                 }else{
                     handle_error("read");
@@ -52,6 +62,9 @@ int main(void){
             printf("write :%d\n",n);
             if(n==-1){//do after ignore SIGPIPE
                 if(errno==EAGAIN||errno==EWOULDBLOCK){//errno==EINTR,not happen when nonblock
+                    goto WriteAgain;
+                }else if(errno==EINTR){//block mode only
+                    printf("write EINTR\n");
                     goto WriteAgain;
                 }else if(errno==EPIPE){
                     close(cfd);

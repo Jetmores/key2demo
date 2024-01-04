@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-#define handle_error(msg) do { perror(msg); exit(EXIT_FAILURE); } while (0)
+#define handle_error(msg) do { perror(msg); pthread_exit(NULL); } while (0)
 
 
 void doNothing(int signo){

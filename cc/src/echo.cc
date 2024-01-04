@@ -27,6 +27,7 @@ int main(void){
     action.sa_flags =SA_INTERRUPT;//切记要=,不要|=
     //kill -10 pid or kill -SIGUSR1 pid
     sigaction(SIGUSR1,&action,NULL);//默认重启被打断的慢速read调用,但可手动设置=SA_INTERRUPT从而不重启
+    sigaction(SIGUSR2,&action,NULL);
     //kill -13 pid
     sigaction(SIGPIPE,&action,NULL);
     int lfd=Listen("0.0.0.0",9990);
@@ -37,13 +38,13 @@ int main(void){
         if (cfd == -1){
             handle_error("accept");
         }
-        set_fl(cfd,O_NONBLOCK);
+        //set_fl(cfd,O_NONBLOCK);
         while (1){
             ReadAgain:
             n = read(cfd, buf, sizeof(buf));
             if(n==-1){
                 if(errno==EAGAIN||errno==EWOULDBLOCK){//no data to read, read reback immediately
-                    printf("read again\n");
+                    //printf("read again\n");
                     goto ReadAgain;
                 }else if(errno==EINTR){//block mode only
                     printf("read EINTR\n");

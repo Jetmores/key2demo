@@ -62,7 +62,8 @@ int main(void){
                 }
             }else{
                 printf("events[%d].data.fd:%d\n",i,events[i].data.fd);
-                doUseFd(events[i].data.fd);
+                //doUseFd(events[i].data.fd);
+                doUseFdEt(events[i].data.fd);
             }
         }
     }

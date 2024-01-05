@@ -33,5 +33,5 @@ int main(int argc, char *argv[]){
 1. 单线程:accept,read,更改epollout,write,更改epollin(reactor:读写回调缓冲区|任务队列+线程池)--redis连接少io频繁;skynet带任务队列
 2. 多线程:包含accept,read,write;io密集的2n cpu thread
 3. 多线程:单accept多read&write
-4. 多线程:多accept多read&write(此处多accept同一个lfd,之后epoll_wait会惊群;个人理解多lfd时reuse port更好)
+4. 多线程:多accept多read&write(此处多accept同一个lfd,之后epoll_wait会惊群,即使加了exclusive;加锁解决或者多lfd时reuse port更好)
 5. 多进程:reuse port--nginx

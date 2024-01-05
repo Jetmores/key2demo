@@ -1,7 +1,7 @@
 // 前提1:正常关闭client
 // 结果1:epollin,read=0
 // 前提2:服务端还在写时关闭client
-// 结果2:epollin,epollerr,epollhup,write=-1 errno=EPIPE
+// 结果2:epollin,epollhup,write=-1 errno=EPIPE;此时需要检测epollhup摘除对应fd
 
 #include <errno.h>
 #include <signal.h>
@@ -12,6 +12,7 @@
 
 using namespace std;
 
+void doUseFdEt(int cfd);
 void doUseFd(int fd);
 void pEventBit(uint32_t events);
 
@@ -54,8 +55,8 @@ int main(void)
                 printf("accept cfd:%d\n", cfd);
                 set_fl(cfd, O_NONBLOCK); // match doUseFdEt
                 ev.events = EPOLLIN | EPOLLET; // match doUseFdEt
-                // ev.events=EPOLLIN;
-                // ev.events=EPOLLIN|EPOLLONESHOT;//only once,need register again
+                // ev.events = EPOLLIN;
+                //  ev.events=EPOLLIN|EPOLLONESHOT;//only once,need register again
                 ev.data.fd = cfd;
                 if (-1 == epoll_ctl(efd, EPOLL_CTL_ADD, cfd, &ev)) {
                     handle_error("epoll_ctl after accept");
@@ -92,6 +93,7 @@ void doUseFdEt(int cfd)
             return;
         }
 
+        usleep(1000000); // us
         n = write(cfd, buf, n);
         printf("write :%d\n", n);
         if (n == -1) { // do after ignore SIGPIPE
@@ -99,8 +101,6 @@ void doUseFdEt(int cfd)
                 printf("write EAGAIN\n");
                 continue;
             } else if (errno == EPIPE) {
-                epoll_ctl(efd, EPOLL_CTL_DEL, cfd, NULL);
-                close(cfd);
                 return;
             } else {
                 handle_error("write");
@@ -126,7 +126,8 @@ ReadAgain:
     if (n == -1) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) { // no data to read, read reback immediately
             // printf("read again\n");
-            goto ReadAgain;
+            // goto ReadAgain;
+            return;
         } else if (errno == EINTR) { // block mode only
             printf("read EINTR\n");
             goto ReadAgain;
@@ -150,8 +151,8 @@ WriteAgain:
             printf("write EINTR\n");
             goto WriteAgain;
         } else if (errno == EPIPE) {
-            epoll_ctl(efd, EPOLL_CTL_DEL, cfd, NULL);
-            close(cfd);
+            // epoll_ctl(efd, EPOLL_CTL_DEL, cfd, NULL);
+            // close(cfd);//此处关闭,下次epoll_wait会出现epollerr
             return;
         } else {
             handle_error("write");

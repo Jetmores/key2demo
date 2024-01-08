@@ -1,3 +1,6 @@
+evio:
+	gcc -o evio evio.c  -L/usr/local/lib -I/usr/local/include/ -lev -Wl,-rpath,/usr/local/lib
+
 evdemo:
 	gcc -o evdemo evdemo.c  -L/usr/local/lib -I/usr/local/include/ -lev -Wl,-rpath,/usr/local/lib
 
@@ -10,4 +13,4 @@ echo:
 
 .PHONY:clean
 clean:
-	rm -f *.o a.out echo mio evdemo
+	rm -f *.o a.out echo mio evdemo evio

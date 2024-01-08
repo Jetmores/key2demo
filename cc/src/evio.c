@@ -40,7 +40,7 @@ int main (void)
   ev_io_start (loop, &stdin_watcher);
 
   // 在启动一个Timer观察者之前, 我们需要先初始化它.
-  ev_timer_init (&timeout_watcher, timeout_cb, 5.5, 0.);
+  ev_timer_init (&timeout_watcher, timeout_cb, 5.5, 3.);
   // 这个一次性定时器将会从启动开始后的`5.5`秒后超时触发.
   ev_timer_start (loop, &timeout_watcher);
 

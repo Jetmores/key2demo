@@ -33,6 +33,7 @@ int main (void)
 {
   // 可以使用已定义的宏来获取默认的事件循环, 当然你也可以根据自己的需求创建指定的.
   struct ev_loop *loop = EV_DEFAULT;
+  printf("backend:%#x\n",ev_backend(loop));
 
   // 在启动一个I/O观察者之前, 我们需要先初始化它.
   ev_io_init (&stdin_watcher, stdin_cb, /*STDIN_FILENO*/ 0, EV_READ);

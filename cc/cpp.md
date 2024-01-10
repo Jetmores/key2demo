@@ -51,3 +51,6 @@ cc
 cc
 https://zh.cppreference.com/mwiki/index.php?title=Special:%E6%90%9C%E7%B4%A2&search=%s
 ```
+
+### vscode c/cpp format settings
+Ctrl+,->search formatting->C/C++ /Formatting->C_Cpp:Clang_format-style->{ BasedOnStyle: WebKit}

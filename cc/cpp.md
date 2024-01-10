@@ -53,7 +53,7 @@ https://zh.cppreference.com/mwiki/index.php?title=Special:%E6%90%9C%E7%B4%A2&sea
 ```
 
 ### vscode c/cpp format settings
-Ctrl+,->search formatting->C/C++ /Formatting->C_Cpp:Clang_format-style->{ BasedOnStyle: WebKit}
+Ctrl+,->search formatting->C/C++ /Formatting->C_Cpp:Clang_format_style->{ BasedOnStyle: WebKit}
 
 ### vscode Keyboard Shortcuts
 File->Preferences->Keyboard Shortcuts->cursorLineEnd->Ctrl+;

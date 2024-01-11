@@ -27,34 +27,50 @@ valgrind ./app
 perf stat -p pid
 ```
 
-### 执行文件的第5行命令
+### sed
 ```bash
+# 执行文件的第5行命令
 sed -n '5p' cmd |bash
-```
-
-### 批量查找替换文件内容
-```bash
+# 批量查找替换文件内容
 sed -i 's/LD_LIBRARY_PATH=./LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH/g' *.sh
 ```
 
-### gcc/g++动态库(默认)同时和静态库加载声明
+### gcc/g++
+<https://www.runoob.com/w3cnote/gcc-parameter-detail.html>
 ```bash
+# 同时链接动态库(默认)和静态库
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
-```
-
-### 生成intel汇编语法
-```bash
+# 生成intel汇编语法
 cc -S -masm=intel add.c
 ```
+* 编译时链接库需要分为两类:
+    1. 直接引用:被源码中直接调用的库
+    2. 间接引用:被调用库的依赖库
+* -lxxx: 指定具体的库名称,编译时需要显式指定直接引用的库名称
+* -L: 指定链接库的位置,编译时需要显式指定直接引用的库位置
+* -Wl,-rpath-link: 用于编译时指定间接引用的库位置  
+如果知道所有间接引用的库文件名称,并且不嫌麻烦,也可以用-lxxx显式指定每一个库(不推荐-lxxx)
+* -Wl,-rpath: 有两个作用
+    1. 用于编译时指定间接引用的库位置,作用同-Wl,-rpath-link
+    2. 用于运行时指定所有引用库的位置,作用同修改环境变量(LD_LIBRARY_PATH),并且库路径引用优先级高于LD_LIBRARY_PATH
+* 使用建议
+    1. 编译命令中使用-Wl,-rpath-link 指定间接引用库位置(编译时),使用-Wl,-rpath 指定引用库位置(运行时)
+    2. -Wl,-rpath-link 在 -Wl,-rpath 前
+
 
 ### 快捷拷贝程序依赖的动态库
 ```bash
 ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 ```
-### cat .ssh/id_rsa.pub
+
+### ssh
 ```bash
+# 生成.ssh/id_rsa.pub
 ssh-keygen -t rsa -C "lets2rs@126.com"
+# ssh代理连接
 ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
+# ssh免(输入)密码连接
+sshpass -p BoyuUbuntu ssh boyu@192.168.0.20
 ```
 
 ### 远程拷贝
@@ -84,8 +100,9 @@ netstat -[a|4]pn
 tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802
 ```
 
-### 模拟HTTP请求
+### curl
 ```bash
+# 模拟HTTP请求
 curl 127.0.0.1:9909
 # 下载文件类似wget,加k不进行ssl校验
 curl -LOk https://ziglang.org/download/0.11.0/zig-0.11.0.tar.xz

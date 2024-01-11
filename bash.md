@@ -57,6 +57,11 @@ ssh-keygen -t rsa -C "lets2rs@126.com"
 ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
 ```
 
+### ssh免(输入)密码连接
+```bash
+sshpass -p BoyuUbuntu ssh boyu@192.168.0.20
+```
+
 ### 远程拷贝
 ```bash
 scp dlib.tar.xz cat@119.27.182.173:/home/cat/tp

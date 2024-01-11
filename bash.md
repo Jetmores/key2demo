@@ -51,14 +51,15 @@ cc -S -masm=intel add.c
 ```bash
 ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 ```
-### cat .ssh/id_rsa.pub
+### ssh
 ```bash
+# 生成.ssh/id_rsa.pub
 ssh-keygen -t rsa -C "lets2rs@126.com"
-ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
-```
 
-### ssh免(输入)密码连接
-```bash
+# ssh代理连接
+ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
+
+# ssh免(输入)密码连接
 sshpass -p BoyuUbuntu ssh boyu@192.168.0.20
 ```
 

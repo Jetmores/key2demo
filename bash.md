@@ -39,6 +39,7 @@ sed -i 's/LD_LIBRARY_PATH=./LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH/g' *.sh
 
 ### gcc/g++动态库(默认)同时和静态库加载声明
 ```bash
+# 同时链接动态库(默认)和静态库
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
 ```
 

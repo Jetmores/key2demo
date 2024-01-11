@@ -1,14 +1,15 @@
-#include <stdio.h>
 #include <ev.h>
+#include <stdio.h>
 
 static ev_idle idle;
 
-static void idle_cb(struct ev_loop* loop, ev_idle *idle, int revents) {
+static void idle_cb(struct ev_loop* loop, ev_idle* idle, int revents)
+{
   puts("idle start.");
-  //ev_idle_stop(loop, idle);
+  // ev_idle_stop(loop, idle);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
   struct ev_loop* loop = EV_DEFAULT;
 

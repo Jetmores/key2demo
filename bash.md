@@ -36,6 +36,7 @@ sed -i 's/LD_LIBRARY_PATH=./LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH/g' *.sh
 ```
 
 ### gcc/g++
+<https://www.runoob.com/w3cnote/gcc-parameter-detail.html>
 ```bash
 # 同时链接动态库(默认)和静态库
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly

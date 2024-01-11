@@ -27,24 +27,19 @@ valgrind ./app
 perf stat -p pid
 ```
 
-### 执行文件的第5行命令
+### sed
 ```bash
+# 执行文件的第5行命令
 sed -n '5p' cmd |bash
-```
-
-### 批量查找替换文件内容
-```bash
+# 批量查找替换文件内容
 sed -i 's/LD_LIBRARY_PATH=./LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH/g' *.sh
 ```
 
-### gcc/g++动态库(默认)同时和静态库加载声明
+### gcc/g++
 ```bash
 # 同时链接动态库(默认)和静态库
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
-```
-
-### 生成intel汇编语法
-```bash
+# 生成intel汇编语法
 cc -S -masm=intel add.c
 ```
 
@@ -52,14 +47,13 @@ cc -S -masm=intel add.c
 ```bash
 ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 ```
+
 ### ssh
 ```bash
 # 生成.ssh/id_rsa.pub
 ssh-keygen -t rsa -C "lets2rs@126.com"
-
 # ssh代理连接
 ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
-
 # ssh免(输入)密码连接
 sshpass -p BoyuUbuntu ssh boyu@192.168.0.20
 ```
@@ -91,8 +85,9 @@ netstat -[a|4]pn
 tcpdump -i ens5 -An src host 10.64.2.100 and udp dst port 36802
 ```
 
-### 模拟HTTP请求
+### curl
 ```bash
+# 模拟HTTP请求
 curl 127.0.0.1:9909
 # 下载文件类似wget,加k不进行ssl校验
 curl -LOk https://ziglang.org/download/0.11.0/zig-0.11.0.tar.xz

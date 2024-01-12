@@ -48,7 +48,8 @@ mysqldump -u root -p mdb test2 > /root/mdb_test2.sql
 source mdb_test2.sql
 mysql -u root -p mdb < mdb_test2.sql
 # 备份库(单个,多个或所有)
-mysqldump -u root -p [--databases|-B|--all_databases|-A] mdb > /root/mdb.sql
+mysqldump -u root -p [--databases|-B] mdb > /root/mdb.sql
+mysqldump -u root -p [--all_databases|-A] > /root/mdb.sql
 create database mdb;use mdb;source mdb.sql
 create database mdb;mysql -u root -p mdb < mdb.sql
 ```

@@ -116,6 +116,12 @@ ps -T -p pid
 top -H -p pid
 ```
 
+### kill
+```bash
+kill -9 pid
+pkill -f marketCtrl
+```
+
 ### git
 ```bash
 # name,email,then need id_rsa for clone in git@
@@ -140,10 +146,4 @@ git add [*|.|-A]
 ```bash
 tail -f x.log #退出ctrl+c
 less +F x.log #退出ctrl+c;q
-```
-
-### kill
-```bash
-kill -9 pid
-pkill -f marketCtrl
 ```

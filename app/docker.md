@@ -47,6 +47,8 @@ docker ps
 docker images
 
 docker run -it [--ulimit core=-1] --name ubt -p 25:22 -v C:\workdir\ubt:/root ubuntu:22.04 /bin/bash
+# 置于同一局域网下--network
+docker run -it --privileged=true -v /home/boyu/yh:/app --network down_argo-net --name ninja_yh03 -p 39:22 argo:yh001 bash
 docker exec -it ubt bash
 docker start ubt
 docker stop ubt

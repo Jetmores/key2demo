@@ -42,6 +42,11 @@ sed -i 's/LD_LIBRARY_PATH=./LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH/g' *.sh
 g++ -Wl,-Bstatic -L. -lx -Wl,-Bdynamic -L. -ly
 # 生成intel汇编语法
 cc -S -masm=intel add.c
+# Optimization
+-O0:不优化
+-O/-O1/-Og:等价表示,g在1基础上增强debug
+-O2/-Os/-Oz:s和z进一步在2基础上优化大小
+-O3/-Ofast:fast在3基础上优化速度
 ```
 * 编译时链接库需要分为两类:
     1. 直接引用:被源码中直接调用的库

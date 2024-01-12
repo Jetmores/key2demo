@@ -31,6 +31,9 @@ insert into test(body) values('tom'),('jack');
 delete from test where id=2;
 update test set body='jm' where id=2;
 select * from test;
+
+# 插入或删除记录时出现外键约束错误
+set foreign_key_checks=0;
 ```
 
 ### 备份恢复

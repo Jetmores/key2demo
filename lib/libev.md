@@ -16,4 +16,6 @@
 1. ev_[io|timer|signal]_init
 2. ev_[io|timer|signal]_start
 
-### 启动事件循环ev_run
+### 事件循环
+1. ev_loop_new(0):初始化
+2. ev_run(loop,0):启动事件循环

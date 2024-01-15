@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
 5. 多进程:reuse port--nginx
 
 ### clock_gettime
-1. CLOCK_REALTIME:时钟时间,可调节(如更改系统设定时间),用此时间戳比较先后要慎重
+1. CLOCK_REALTIME:时钟时间,可调节(如更改系统设定时间),用此时间戳比较先后要慎重,同time(NULL)和gettimeofday类型相同但精度更高
 2. CLOCK_MONOTONIC:自开机启动后的单调递增时间,受NTP影响,不计系统休眠时间
     1. CLOCK_MONOTONIC_RAW:不受NTP影响,不计系统休眠时间
     2. CLOCK_BOOTTIME:计算系统休眠时间

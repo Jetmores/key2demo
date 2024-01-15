@@ -35,3 +35,9 @@ int main(int argc, char *argv[]){
 3. 多线程:单accept多read&write
 4. 多线程:多accept多read&write(此处多accept同一个lfd,之后epoll_wait会惊群,即使加了exclusive;加锁解决或者多lfd时reuse port更好)
 5. 多进程:reuse port--nginx
+
+### clock_gettime
+1. CLOCK_REALTIME:时钟时间,可调节(如更改系统设定时间),用此时间戳比较先后要慎重
+2. CLOCK_MONOTONIC:自开机启动后的单调递增时间,受NTP影响,不计系统休眠时间
+    1. CLOCK_MONOTONIC_RAW:不受NTP影响,不计系统休眠时间
+    2. CLOCK_BOOTTIME:计算系统休眠时间

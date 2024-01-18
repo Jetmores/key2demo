@@ -93,3 +93,7 @@ ZINTER numkeys key [key ...] [WEIGHTS weight [weight ...]] [AGGREGATE SUM|MIN|MA
 ZUNION numkeys key [key ...] [WEIGHTS weight [weight ...]] [AGGREGATE SUM|MIN|MAX] [WITHSCORES]
 ZDIFF numkeys key [key ...] [WITHSCORES]
 ```
+
+### redis与mysql如何保障数据一致性
+1. 实时一致性方案:先写mysql,再删redis
+2. 最终一致性方案:先写mysql,通过binlog,异步更新redis

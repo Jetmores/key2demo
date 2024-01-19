@@ -59,3 +59,7 @@ https://zh.cppreference.com/mwiki/index.php?title=Special:%E6%90%9C%E7%B4%A2&sea
 
 ### vscode Keyboard Shortcuts
 File->Preferences->Keyboard Shortcuts->cursorLineEnd->Ctrl+;
+
+### log
+1. 同步日志:实时性好,便于记录异常崩溃日志;但阻塞当前业务
+2. 异步日志:业务线程生成日志信息,打印线程消费;

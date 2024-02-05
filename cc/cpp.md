@@ -65,6 +65,26 @@ File->Preferences->Keyboard Shortcuts->cursorLineEnd->Ctrl+;
 2. 异步日志:业务线程生成日志信息,打印线程消费;
 
 ## 并发实战
+### 基于atomic_flag的自旋锁
+```cpp
+class spinlock_mutex
+{
+ std::atomic_flag flag;
+public:
+ spinlock_mutex():
+ flag(ATOMIC_FLAG_INIT)
+ {}
+ void lock()
+ {
+ while(flag.test_and_set(std::memory_order_acquire));
+ }
+ void unlock()
+ {
+ flag.clear(std::memory_order_release);
+ }
+};
+```
+
 ### 可上锁和等待的线程安全队列
 ```cpp
 template<typename T>

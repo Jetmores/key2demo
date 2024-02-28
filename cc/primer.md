@@ -37,6 +37,15 @@
 
 
 ### regex
+1. [s|c]regex_[search|match]([s|cp],([s|c]match)m,r)
+2. m.str(n) == m[n].str() m.format(fmt)
+3. [s|c]regex_iterator
+```cpp
+for(sregex_iterator it(s.begin(),s.end(),r),end_it;it!=end_it;++it){
+    cout<<it-str()<<endl;
+}
+```
+4. regex_replace(s,r,fmt)
 
 
 ### chrono

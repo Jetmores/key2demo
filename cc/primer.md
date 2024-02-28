@@ -36,6 +36,14 @@
 * partial_sum(b,e,d)
 
 
+### 智能指针
+#### shared_ptr
+
+#### unique_ptr
+
+#### weak_ptr
+
+
 ### regex
 1. [s|c]regex_[search|match]([s|cp],([s|c]match)m,r)
 2. m.str(n) == m[n].str() m.format(fmt)

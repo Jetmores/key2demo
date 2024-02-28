@@ -8,15 +8,17 @@
 
 #### 关联增删改查
 
+
 ### algorithm
 #### 增删改查
 
 #### special
 函数编程对象
-* 函数对象
+* 函数对象:operator()(int a,int b){}
 * lambda表达式
 * bind
 * function可调对象
+
 
 高阶函数
 1. accumulate
@@ -25,10 +27,20 @@
 
 #### 划分/排序/二分查找/排列/集合/大小
 
+
 ### numeric
+* iota(b,e,val)
+* accumulate(b,e,init)
+* inner_product(b,e,b2,init)
+* adjacent_difference(b,e,d)
+* partial_sum(b,e,d)
+
 
 ### regex
 
+
 ### chrono
 
+
 ### filesystem
+

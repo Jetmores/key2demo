@@ -74,3 +74,6 @@ mysql -u root -p -e "show grants for kt;"
 mysql -u root -p -e "grant process on *.* to kt;"
 mysql -u root -p -e "revoke process on *.* from kt;"
 ```
+
+### 疑难杂症
+#### mysql查询性能低

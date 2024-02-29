@@ -1,3 +1,6 @@
+walk:
+	g++ -o walk walk.cc -std=c++23
+
 evio:
 	gcc -o evio evio.c  -L/usr/local/lib -I/usr/local/include/ -lev -Wl,-rpath,/usr/local/lib
 
@@ -13,4 +16,4 @@ echo:
 
 .PHONY:clean
 clean:
-	rm -f *.o a.out echo mio evdemo evio
+	rm -f *.o a.out echo mio evdemo evio walk

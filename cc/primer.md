@@ -183,10 +183,18 @@ int main()
 }
 ```
 
+
 ### filesystem
+```cpp
+  const std::filesystem::path sandbox { "sandbox" };
+  std::filesystem::recursive_directory_iterator rit { sandbox };
+  //std::for_each(begin(rit), end(rit), [](const auto& dir_entry) { std::cout << dir_entry << '\n'; });
+  std::for_each(begin(rit), end(rit), [](const auto& dir_entry) { printf("%s\n", dir_entry.path().relative_path().c_str()); });
+```
 
 
 ### class
+
 
 
 ### derive class

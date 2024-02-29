@@ -42,6 +42,53 @@
 #### unique_ptr
 
 #### weak_ptr
+1. 在成环最后节点,用weak_ptr打破环状依赖,防止内存泄漏
+```cpp
+struct B;
+struct A{
+    //shared_ptr<B> sp_;//造成引用成环,内存泄漏
+    weak_ptr<B> sp_;
+};
+struct B{
+    shared_ptr<A> sp_;
+};
+
+void main(void){
+    shared_ptr<A> sa=new A();
+    shared_tr<B> sb=new B();
+    sa->sp_=sb;
+    sb->sp_=sa;
+}
+```
+2. shared_ptr生存期之外存在weak_ptr
+```cpp
+#include <iostream>
+#include <memory>
+ 
+std::weak_ptr<int> gw;
+ 
+void observe()
+{
+    std::cout << "gw.use_count() == " << gw.use_count() << "; ";
+    // 使用之前必须制作一个 shared_ptr 副本
+    if (std::shared_ptr<int> spt = gw.lock())
+        std::cout << "*spt == " << *spt << '\n';
+    else
+        std::cout << "gw 已过期\n";
+}
+ 
+int main()
+{
+    {
+        auto sp = std::make_shared<int>(42);
+	gw = sp;
+ 
+	observe();
+    }
+ 
+    observe();
+}
+```
 
 
 ### regex

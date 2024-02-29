@@ -38,8 +38,23 @@
 
 ### 智能指针
 #### shared_ptr
+1. shared_ptr<T> p(q);//拷贝构造
+2. p=q;//拷贝赋值
+3. make_shared<T>(args);
+4. shared_ptr<T> p(ptr,d=delete);//拷贝构造,如ptr=new int(0)
+5. shared_ptr<T> p(weak_ptr);//lock()为false时null,此时构造抛异常
+6. shared_ptr<T> p(unique_ptr);
+7. p.reset(ptr=nullptr,d=delete);
+8. shared_ptr<int> sp(new int[10],[](int *p){delete[] p;});//c++17后用法类似unique
+9. *(sp.get()+i)=i;//接上,索引;c++17之后支持直接索引
 
 #### unique_ptr
+1. unique_ptr<T[]> u;
+2. unique_ptr<T[]> u(p);//unique_ptr<int[]> up(new int[10]);
+3. u[i];
+4. unique_ptr<T,D=decltype(delete)*> p(ptr,d=delete);
+5. p.reset(ptr=nullptr);
+6. auto p=p2.release();unique_ptr<int> p(p2.release());//单p2.release();是错误的,丢失了指针
 
 #### weak_ptr
 1. 在成环最后节点,用weak_ptr打破环状依赖,防止内存泄漏
@@ -88,6 +103,19 @@ int main()
  
     observe();
 }
+```
+
+#### allocator
+1. allocator<T> a;
+2. p=a.allocate(n);
+3. a.deallocate(p,n);//在此之前需要依次destroy(p)
+4. a.construct(p,args);
+5. a.destroy(p);
+```cpp
+uninitialized_fill(b,e,val);
+fill_n(dest,n,val);
+copy(b,e,dest);
+copy_n(b,n,dest);
 ```
 
 

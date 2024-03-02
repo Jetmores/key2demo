@@ -210,7 +210,7 @@ item.combine(Sales_data(null_book));
 item.combine(static_cast<Sales_data>(null_book));
 ```
 11. constexpr构造函数无函数体,必须初始化所有成员变量(类内初始值,构造函数初始值列表)
-
+12. static是类内修饰符,可以.和->访问成员,也可X::static_a访问,静态成员函数除了无this和const修饰this其它相同;static成员变量类似全局变量,在源文件中定义如int X::static_a=1;此时被const修饰类外定义需要常量表达式,而constexpr则类内初始值需要常量表达式且类外有时需要constexpr int Account::period;
 
 
 ### derive class

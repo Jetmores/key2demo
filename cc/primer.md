@@ -215,5 +215,19 @@ item.combine(static_cast<Sales_data>(null_book));
 
 ### derive class
 1. 面向对象三大特性:封装(实现接口和实现的分离),继承,多态;
+2. 多态:基类的指针或引用调用虚函数,仅此时动态类型与静态类型存在差异;
+3. 基类中vitual和析构函数,派生类的override和final;
+```cpp
+class A final {};
+class B final : public A{};//error
 
+class Base {
+    virtual ~Base()=default;
+    virtual int sum(int i)=0;//纯虚函数,含有纯虚函数的类是抽象基类,抽象基类无对象
+};
+class Derive {
+    int sum(int i) override final {return 0;}//override覆盖基类,final阻止派生类
+};
+```
+4. 回避虚函数机制:baseP->Derive::price(6);//显示指明作用域
 

@@ -233,3 +233,15 @@ class Derive {
 4. 回避虚函数机制:baseP->Derive::price(6);//显示指明作用域
 5. 派生类对基类成员的访问权限只与基类的访问说明符有关,类用户(对象和它的派生类)还需要与派生访问说明符叠加;可以使用using声明派生类可访问但对象不可访问的成员;
 6. 名字查找先于类型检查,派生类本质是嵌套类,内层名字会隐藏外层,可用using A::price引入基类的多个重载函数;
+7. 继承的构造函数:using thread::thread;个别需要替换的只需重新定义从而继承自动剔除掉相同参数列表的项;
+```cpp
+struct guarded_thread : thread{
+    using thread::thread;
+    ^guarded_thread(){if(joinable()) join();}
+};
+```
+8. 在容器中放置(智能)指针而非对象,如
+```cpp
+vector<shared_ptr<Base>> vb;
+vb.push_back(make_shared<Derive>(100));
+```

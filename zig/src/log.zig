@@ -6,13 +6,13 @@ const std = @import("std");
 //    .ReleaseFast, .ReleaseSmall => .err,
 //};
 
-pub const std_options = struct {
+pub const std_options = .{
     // Set the log level to info
     //pub const log_level = .info;
-    pub const log_level = std.log.default_level;
+    .log_level = std.log.default_level,
 
     // Define logFn to override the std implementation
-    pub const logFn = myLogFn;
+    .logFn = myLogFn,
 };
 
 pub fn myLogFn(
@@ -34,8 +34,8 @@ pub fn myLogFn(
     const prefix = "[" ++ comptime level.asText() ++ "] " ++ scope_prefix;
 
     // Print the message to stderr, silently ignoring any errors
-    std.debug.getStderrMutex().lock();
-    defer std.debug.getStderrMutex().unlock();
+    std.debug.lockStdErr();
+    defer std.debug.unlockStdErr();
     const stderr = std.io.getStdErr().writer();
     nosuspend stderr.print(prefix ++ format ++ "\n", args) catch return;
 }

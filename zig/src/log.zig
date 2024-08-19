@@ -8,7 +8,7 @@ const std = @import("std");
 
 pub const std_options = .{
     // Set the log level to info
-    //pub const log_level = .info;
+    //.log_level = .info;
     .log_level = std.log.default_level,
 
     // Define logFn to override the std implementation
@@ -44,8 +44,8 @@ pub fn main() void {
     // Using the default scope:
     std.log.debug("A borderline useless debug log message", .{}); // Won't be printed as log_level is .info
     std.log.info("Flux capacitor is starting to overheat", .{});
-    std.log.warn("Warn", .{});
-    std.log.err("Error", .{});
+    std.log.warn("Warn", .{}); //Debug,ReleaseSafe
+    std.log.err("Error", .{}); //ReleaseFast,ReleaseSmall
 
     // Using scoped logging:
     const my_project_log = std.log.scoped(.my_project);
@@ -56,5 +56,5 @@ pub fn main() void {
     my_project_log.info("Starting up", .{});
     nice_library_log.warn("Something went very wrong, sorry", .{});
     nice_library_log.err("Error", .{});
-    verbose_lib_log.warn("Added 1 + 1: {}", .{1 + 1}); // Won't be printed as it gets filtered out by our log function
+    verbose_lib_log.err("Added 1 + 1: {}", .{1 + 1}); // Won't be printed as it gets filtered out by our log function
 }

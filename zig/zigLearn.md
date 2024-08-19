@@ -37,10 +37,10 @@ pub const default_level: Level = switch (builtin.mode) {
     .ReleaseSafe => .info,
     .ReleaseFast, .ReleaseSmall => .err,
 };
-std.log.debug("A borderline useless debug log message", .{});
-std.log.info("Flux capacitor is starting to overheat", .{});
-std.log.warn("Warn", .{});
-std.log.err("Error", .{});
+std.log.debug("A borderline useless debug log message", .{});//Debug
+std.log.info("Flux capacitor is starting to overheat", .{});//Debug and Safe
+std.log.warn("Warn", .{});//Debug and Safe
+std.log.err("Error", .{});//Fast and Small
 ```
 
 ### expect

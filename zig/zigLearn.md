@@ -899,6 +899,9 @@ test "fetchPut" {
 }
 ```
 
+### 以下了解即可,随用随取
+
+
 ### std.mem.sort
 std.sort.sort has a best case of O(n), and an average and worst case of O(n*log(n)).
 ```zig

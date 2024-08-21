@@ -774,7 +774,7 @@ test "arena allocator" {
 
 //This is a safe allocator which can prevent double-free, use-after-free and can detect leaks. Safety checks and thread safety can be turned off via its configuration struct (left empty below).
 test "GPA" {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};//init,deinit;allocator:alloc,free
     const allocator = gpa.allocator();
     defer {
         const deinit_status = gpa.deinit();

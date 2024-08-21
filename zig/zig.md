@@ -7,6 +7,9 @@ zig
 https://ziglang.org/documentation/master/std/#A;std?%s
 ```
 
+### zig CookBook
+<https://cookbook.ziglang.cc/intro.html>
+
 ### zig ?collection <https://github.com/ziglang/zig/issues/7782>
 1. ArrayList[Aligned][Unmanaged] ->vector
 2. MultiArrayList ->结构中各元素组成各自的切片,同字段放一个切片中,便于列遍历(ArrayList是行遍历)

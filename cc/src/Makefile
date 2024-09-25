@@ -1,5 +1,5 @@
 hole:
-	g++ -g -o hole hole.cc
+	gcc -g -o hole hole.c
 	
 walk:
 	g++ -o walk walk.cc -std=c++23

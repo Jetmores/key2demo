@@ -8,8 +8,8 @@
 #include <pthread.h>
 
 // std
-#include <cstdio>
-#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define handle_error(msg) \
   do {                    \

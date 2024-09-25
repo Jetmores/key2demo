@@ -1,9 +1,10 @@
-#include "lib.cc"
-#include <cstdio>
+#include "lib.c"
 #include <fcntl.h>
+#include <stdio.h>
 #include <unistd.h>
 
-int main(void) {
+int main(void)
+{
   int fd;
   if ((fd = creat("file.hole", 0644)) == -1) {
     handle_error("creat error");

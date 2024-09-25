@@ -8,7 +8,7 @@
 #include <sys/epoll.h>
 #include <unistd.h>
 
-#include "lib.cc"
+#include "lib.c"
 
 using namespace std;
 

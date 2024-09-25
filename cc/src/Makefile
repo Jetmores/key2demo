@@ -1,3 +1,6 @@
+hole:
+	g++ -g -o hole hole.cc
+	
 walk:
 	g++ -o walk walk.cc -std=c++23
 
@@ -16,4 +19,4 @@ echo:
 
 .PHONY:clean
 clean:
-	rm -f *.o a.out echo mio evdemo evio walk
+	rm -f *.o a.out echo mio evdemo evio walk hole file.hole

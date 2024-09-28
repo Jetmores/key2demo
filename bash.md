@@ -145,6 +145,9 @@ git clean -df
 git clean -xdf
 # 加入暂存(当前目录不含.xx|当前目录|版本库所有目录)
 git add [*|.|-A]
+# 查看pull/push所用协议,更改使ssh密钥起作用
+git remote -v 
+git config remote.origin.url git@gitlab.com:lets2rs/helix.git
 ```
 
 ### 查看log文件

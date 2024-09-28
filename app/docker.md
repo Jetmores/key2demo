@@ -13,8 +13,10 @@
     "buildkit": true
   },
   "registry-mirrors": [
-    "https://hub-mirror.c.163.com",
-    "https://mirror.baidubce.com"
+    ~~"https://hub-mirror.c.163.com",~~
+    ~~"https://mirror.baidubce.com"~~
+    "https://docker.m.daocloud.io",
+    "https://register.liberx.info"
   ]
 }
 ```

@@ -70,8 +70,9 @@ ldd app |awk '{print $3}' |xargs -i cp -L {} mdir/
 
 ### ssh
 ```bash
-# 生成.ssh/id_rsa.pub
+# 生成.ssh/id_rsa.pub 并且远程添加公钥
 ssh-keygen -t rsa -C "lets2rs@126.com"
+cat .ssh/id_rsa.pub | ssh root@47.106.171.40 "cat - >>~/.ssh/authorized_keys"
 # ssh代理连接
 ssh -v -i id_rsa -oProxyCommand="ssh -i id_rsa yh@35.75.184.13 -p 10022 -N -W %h:%p" yh@10.64.4.45
 # ssh免(输入)密码连接

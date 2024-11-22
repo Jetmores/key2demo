@@ -1,3 +1,11 @@
+### 非容器启动
+如FreeBSD下通过`pkg install postgresql15-client postgresql15-server`下载的postgres如何启动:
+1. 先切换postgres用户
+2. 再执行posrgres -D datadir
+```bash
+su -l postgres -c 'postgres -D data15/ >logfile 2>&1 &'
+```
+
 ### 容器构建
 完全重建容器,需要删除pgdata外挂盘,删除现有容器,完全重新执行如下指令方可正常
 ```bash

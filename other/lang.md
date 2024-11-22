@@ -16,8 +16,8 @@
 ### xcvb
 1. X:冖mi欠饣shi,夕鱼v七i车ju衤yi
 2. C:下框冊ce4e,见贝页雨,彳chi23丿<曹头>v女
-3. V:石厂han3不田里,甲禺v习
-4. B:弓马尸又o彐ji隶di,<五身>丑皮言
+3. V:石厂han3不u田里,甲禺v习
+4. B:弓马尸又o彐ji4隶di4,<五身>丑皮言
 ### qwert
 1. Q:自i身丬qiang2丷ba1k羊米虫
 2. W:月囗wei,勹bao月围,屮che4凵k,右纠jiu儿
@@ -30,9 +30,10 @@
 3. I:火灬biao宀mian2穴,尚小v二r亍chu4
 4. O:大夫𡗗di2巳巴,已i己之辶chuo,也e乜mie糸si钅旁
 5. P:西酉工,生牛足止i
-### 特殊小码
-1. yu->v
-2. you->o
-3. yi->i
-4. shi->i
-5. er->r
+### 特殊小码yu->v,yi->i(除了衤𧘇),er->r
+- a:三八麻牙幺
+- o:you艹舟
+- e:人文了业也冊
+- i:yi(^𧘇衤)七心臼世十矢
+- u:不夂
+- v:yu上小口
